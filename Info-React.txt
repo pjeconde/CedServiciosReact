@@ -1,5 +1,5 @@
 Comando para crear el proyecto React
-
+c:\>npx create-react-app cedserviciosreact
 
 Levantar proyecto React
 
