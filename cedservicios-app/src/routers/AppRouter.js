@@ -4,8 +4,8 @@ import {
     Switch,
     Redirect
 } from 'react-router-dom';
-import { AuthRouter } from './AuthRouter';
-import { DashboardRoutes } from './DashboardRoutes';
+import { DashboardPublic } from './DashboardPublic';
+import { DashboardPrivate } from './DashboardPrivate';
 import { PrivateRoute } from './PrivateRoute';
 import { PublicRoute } from './PublicRoute';
 
@@ -20,13 +20,13 @@ export const AppRouter = () => {
                     <PublicRoute
                         path="/auth"
                         isAuthenticated={isLoggedIn}
-                        component={AuthRouter} />
+                        component={DashboardPublic} />
 
                     <PrivateRoute
                         exact
                         path="/"
                         isAuthenticated={isLoggedIn}
-                        component={DashboardRoutes} />
+                        component={DashboardPrivate} />
 
                     <Redirect to="/auth/login" />
                 </Switch>
