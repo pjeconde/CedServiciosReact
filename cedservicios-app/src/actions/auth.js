@@ -1,32 +1,34 @@
-import axios from 'axios';
 import { types } from '../types/types';
-import { config } from '../config/config';
-import { startLoading } from './ui';
+import { axiosConfig as axios } from '../config/config';
+import { startLoading, finishLoading, setError } from './ui';
 
-
-export const startLogout = () => {
-    return async (dispatch) => {
-        // await firebase.auth().signOut();
-
-        // dispatch(logout());
-
-        // dispatch(noteLogout());
-
-    }
-}
 
 export const startLoginEmailPassword = (email, password) => {
     return async (dispatch) => {
-        dispatch(startLoading());
-        
-        // firebase.auth().signInWithEmailAndPassword(email, password)
-        //     .then(({ user }) => {
-        //         dispatch(finishLoading());
-        //         dispatch(login(user.uid, user.displayName));
-        //     }).catch(e => {
-        //         dispatch(finishLoading());
-        //         Swal.fire('Error', e.message, 'error');
-        //     })
+        try {
+            dispatch(startLoading());
+            const resp = await axios.get('Usuario/Ingresar', {
+                params: {
+                    id: email,
+                    password
+                }
+            });
+            const { resultado } = resp.data[0];
+
+            if (resp.status === 200 && resultado.severidad === 0) {
+                dispatch(login({
+                    id: email,
+                    name: 'Username'
+                }));
+            } else {
+                dispatch(setError(resultado.descripcion));
+            }
+            dispatch(finishLoading());
+
+        } catch (error) {
+            dispatch(finishLoading());
+            dispatch(setError('Por favor contactese con el administrador.'));
+        }
     }
 }
 
@@ -45,12 +47,15 @@ export const startRegisterWithEmailAndPassword = (email, password, name) => {
     }
 }
 
-export const login = (id, displayName) => ({
-    type: types.login,
-    payload: {
-        id,
-        displayName
+export const startLogout = () => {
+    return async (dispatch) => {
+
     }
+}
+
+export const login = (user) => ({
+    type: types.login,
+    payload: user
 });
 
 export const logout = () => ({

@@ -10,7 +10,7 @@ export const DashboardPublic = () => {
         <>
             <Menu />
 
-            <div className="content" >
+            {/* <div className="content" > */}
                 <Switch>
                     <Route exact path="/auth/login" component={LoginScreen} />
 
@@ -19,7 +19,7 @@ export const DashboardPublic = () => {
                     <Redirect to="/auth/login" />
                 </Switch>
 
-            </div>
+            {/* </div> */}
         </>
     )
 }

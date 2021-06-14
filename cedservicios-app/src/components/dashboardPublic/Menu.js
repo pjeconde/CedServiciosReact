@@ -54,11 +54,11 @@ export const Menu = () => {
                         <NavLink
                             activeClassName="active"
                             className="nav-item nav-link"
-                            to="#pricing">TECNOLOGÍA</NavLink>
+                            to="/auth/tech">TECNOLOGÍA</NavLink>
                         <NavLink
                             activeClassName="active"
                             className="nav-item nav-link"
-                            to="#pricing">INGRESAR</NavLink>
+                            to="/auth/login">INGRESAR</NavLink>
                     </Nav>
                 </Navbar.Collapse>
             </Navbar>
