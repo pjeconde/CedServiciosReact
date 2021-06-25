@@ -1,3 +1,33 @@
+.section{
+	position:relative;
+	width:100%;
+	overflow:hidden;
+}
+
+.call-to-action-2{
+	position:relative;
+	width:100%;
+	margin:0 auto;
+	text-align:center;
+	padding-top:30px;
+	padding-bottom:30px;
+	background:#212121;
+}
+
+.call-to-action-2 h6{
+	position:relative;
+	color:#f4f4f4;
+	text-align:center;
+	display:inline-block;
+	padding-right:30px;
+}
+
+h6 {
+    line-height: 25px;
+}    
+
+h6 { font-size: 16px; line-height: 20px;text-transform: uppercase;font-weight: 700;}
+
 .form-login {
     background: #3bb2df;
 }
@@ -17,6 +47,7 @@
 
 .title-login {
     position: relative;
+    color: white;
     width: 100%;
     padding-bottom: 30px;
     padding-top: 20px;

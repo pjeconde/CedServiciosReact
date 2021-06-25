@@ -1,24 +1,62 @@
+import Swal from 'sweetalert2';
+import { instance as axios } from '../config/config';
 import { types } from '../types/types';
-import { axiosConfig as axios } from '../config/config';
 import { startLoading, finishLoading, setError } from './ui';
 
 
-export const startLoginEmailPassword = (email, password) => {
+export const startLogin = (id, clave) => {
     return async (dispatch) => {
         try {
             dispatch(startLoading());
             const resp = await axios.get('Usuario/Ingresar', {
                 params: {
-                    id: email,
-                    password
+                    id,
+                    clave
                 }
             });
+            const { respuesta } = resp.data[0];
+
+            if (resp.status === 200 && respuesta.resultado.severidad === 0) {
+                dispatch(login({
+                    id,
+                    name: 'Nombre de usuario'
+                }));
+            } else {
+                dispatch(setError(respuesta.resultado.descripcion));
+            }
+            dispatch(finishLoading());
+
+        } catch (error) {
+            dispatch(finishLoading());
+            Swal.fire({
+                icon: 'error',
+                title: 'Oops...',
+                text: 'Por favor contactese con el administrador'
+            });
+        }
+    }
+}
+
+export const startRegister = (formValues) => {
+    return async (dispatch) => {
+        try {
+            dispatch(startLoading());
+
+            const resp = await axios.post('Usuario/Registrar',
+                { ...formValues }, {
+                headers: {
+                    'Access-Control-Allow-Origin': '*',
+                    'Content-type': 'application/json',
+                    'Access-Control-Allow-Methods': 'GET,PUT,POST,DELETE,PATCH,OPTIONS'
+                }
+            });
+            console.log(resp)
             const { resultado } = resp.data[0];
 
             if (resp.status === 200 && resultado.severidad === 0) {
                 dispatch(login({
-                    id: email,
-                    name: 'Username'
+                    id: formValues.id,
+                    name: formValues.name
                 }));
             } else {
                 dispatch(setError(resultado.descripcion));
@@ -26,24 +64,14 @@ export const startLoginEmailPassword = (email, password) => {
             dispatch(finishLoading());
 
         } catch (error) {
+            console.log(error);
             dispatch(finishLoading());
-            dispatch(setError('Por favor contactese con el administrador.'));
+            Swal.fire({
+                icon: 'error',
+                title: 'Oops...',
+                text: 'Por favor contactese con el administrador'
+            });
         }
-    }
-}
-
-export const startRegisterWithEmailAndPassword = (email, password, name) => {
-    return (dispatch) => {
-        // firebase.auth().createUserWithEmailAndPassword(email, password)
-        //     .then(async ({ user }) => {
-
-        //         await user.updateProfile({ displayName: name });
-
-        //         dispatch(login(user.uid, user.displayName));
-
-        //     }).catch(e => {
-        //         Swal.fire('Error', e.message, 'error');
-        //     })
     }
 }
 
@@ -61,3 +89,36 @@ export const login = (user) => ({
 export const logout = () => ({
     type: types.logout
 });
+
+export const startCheckUserIdByEmail = (email) => {
+    return async (dispatch) => {
+        dispatch(startLoading());
+        try {
+            const resp = await axios.get('Usuario/ConsultarIdUsuarioPorEmail', {
+                params: email
+            });
+            const { respuesta } = resp.data[0];
+
+            if (resp.status === 200 && respuesta.resultado.severidad === 0) {
+                Swal.fire('Id Usuario', 'Id usuario recuperado exitosamente.', 'success');
+            } else {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Oops...',
+                    text: respuesta.resultado.descripcion
+                });
+                dispatch(setError(respuesta.resultado.descripcion));
+            }
+            dispatch(finishLoading());
+            
+        } catch (error) {
+            console.log(error);
+            dispatch(finishLoading());
+            Swal.fire({
+                icon: 'error',
+                title: 'Oops...',
+                text: 'Por favor contactese con el administrador'
+            });
+        }
+    }
+}
