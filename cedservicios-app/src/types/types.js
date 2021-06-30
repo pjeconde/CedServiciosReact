@@ -1,7 +1,11 @@
 export const types = {
 
-    login: '[Auth] Login',
-    logout: '[Auth] Logout',
+    authLogin: '[Auth] Login',
+    authLogout: '[Auth] Logout',
+    authSetQuestion: '[Auth] Set question',
+    authRemoveQuestion: '[Auth] Remove question',
+    authSetValidAnswer: '[Auth] Set valid answer',
+    authRemoveValidAnswer: '[Auth] Remove valid answer',
 
     uiSetError: '[UI] Set error',
     uiRemoveError: '[UI] Remove error',
