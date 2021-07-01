@@ -208,8 +208,46 @@ const setValidAnswer = (validAnswer) => ({
     payload: validAnswer
 });
 
-export const startChangePassword = () => {
-    // Continuar 
+export const startChangePassword = (idUsuario, email, answer, password) => {
+    return async (dispatch, getState) => {
+        try {
+            dispatch(startLoading());
+
+            const { question: pregunta } = getState().auth;
+
+            const resp = await axios.post('Usuario/CambiarClaveConPreguntaSeg', {
+                idUsuario,
+                email,
+                pregunta,
+                respuesta: answer,
+                claveNueva: password,
+                claveNuevaConfirmacion: password
+            });
+            const { respuesta, valor } = resp.data[0];
+
+            if (resp.status === 200 && valor) {
+                Swal.fire('Success', 'Cambio de contraseña exitoso.', 'success');
+            } else {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Oops...',
+                    text: respuesta.resultado.descripcion
+                });
+                dispatch(setError(respuesta.resultado.descripcion));
+            }
+            dispatch(finishLoading());
+
+        } catch (error) {
+            console.log(error);
+            dispatch(finishLoading());
+            Swal.fire({
+                icon: 'error',
+                title: 'Oops...',
+                text: 'Por favor contactese con el administrador'
+            });
+        }
+
+    }
 }
 
 

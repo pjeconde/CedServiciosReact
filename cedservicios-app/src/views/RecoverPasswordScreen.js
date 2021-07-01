@@ -8,6 +8,7 @@ import {
     Col,
     Button
 } from 'react-bootstrap';
+import Swal from 'sweetalert2';
 import validator from 'validator';
 import { useForm } from '../hooks/useForm';
 import { startChangePassword, startCheckAnswer, startCheckQuestion, startRemoveQuestionAndAnswer } from '../actions/auth';
@@ -43,14 +44,16 @@ export const RecoverPasswordScreen = () => {
     const handleRequestPassword = (e) => {
         e.preventDefault();
         if (respuesta.length > 4) {
-            dispatch(startCheckAnswer(userId, email, respuesta))
+            dispatch(startCheckAnswer(userId, email, respuesta));
         }
     }
 
     const handleConfirmPassword = (e) => {
         e.preventDefault();
         if (password === password2) {
-            dispatch(startChangePassword());
+            dispatch(startChangePassword(userId, email, respuesta, password));
+        } else {
+            Swal.fire('Error', 'Las contraseñas no son iguales.', 'error');
         }
     }
 
