@@ -18,7 +18,7 @@ export const startLogin = (IdUsuario, clave) => {
 
             if (resp.status === 200 && respuesta.resultado.severidad === 0) {
                 dispatch(login({
-                    id: new Date().getTime(),
+                    uid: new Date().getTime(),
                     username: IdUsuario
                 }));
             } else {
@@ -86,6 +86,41 @@ const login = (user) => ({
 // const logout = () => ({
 //     type: types.authLogout
 // });
+
+export const startCheckUserIdById = (id) => {
+    return async (dispatch) => {
+        try {
+            dispatch(startLoading());
+            const resp = await axios.get('Usuario/ConsultarIdDisponible', {
+                params: {
+                    id
+                }
+            });
+            const { valor } = resp.data[0];
+
+            if (resp.status === 200 && valor) {
+                Swal.fire('Id Usuario', 'Id usuario disponible.', 'success');
+            } else {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Oops...',
+                    text: 'El Id Usuario no está disponible.'
+                });
+                dispatch(setError('El Id Usuario no está disponible'));
+            }
+            dispatch(finishLoading());
+
+        } catch (error) {
+            console.log(error);
+            dispatch(finishLoading());
+            Swal.fire({
+                icon: 'error',
+                title: 'Oops...',
+                text: 'Por favor contactese con el administrador'
+            });
+        }
+    }
+}
 
 export const startCheckUserIdByEmail = (email) => {
     return async (dispatch) => {
@@ -250,6 +285,22 @@ export const startChangePassword = (idUsuario, email, answer, password) => {
     }
 }
 
+export const startChecking = () => {
+    return (dispatch) => {
+        const pepe = true;
+        //Aca deberiamos renovar el token
+        // localStorage.setItem('token', token);
+        // localStorage.setItem('token-init-date', new Date().getTime());
+
+        if (pepe)
+            dispatch(login({
+                uid: new Date().getTime(),
+                name: 'gmontiel'
+            }));
+        else
+            dispatch(checkingFinish());
+    }
+}
 
 export const startRemoveQuestionAndAnswer = () => {
     return (dispatch) => {
@@ -257,6 +308,8 @@ export const startRemoveQuestionAndAnswer = () => {
         dispatch(removeValidAnswer());
     }
 }
+
+const checkingFinish = () => ({ type: types.authCheckingFinish });
 
 const removeQuestion = () => ({
     type: types.authRemoveQuestion

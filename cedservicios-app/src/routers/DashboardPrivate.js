@@ -1,14 +1,20 @@
 import React from 'react';
+import { Route, Switch, Redirect } from 'react-router-dom';
+import { Menu } from '../components/dashboardPrivate/Menu';
+import { AltaCuitScreen } from '../views/AltaCuitScreen';
 
 export const DashboardPrivate = () => {
     return (
-        <div>
-            {
-                //Navbar
-            }
-            <main>
-                <h1>Dashboard</h1>
+        <>
+            <Menu />
+
+            <main style={{ height: '100vh' }}>
+                <Switch>
+                    <Route path="/admin/cuit/alta" component={AltaCuitScreen} />
+
+                    <Redirect to="/admin/cuit/alta" />
+                </Switch>
             </main>
-        </div>
+        </>
     )
 }

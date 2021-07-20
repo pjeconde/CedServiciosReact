@@ -47,13 +47,14 @@ export const LoginScreen = () => {
 
   return (
     <>
-      <section>
-        <div>
-          <img
-            className="img-fluid"
-            src={`${process.env.PUBLIC_URL}/assets/parallax/factura.jpg`}
-            alt="Cedeira"
-          />
+      <section className="section section-home">
+        <div className="box-home">
+            <span className="border-text" >COMPROMISO, EXPERIENCIA E INNOVACIÓN</span>
+        </div>
+        <div className="box-home box-home-2">
+          <span>
+          EL TRABAJO EN EQUIPO, EL COMPROMISO Y LA PASIÓN POR LO QUE HACEMOS SON LA CLAVE DEL ÉXITO DE TODOS LOS DÍAS.
+          </span>
         </div>
       </section>
       <section className="section">
@@ -126,6 +127,9 @@ export const LoginScreen = () => {
                 </Link>
                 <Link to="/auth/recover/password">
                   ¿OLVIDÓ SU clave?
+                </Link>
+                <Link to="/auth/">
+                  ¿PROBLEMAS CON EL LOGIN?
                 </Link>
               </p>
             </div>

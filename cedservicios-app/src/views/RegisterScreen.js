@@ -11,7 +11,7 @@ import {
 import { textoTerminoYCondiciones } from '../helpers/terminoYCondiciones';
 
 import { useForm } from '../hooks/useForm';
-import { startRegister } from '../actions/auth';
+import { startCheckUserIdById, startRegister } from '../actions/auth';
 import { removeError, setError } from '../actions/ui';
 
 
@@ -58,6 +58,12 @@ export const RegisterScreen = () => {
             setValidated(true);
         }
         setValidated(false);
+    }
+
+    const handleCkecUserId = () => {
+        if (uid) {
+            dispatch(startCheckUserIdById(uid));
+        }
     }
 
     const handleCancel = () => {
@@ -159,6 +165,15 @@ export const RegisterScreen = () => {
                             isInvalid={label === 'uid'}
                             value={uid}
                             onChange={handleInputChange} />
+                    </Col>
+                    <Col sm={3}>
+                        <Button
+                            style={{ marginTop: '0' }}
+                            variant="secondary"
+                            onClick={handleCkecUserId}
+                        >
+                            Id.Usuario Disponible?
+                        </Button>
                     </Col>
                 </Row>
                 <Row style={{ margin: '5px' }}>

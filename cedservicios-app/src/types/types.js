@@ -2,6 +2,7 @@ export const types = {
 
     authLogin: '[Auth] Login',
     authLogout: '[Auth] Logout',
+    authCheckingFinish: '[Auth] Finish checking',
     authSetQuestion: '[Auth] Set question',
     authRemoveQuestion: '[Auth] Remove question',
     authSetValidAnswer: '[Auth] Set valid answer',

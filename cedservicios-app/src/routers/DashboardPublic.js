@@ -18,6 +18,7 @@ export const DashboardPublic = () => {
                     <Route exact path="/auth/register" component={RegisterScreen} />
                     <Route exact path="/auth/recover/userId" component={RecoverUserIdScreen} />
                     <Route exact path="/auth/recover/password" component={RecoverPasswordScreen} />
+
                     <Redirect to="/auth/login" />
                 </Switch>
             </main>
