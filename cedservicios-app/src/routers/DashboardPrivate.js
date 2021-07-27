@@ -8,7 +8,7 @@ export const DashboardPrivate = () => {
         <>
             <Menu />
 
-            <main style={{ height: '100vh' }}>
+            <main style={{ height: '1200px' }}>
                 <Switch>
                     <Route path="/admin/cuit/alta" component={AltaCuitScreen} />
 
