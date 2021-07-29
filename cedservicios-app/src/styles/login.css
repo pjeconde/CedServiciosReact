@@ -1,0 +1,130 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+.section {
+	position:relative;
+	width:100%;
+	overflow:hidden;
+}
+
+.section-home {
+    position: relative;
+    background-image: url("../images/2.jpg");
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    object-fit: cover;
+    background-position: center top;
+    width: 100%;
+    height: 900px;
+}
+
+.box-home {
+    position: absolute;
+    width: 100%;
+    left: 0;
+    top:50%;
+    color: #212121;
+    text-transform: uppercase;
+    font-weight: 700;
+    text-align: center;
+    font-family: 'Lato', sans-serif;
+    font-size: 30px;
+    visibility: visible;
+    opacity: 1;
+    letter-spacing: 4px;
+    white-space: nowrap;
+}
+
+.box-home-2 {
+    top: 56%;
+    margin: 40px auto;
+    letter-spacing: 2px;
+    font-size: 22px;
+    line-height: 26px;
+    display: inline-block;
+    font-weight: 400;
+    padding: 0 10%;
+    white-space: normal;
+    text-align: center;
+}
+
+.border-text {
+    padding: 19px 28px;
+    border-width: 5px;
+    border: 5px solid #212121;
+    font-size: 28px;
+    width: 70%;
+    white-space: normal;
+    line-height: 40px;
+    display: inline-block;
+    margin: -90px 0 0 0;
+    text-align: center;
+}
+
+.call-to-action-2{
+	position:relative;
+	width:100%;
+	margin:0 auto;
+	text-align:center;
+	padding-top:30px;
+	padding-bottom:30px;
+	background:#212121;
+}
+
+.call-to-action-2 h6{
+	position:relative;
+	color:#f4f4f4;
+	text-align:center;
+	display:inline-block;
+	padding-right:30px;
+}
+
+h6 {
+    line-height: 25px;
+}    
+
+h6 { font-size: 16px; line-height: 20px;text-transform: uppercase;font-weight: 700;}
+
+.form-login {
+    background: #3bb2df;
+}
+
+.container-login {
+    position: relative;
+    width: 1200px;
+    margin: 0 auto;
+    padding: 0;
+}
+
+.sexteen-columns {
+    width: 100%;
+    float: none;
+    display: inline-block;
+}
+
+.title-login {
+    position: relative;
+    color: white;
+    width: 100%;
+    padding-bottom: 30px;
+    padding-top: 20px;
+}
+
+.btn-login {
+    margin-top: '15px';
+    width: '140px';
+    border: '2px solid #fff';
+    letter-spacing: '3px'
+}
+
+.footer-login p a{
+    text-decoration: none;
+    margin-right: 10px;
+    font-size: 12px;
+    font-family: 'Lato', sans-serif;
+    text-transform: uppercase;
+    font-weight: 400;
+}

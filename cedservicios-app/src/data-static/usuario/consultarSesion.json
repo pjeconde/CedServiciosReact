@@ -1,0 +1,1120 @@
+[
+    {
+        "respuesta": {
+            "resultado": {
+                "severidad": 0,
+                "codigo": "",
+                "descripcion": ""
+            },
+            "detalle": []
+        },
+        "sesion": {
+            "usuario": {
+                "wf": {
+                    "id": 2156,
+                    "estado": "Vigente"
+                },
+                "ultActualiz": "0x0000000000040744",
+                "permisos": [
+                    {
+                        "usuario": {
+                            "wf": {
+                                "id": 0,
+                                "estado": null
+                            },
+                            "ultActualiz": null,
+                            "permisos": [],
+                            "cuitPredef": "",
+                            "idUNPredef": 0,
+                            "fechaOKeFactTyC": null,
+                            "cantidadFilasXPagina": 10,
+                            "mostrarAyudaComoPaginaDefault": false,
+                            "cantidadEnviosMail": 0,
+                            "fechaUltimoReenvioMail": "0001-01-01T00:00:00",
+                            "estado": null,
+                            "id": "pjeconde",
+                            "password": null,
+                            "nombre": null,
+                            "telefono": null,
+                            "email": null,
+                            "pregunta": null,
+                            "respuesta": null,
+                            "emailSMS": null
+                        },
+                        "cuit": "",
+                        "un": {
+                            "cuit": null,
+                            "id": 0,
+                            "descr": "",
+                            "wf": {
+                                "id": 0,
+                                "estado": null
+                            },
+                            "ultActualiz": null,
+                            "puntosVta": [],
+                            "puntosVtaVigentes": [],
+                            "estado": null
+                        },
+                        "tipoPermiso": {
+                            "id": "AdminSITE",
+                            "descr": "Administrador del site"
+                        },
+                        "fechaFinVigencia": "2062-12-31T00:00:00",
+                        "usuarioSolicitante": {
+                            "wf": {
+                                "id": 0,
+                                "estado": null
+                            },
+                            "ultActualiz": null,
+                            "permisos": [],
+                            "cuitPredef": "",
+                            "idUNPredef": 0,
+                            "fechaOKeFactTyC": null,
+                            "cantidadFilasXPagina": 10,
+                            "mostrarAyudaComoPaginaDefault": false,
+                            "cantidadEnviosMail": 0,
+                            "fechaUltimoReenvioMail": "0001-01-01T00:00:00",
+                            "estado": null,
+                            "id": "pjeconde",
+                            "password": null,
+                            "nombre": null,
+                            "telefono": null,
+                            "email": null,
+                            "pregunta": null,
+                            "respuesta": null,
+                            "emailSMS": null
+                        },
+                        "accion": {
+                            "tipo": "",
+                            "nro": 24
+                        },
+                        "wf": {
+                            "id": 2157,
+                            "estado": "Vigente"
+                        },
+                        "estado": "Vigente",
+                        "idTipoPermiso": "AdminSITE",
+                        "descrTipoPermiso": "Administrador del site",
+                        "idUsuario": "pjeconde",
+                        "nombreUsuario": null,
+                        "idUsuarioSolicitante": "pjeconde",
+                        "nombreUsuarioSolicitante": null,
+                        "tipoAccion": "",
+                        "idUN": 0,
+                        "descrUN": ""
+                    },
+                    {
+                        "usuario": {
+                            "wf": {
+                                "id": 0,
+                                "estado": null
+                            },
+                            "ultActualiz": null,
+                            "permisos": [],
+                            "cuitPredef": "",
+                            "idUNPredef": 0,
+                            "fechaOKeFactTyC": null,
+                            "cantidadFilasXPagina": 10,
+                            "mostrarAyudaComoPaginaDefault": false,
+                            "cantidadEnviosMail": 0,
+                            "fechaUltimoReenvioMail": "0001-01-01T00:00:00",
+                            "estado": null,
+                            "id": "pjeconde",
+                            "password": null,
+                            "nombre": null,
+                            "telefono": null,
+                            "email": null,
+                            "pregunta": null,
+                            "respuesta": null,
+                            "emailSMS": null
+                        },
+                        "cuit": "20225018805",
+                        "un": {
+                            "cuit": null,
+                            "id": 0,
+                            "descr": "",
+                            "wf": {
+                                "id": 0,
+                                "estado": null
+                            },
+                            "ultActualiz": null,
+                            "puntosVta": [],
+                            "puntosVtaVigentes": [],
+                            "estado": null
+                        },
+                        "tipoPermiso": {
+                            "id": "AdminCUIT",
+                            "descr": "Administrador del CUIT"
+                        },
+                        "fechaFinVigencia": "2062-12-31T00:00:00",
+                        "usuarioSolicitante": {
+                            "wf": {
+                                "id": 0,
+                                "estado": null
+                            },
+                            "ultActualiz": null,
+                            "permisos": [],
+                            "cuitPredef": "",
+                            "idUNPredef": 0,
+                            "fechaOKeFactTyC": null,
+                            "cantidadFilasXPagina": 10,
+                            "mostrarAyudaComoPaginaDefault": false,
+                            "cantidadEnviosMail": 0,
+                            "fechaUltimoReenvioMail": "0001-01-01T00:00:00",
+                            "estado": null,
+                            "id": "pjeconde",
+                            "password": null,
+                            "nombre": null,
+                            "telefono": null,
+                            "email": null,
+                            "pregunta": null,
+                            "respuesta": null,
+                            "emailSMS": null
+                        },
+                        "accion": {
+                            "tipo": "SolicAdminCuit",
+                            "nro": 100
+                        },
+                        "wf": {
+                            "id": 3982,
+                            "estado": "Vigente"
+                        },
+                        "estado": "Vigente",
+                        "idTipoPermiso": "AdminCUIT",
+                        "descrTipoPermiso": "Administrador del CUIT",
+                        "idUsuario": "pjeconde",
+                        "nombreUsuario": null,
+                        "idUsuarioSolicitante": "pjeconde",
+                        "nombreUsuarioSolicitante": null,
+                        "tipoAccion": "SolicAdminCuit",
+                        "idUN": 0,
+                        "descrUN": ""
+                    },
+                    {
+                        "usuario": {
+                            "wf": {
+                                "id": 0,
+                                "estado": null
+                            },
+                            "ultActualiz": null,
+                            "permisos": [],
+                            "cuitPredef": "",
+                            "idUNPredef": 0,
+                            "fechaOKeFactTyC": null,
+                            "cantidadFilasXPagina": 10,
+                            "mostrarAyudaComoPaginaDefault": false,
+                            "cantidadEnviosMail": 0,
+                            "fechaUltimoReenvioMail": "0001-01-01T00:00:00",
+                            "estado": null,
+                            "id": "pjeconde",
+                            "password": null,
+                            "nombre": null,
+                            "telefono": null,
+                            "email": null,
+                            "pregunta": null,
+                            "respuesta": null,
+                            "emailSMS": null
+                        },
+                        "cuit": "20225018805",
+                        "un": {
+                            "cuit": null,
+                            "id": 1,
+                            "descr": "Garage",
+                            "wf": {
+                                "id": 0,
+                                "estado": null
+                            },
+                            "ultActualiz": null,
+                            "puntosVta": [],
+                            "puntosVtaVigentes": [],
+                            "estado": null
+                        },
+                        "tipoPermiso": {
+                            "id": "AdminUN",
+                            "descr": "Administrador de la UN"
+                        },
+                        "fechaFinVigencia": "2062-12-31T00:00:00",
+                        "usuarioSolicitante": {
+                            "wf": {
+                                "id": 0,
+                                "estado": null
+                            },
+                            "ultActualiz": null,
+                            "permisos": [],
+                            "cuitPredef": "",
+                            "idUNPredef": 0,
+                            "fechaOKeFactTyC": null,
+                            "cantidadFilasXPagina": 10,
+                            "mostrarAyudaComoPaginaDefault": false,
+                            "cantidadEnviosMail": 0,
+                            "fechaUltimoReenvioMail": "0001-01-01T00:00:00",
+                            "estado": null,
+                            "id": "pjeconde",
+                            "password": null,
+                            "nombre": null,
+                            "telefono": null,
+                            "email": null,
+                            "pregunta": null,
+                            "respuesta": null,
+                            "emailSMS": null
+                        },
+                        "accion": {
+                            "tipo": "SolicAdminUN",
+                            "nro": 188
+                        },
+                        "wf": {
+                            "id": 4098,
+                            "estado": "Vigente"
+                        },
+                        "estado": "Vigente",
+                        "idTipoPermiso": "AdminUN",
+                        "descrTipoPermiso": "Administrador de la UN",
+                        "idUsuario": "pjeconde",
+                        "nombreUsuario": null,
+                        "idUsuarioSolicitante": "pjeconde",
+                        "nombreUsuarioSolicitante": null,
+                        "tipoAccion": "SolicAdminUN",
+                        "idUN": 1,
+                        "descrUN": "Garage"
+                    },
+                    {
+                        "usuario": {
+                            "wf": {
+                                "id": 0,
+                                "estado": null
+                            },
+                            "ultActualiz": null,
+                            "permisos": [],
+                            "cuitPredef": "",
+                            "idUNPredef": 0,
+                            "fechaOKeFactTyC": null,
+                            "cantidadFilasXPagina": 10,
+                            "mostrarAyudaComoPaginaDefault": false,
+                            "cantidadEnviosMail": 0,
+                            "fechaUltimoReenvioMail": "0001-01-01T00:00:00",
+                            "estado": null,
+                            "id": "pjeconde",
+                            "password": null,
+                            "nombre": null,
+                            "telefono": null,
+                            "email": null,
+                            "pregunta": null,
+                            "respuesta": null,
+                            "emailSMS": null
+                        },
+                        "cuit": "20225018805",
+                        "un": {
+                            "cuit": null,
+                            "id": 1,
+                            "descr": "Garage",
+                            "wf": {
+                                "id": 0,
+                                "estado": null
+                            },
+                            "ultActualiz": null,
+                            "puntosVta": [],
+                            "puntosVtaVigentes": [],
+                            "estado": null
+                        },
+                        "tipoPermiso": {
+                            "id": "eFact",
+                            "descr": "Operador servicio eFact"
+                        },
+                        "fechaFinVigencia": "2062-12-31T00:00:00",
+                        "usuarioSolicitante": {
+                            "wf": {
+                                "id": 0,
+                                "estado": null
+                            },
+                            "ultActualiz": null,
+                            "permisos": [],
+                            "cuitPredef": "",
+                            "idUNPredef": 0,
+                            "fechaOKeFactTyC": null,
+                            "cantidadFilasXPagina": 10,
+                            "mostrarAyudaComoPaginaDefault": false,
+                            "cantidadEnviosMail": 0,
+                            "fechaUltimoReenvioMail": "0001-01-01T00:00:00",
+                            "estado": null,
+                            "id": "pjeconde",
+                            "password": null,
+                            "nombre": null,
+                            "telefono": null,
+                            "email": null,
+                            "pregunta": null,
+                            "respuesta": null,
+                            "emailSMS": null
+                        },
+                        "accion": {
+                            "tipo": "SolicOperServUN",
+                            "nro": 190
+                        },
+                        "wf": {
+                            "id": 4100,
+                            "estado": "Vigente"
+                        },
+                        "estado": "Vigente",
+                        "idTipoPermiso": "eFact",
+                        "descrTipoPermiso": "Operador servicio eFact",
+                        "idUsuario": "pjeconde",
+                        "nombreUsuario": null,
+                        "idUsuarioSolicitante": "pjeconde",
+                        "nombreUsuarioSolicitante": null,
+                        "tipoAccion": "SolicOperServUN",
+                        "idUN": 1,
+                        "descrUN": "Garage"
+                    },
+                    {
+                        "usuario": {
+                            "wf": {
+                                "id": 0,
+                                "estado": null
+                            },
+                            "ultActualiz": null,
+                            "permisos": [],
+                            "cuitPredef": "",
+                            "idUNPredef": 0,
+                            "fechaOKeFactTyC": null,
+                            "cantidadFilasXPagina": 10,
+                            "mostrarAyudaComoPaginaDefault": false,
+                            "cantidadEnviosMail": 0,
+                            "fechaUltimoReenvioMail": "0001-01-01T00:00:00",
+                            "estado": null,
+                            "id": "pjeconde",
+                            "password": null,
+                            "nombre": null,
+                            "telefono": null,
+                            "email": null,
+                            "pregunta": null,
+                            "respuesta": null,
+                            "emailSMS": null
+                        },
+                        "cuit": "20225018805",
+                        "un": {
+                            "cuit": null,
+                            "id": 2,
+                            "descr": "Condeco",
+                            "wf": {
+                                "id": 0,
+                                "estado": null
+                            },
+                            "ultActualiz": null,
+                            "puntosVta": [],
+                            "puntosVtaVigentes": [],
+                            "estado": null
+                        },
+                        "tipoPermiso": {
+                            "id": "AdminUN",
+                            "descr": "Administrador de la UN"
+                        },
+                        "fechaFinVigencia": "2062-12-31T00:00:00",
+                        "usuarioSolicitante": {
+                            "wf": {
+                                "id": 0,
+                                "estado": null
+                            },
+                            "ultActualiz": null,
+                            "permisos": [],
+                            "cuitPredef": "",
+                            "idUNPredef": 0,
+                            "fechaOKeFactTyC": null,
+                            "cantidadFilasXPagina": 10,
+                            "mostrarAyudaComoPaginaDefault": false,
+                            "cantidadEnviosMail": 0,
+                            "fechaUltimoReenvioMail": "0001-01-01T00:00:00",
+                            "estado": null,
+                            "id": "pjeconde",
+                            "password": null,
+                            "nombre": null,
+                            "telefono": null,
+                            "email": null,
+                            "pregunta": null,
+                            "respuesta": null,
+                            "emailSMS": null
+                        },
+                        "accion": {
+                            "tipo": "SolicAdminUN",
+                            "nro": 189
+                        },
+                        "wf": {
+                            "id": 4099,
+                            "estado": "Vigente"
+                        },
+                        "estado": "Vigente",
+                        "idTipoPermiso": "AdminUN",
+                        "descrTipoPermiso": "Administrador de la UN",
+                        "idUsuario": "pjeconde",
+                        "nombreUsuario": null,
+                        "idUsuarioSolicitante": "pjeconde",
+                        "nombreUsuarioSolicitante": null,
+                        "tipoAccion": "SolicAdminUN",
+                        "idUN": 2,
+                        "descrUN": "Condeco"
+                    },
+                    {
+                        "usuario": {
+                            "wf": {
+                                "id": 0,
+                                "estado": null
+                            },
+                            "ultActualiz": null,
+                            "permisos": [],
+                            "cuitPredef": "",
+                            "idUNPredef": 0,
+                            "fechaOKeFactTyC": null,
+                            "cantidadFilasXPagina": 10,
+                            "mostrarAyudaComoPaginaDefault": false,
+                            "cantidadEnviosMail": 0,
+                            "fechaUltimoReenvioMail": "0001-01-01T00:00:00",
+                            "estado": null,
+                            "id": "pjeconde",
+                            "password": null,
+                            "nombre": null,
+                            "telefono": null,
+                            "email": null,
+                            "pregunta": null,
+                            "respuesta": null,
+                            "emailSMS": null
+                        },
+                        "cuit": "20225018805",
+                        "un": {
+                            "cuit": null,
+                            "id": 2,
+                            "descr": "Condeco",
+                            "wf": {
+                                "id": 0,
+                                "estado": null
+                            },
+                            "ultActualiz": null,
+                            "puntosVta": [],
+                            "puntosVtaVigentes": [],
+                            "estado": null
+                        },
+                        "tipoPermiso": {
+                            "id": "eFact",
+                            "descr": "Operador servicio eFact"
+                        },
+                        "fechaFinVigencia": "2062-12-31T00:00:00",
+                        "usuarioSolicitante": {
+                            "wf": {
+                                "id": 0,
+                                "estado": null
+                            },
+                            "ultActualiz": null,
+                            "permisos": [],
+                            "cuitPredef": "",
+                            "idUNPredef": 0,
+                            "fechaOKeFactTyC": null,
+                            "cantidadFilasXPagina": 10,
+                            "mostrarAyudaComoPaginaDefault": false,
+                            "cantidadEnviosMail": 0,
+                            "fechaUltimoReenvioMail": "0001-01-01T00:00:00",
+                            "estado": null,
+                            "id": "pjeconde",
+                            "password": null,
+                            "nombre": null,
+                            "telefono": null,
+                            "email": null,
+                            "pregunta": null,
+                            "respuesta": null,
+                            "emailSMS": null
+                        },
+                        "accion": {
+                            "tipo": "SolicOperServUN",
+                            "nro": 191
+                        },
+                        "wf": {
+                            "id": 4101,
+                            "estado": "Vigente"
+                        },
+                        "estado": "Vigente",
+                        "idTipoPermiso": "eFact",
+                        "descrTipoPermiso": "Operador servicio eFact",
+                        "idUsuario": "pjeconde",
+                        "nombreUsuario": null,
+                        "idUsuarioSolicitante": "pjeconde",
+                        "nombreUsuarioSolicitante": null,
+                        "tipoAccion": "SolicOperServUN",
+                        "idUN": 2,
+                        "descrUN": "Condeco"
+                    }
+                ],
+                "cuitPredef": "",
+                "idUNPredef": 0,
+                "fechaOKeFactTyC": null,
+                "cantidadFilasXPagina": 10,
+                "mostrarAyudaComoPaginaDefault": false,
+                "cantidadEnviosMail": 4,
+                "fechaUltimoReenvioMail": "2021-06-30T20:01:59.117",
+                "estado": "Vigente",
+                "id": "pjeconde",
+                "password": "123456",
+                "nombre": "Pablo J.E.Conde",
+                "telefono": "4771-4189",
+                "email": "pjeconde@gmail.com",
+                "pregunta": "Cual es mi apellido materno",
+                "respuesta": "Cedeira",
+                "emailSMS": ""
+            },
+            "nroCuit": null,
+            "idUN": 0,
+            "cuitsDelUsuario": [
+                {
+                    "nro": "20225018805",
+                    "razonSocial": "CONDE PABLO JORGE ERNESTO",
+                    "domicilio": {
+                        "calle": "Av. San Martín",
+                        "nro": "4977",
+                        "piso": "",
+                        "depto": "",
+                        "sector": "",
+                        "torre": "",
+                        "manzana": "",
+                        "localidad": "CABA",
+                        "provincia": {
+                            "id": "1",
+                            "descr": "Capital Federal"
+                        },
+                        "codPost": "1417"
+                    },
+                    "contacto": {
+                        "nombre": "Pablo J. E. Conde",
+                        "email": "pjeconde@yahoo.com.ar",
+                        "telefono": ""
+                    },
+                    "datosImpositivos": {
+                        "idCondIVA": 6,
+                        "descrCondIVA": "Responsable Monotributo",
+                        "nroIngBrutos": "20225018805",
+                        "idCondIngBrutos": 1,
+                        "descrCondIngBrutos": "Contribuyente Local",
+                        "fechaInicioActividades": "2012-09-01T00:00:00"
+                    },
+                    "datosIdentificatorios": {
+                        "gln": 0,
+                        "codigoInterno": ""
+                    },
+                    "medio": {
+                        "idMedio": "Internet",
+                        "descrMedio": "Internet"
+                    },
+                    "wf": {
+                        "id": 3779,
+                        "estado": "Vigente"
+                    },
+                    "uNs": [],
+                    "ultActualiz": "0x0000000000031D3E",
+                    "destinoComprobanteAFIP": true,
+                    "usaCertificadoAFIPPropio": true,
+                    "destinoComprobanteITF": false,
+                    "nroSerieCertifITF": "",
+                    "estado": "Vigente",
+                    "domicilioCalle": "Av. San Martín",
+                    "domicilioNro": "4977",
+                    "domicilioPiso": "",
+                    "domicilioDepto": "",
+                    "domicilioLocalidad": "CABA",
+                    "domicilioDescrProvincia": "Capital Federal",
+                    "datosImpositivosDescrCondIVA": "Responsable Monotributo",
+                    "datosImpositivosDescrCondIngBrutos": "Contribuyente Local",
+                    "nroYRazSoc": "20225018805-CONDE PABLO JORGE ERNESTO",
+                    "nroYRazSocCorta": "20225018805-CONDE PABLO JORGE ER"
+                }
+            ],
+            "menu": [
+                {
+                    "nombre": "Persona",
+                    "habilitada": true,
+                    "url": null,
+                    "menu": [
+                        {
+                            "nombre": "Alta",
+                            "habilitada": true,
+                            "url": "/personas/alta"
+                        },
+                        {
+                            "nombre": "Baja",
+                            "habilitada": true,
+                            "url": "/personas/baja"
+                        },
+                        {
+                            "nombre": "Modificación",
+                            "habilitada": true,
+                            "url": "/personas/modificacion"
+                        },
+                        {
+                            "nombre": "Consulta",
+                            "habilitada": true,
+                            "url": "/personas/consulta"
+                        }
+                    ]
+                },
+                {
+                    "nombre": "Articulos",
+                    "habilitada": true,
+                    "url": null,
+                    "menu": [
+                        {
+                            "nombre": "Alta",
+                            "habilitada": true,
+                            "url": "/articulos/alta"
+                        },
+                        {
+                            "nombre": "Baja",
+                            "habilitada": true,
+                            "url": "/articulos/baja"
+                        },
+                        {
+                            "nombre": "Modificación",
+                            "habilitada": true,
+                            "url": "/articulos/modificacion"
+                        },
+                        {
+                            "nombre": "Consulta",
+                            "habilitada": true,
+                            "url": "/articulos/consulta"
+                        },
+                        {
+                            "nombre": "Lista de Precios",
+                            "habilitada": true,
+                            "url": null,
+                            "menu": [
+                                {
+                                    "nombre": "Alta",
+                                    "habilitada": true,
+                                    "url": "/articulos/listaPrecios/alta"
+                                },
+                                {
+                                    "nombre": "Baja",
+                                    "habilitada": true,
+                                    "url": "/articulos/listaPrecios/baja"
+                                },
+                                {
+                                    "nombre": "Modificación",
+                                    "habilitada": true,
+                                    "url": "/articulos/listaPrecios/modificacion"
+                                },
+                                {
+                                    "nombre": "Clonado",
+                                    "habilitada": true,
+                                    "url": "/articulos/listaPrecios/clonado"
+                                },
+                                {
+                                    "nombre": "Remplazo",
+                                    "habilitada": true,
+                                    "url": "/articulos/listaPrecios/remplazo"
+                                },
+                                {
+                                    "nombre": "Consulta",
+                                    "habilitada": true,
+                                    "url": "/articulos/listaPrecios/consulta"
+                                }
+                            ]
+                        },
+                        {
+                            "nombre": "Precios",
+                            "habilitada": true,
+                            "url": null,
+                            "menu": [
+                                {
+                                    "nombre": "Ingreso Manual",
+                                    "habilitada": false,
+                                    "url": "/articulos/precios/ingresoManual"
+                                },
+                                {
+                                    "nombre": "Ingreso de Excel",
+                                    "habilitada": true,
+                                    "url": "/articulos/precios/ingresoExcel"
+                                }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "nombre": "Comprobantes",
+                    "habilitada": true,
+                    "url": null,
+                    "menu": [
+                        {
+                            "nombre": "Baja",
+                            "habilitada": true,
+                            "url": "/comprobantes/baja"
+                        },
+                        {
+                            "nombre": "Modificacion",
+                            "habilitada": true,
+                            "url": "/comprobantes/modificacion"
+                        },
+                        {
+                            "nombre": "Envio (AFIP/ITF)",
+                            "habilitada": true,
+                            "url": "/comprobantes/afipItf"
+                        },
+                        {
+                            "nombre": "Consulta",
+                            "habilitada": true,
+                            "url": "/comprobantes/consulta"
+                        },
+                        {
+                            "nombre": "Consulta PDFs",
+                            "habilitada": true,
+                            "url": "/comprobantes/consultaPDF"
+                        },
+                        {
+                            "nombre": "Otras Consultas",
+                            "habilitada": true,
+                            "url": null,
+                            "menu": [
+                                {
+                                    "nombre": "IVA Ventas",
+                                    "habilitada": true,
+                                    "url": "/comprobantes/ivaVentas"
+                                },
+                                {
+                                    "nombre": "IVA Compras",
+                                    "habilitada": true,
+                                    "url": "/comprobantes/ivaCompras"
+                                },
+                                {
+                                    "nombre": "Interfaz CITI Ventas/Compras",
+                                    "habilitada": true,
+                                    "url": "/comprobantes/interfazCiti"
+                                },
+                                {
+                                    "nombre": "Ventas por Articulo",
+                                    "habilitada": true,
+                                    "url": "/comprobantes/ventasArticulo"
+                                },
+                                {
+                                    "nombre": "ComprasArticulo",
+                                    "habilitada": true,
+                                    "url": "/comprobantes/comprasArticulo"
+                                },
+                                {
+                                    "nombre": "Stock por Articulo",
+                                    "habilitada": true,
+                                    "url": "/comprobantes/stockArticulo"
+                                },
+                                {
+                                    "nombre": "Online Interfacturas Comprobantes",
+                                    "habilitada": true,
+                                    "url": "/comprobantes/interfacturasComprobante"
+                                },
+                                {
+                                    "nombre": "Online AFIP",
+                                    "habilitada": true,
+                                    "url": "/comprobantes/onlineAfip"
+                                },
+                                {
+                                    "nombre": "Archivo XML",
+                                    "habilitada": true,
+                                    "url": "/comprobantes/archivoXml"
+                                },
+                                {
+                                    "nombre": "Terminos y Condiciones",
+                                    "habilitada": true,
+                                    "url": "/comprobantes/terminoCondiciones"
+                                }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "nombre": "Contratos",
+                    "habilitada": true,
+                    "url": null,
+                    "menu": [
+                        {
+                            "nombre": "Alta",
+                            "habilitada": true,
+                            "url": "/contratos/alta"
+                        },
+                        {
+                            "nombre": "Baja",
+                            "habilitada": true,
+                            "url": "/contratos/baja"
+                        },
+                        {
+                            "nombre": "Modificación",
+                            "habilitada": true,
+                            "url": "/contratos/modificacion"
+                        },
+                        {
+                            "nombre": "Consulta",
+                            "habilitada": true,
+                            "url": "/contratos/consulta"
+                        }
+                    ]
+                },
+                {
+                    "nombre": "Facturacion",
+                    "habilitada": true,
+                    "url": null,
+                    "menu": [
+                        {
+                            "nombre": "Comun / RG.2904 / BonoFiscal / Expo",
+                            "habilitada": true,
+                            "url": "/facturacion/comun"
+                        },
+                        {
+                            "nombre": "Turismo",
+                            "habilitada": true,
+                            "url": "/facturacion/turismo"
+                        },
+                        {
+                            "nombre": "Automatica de Contratos/Servicios",
+                            "habilitada": true,
+                            "url": "/facturacion/contratosServicios"
+                        },
+                        {
+                            "nombre": "Registro de Facturas",
+                            "habilitada": true,
+                            "url": null,
+                            "menu": [
+                                {
+                                    "nombre": "Venta Resguardo",
+                                    "habilitada": true,
+                                    "url": "/facturacion/registroFacturas/ventaResguardo"
+                                },
+                                {
+                                    "nombre": "Compra",
+                                    "habilitada": true,
+                                    "url": "/facturacion/registroFacturas/compra"
+                                }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "nombre": "Admin",
+                    "habilitada": true,
+                    "url": null,
+                    "menu": [
+                        {
+                            "nombre": "CUIT",
+                            "habilitada": true,
+                            "url": null,
+                            "menu": [
+                                {
+                                    "nombre": "Alta",
+                                    "habilitada": true,
+                                    "url": "admin/cuit/alta"
+                                },
+                                {
+                                    "nombre": "Permiso Admin CUIT",
+                                    "habilitada": true,
+                                    "url": "/admin/cuit/permisoCuit"
+                                },
+                                {
+                                    "nombre": "Baja",
+                                    "habilitada": true,
+                                    "url": "/admin/cuit/baja"
+                                },
+                                {
+                                    "nombre": "Modificación",
+                                    "habilitada": true,
+                                    "url": "/admin/cuit/modificacion"
+                                },
+                                {
+                                    "nombre": "Cambio logotipo",
+                                    "habilitada": true,
+                                    "url": "/admin/cuit/logoTipo"
+                                },
+                                {
+                                    "nombre": "Consulta",
+                                    "habilitada": true,
+                                    "url": "/admin/cuit/consulta"
+                                }
+                            ]
+                        },
+                        {
+                            "nombre": "UNs",
+                            "habilitada": true,
+                            "url": null,
+                            "menu": [
+                                {
+                                    "nombre": "Alta",
+                                    "habilitada": true,
+                                    "url": "/admin/uns/alta"
+                                },
+                                {
+                                    "nombre": "Permiso Admin UN",
+                                    "habilitada": true,
+                                    "url": "/admin/uns/permisoAdmin"
+                                },
+                                {
+                                    "nombre": "Permiso Operador UN",
+                                    "habilitada": true,
+                                    "url": "/admin/uns/permisoOperador"
+                                },
+                                {
+                                    "nombre": "Consulta",
+                                    "habilitada": true,
+                                    "url": "/admin/uns/consulta"
+                                }
+                            ]
+                        },
+                        {
+                            "nombre": "Puntos de Venta",
+                            "habilitada": true,
+                            "url": null,
+                            "menu": [
+                                {
+                                    "nombre": "Alta",
+                                    "habilitada": true,
+                                    "url": "/admin/puntosVenta/alta"
+                                },
+                                {
+                                    "nombre": "Baja",
+                                    "habilitada": true,
+                                    "url": "/admin/puntosVenta/baja"
+                                },
+                                {
+                                    "nombre": "Modificación",
+                                    "habilitada": true,
+                                    "url": "/admin/puntosVenta/modificacion"
+                                },
+                                {
+                                    "nombre": "Consulta",
+                                    "habilitada": true,
+                                    "url": "/admin/puntosVenta/consulta"
+                                }
+                            ]
+                        },
+                        {
+                            "nombre": "Autorizaciones",
+                            "habilitada": true,
+                            "url": null,
+                            "menu": [
+                                {
+                                    "nombre": "Autorizaciones pendientes",
+                                    "habilitada": true,
+                                    "url": "/admin/autorizaciones/pendientes"
+                                }
+                            ]
+                        },
+                        {
+                            "nombre": "Usuarios",
+                            "habilitada": true,
+                            "url": null,
+                            "menu": [
+                                {
+                                    "nombre": "Cambio de Contraseña",
+                                    "habilitada": true,
+                                    "url": "/admin/usuarios/cambioContraseña"
+                                },
+                                {
+                                    "nombre": "Modificacion de Configuracion",
+                                    "habilitada": true,
+                                    "url": "/admin/usuarios/modificarConfiguracion"
+                                }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "nombre": "Admin-Site",
+                    "habilitada": true,
+                    "url": null,
+                    "menu": [
+                        {
+                            "nombre": "Comprobantes",
+                            "habilitada": true,
+                            "url": "/adminSite/comprobantes"
+                        },
+                        {
+                            "nombre": "Usuarios",
+                            "habilitada": true,
+                            "url": "/adminSite/usuarios"
+                        },
+                        {
+                            "nombre": "CUITs",
+                            "habilitada": true,
+                            "url": "/adminSite/cuits"
+                        },
+                        {
+                            "nombre": "UNs",
+                            "habilitada": true,
+                            "url": "/adminSite/uns"
+                        },
+                        {
+                            "nombre": "Puntos de Venta",
+                            "habilitada": true,
+                            "url": "/adminSite/puntosVenta"
+                        },
+                        {
+                            "nombre": "Personas",
+                            "habilitada": true,
+                            "url": "/adminSite/personas"
+                        },
+                        {
+                            "nombre": "Articulos",
+                            "habilitada": true,
+                            "url": "/adminSite/articulos"
+                        },
+                        {
+                            "nombre": "Permisos",
+                            "habilitada": true,
+                            "url": "/adminSite/permisos"
+                        },
+                        {
+                            "nombre": "Configuraciones",
+                            "habilitada": true,
+                            "url": "/adminSite/configuraciones"
+                        },
+                        {
+                            "nombre": "Logs",
+                            "habilitada": true,
+                            "url": "/adminSite/logs"
+                        },
+                        {
+                            "nombre": "Administracion",
+                            "habilitada": true,
+                            "url": "/adminSite/administracion"
+                        },
+                        {
+                            "nombre": "Busqueda Laboral",
+                            "habilitada": true,
+                            "url": null,
+                            "menu": [
+                                {
+                                    "nombre": "Explorador",
+                                    "habilitada": true,
+                                    "url": "/adminSite/laboral/explorador"
+                                },
+                                {
+                                    "nombre": "Archivos CVs",
+                                    "habilitada": true,
+                                    "url": "/adminSite/laboral/cvs"
+                                }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "nombre": "Ayuda",
+                    "habilitada": true,
+                    "url": null,
+                    "menu": [
+                        {
+                            "nombre": "Manual",
+                            "habilitada": true,
+                            "url": "/ayuda/manual"
+                        },
+                        {
+                            "nombre": "Novedades",
+                            "habilitada": true,
+                            "url": "/ayuda/novedades"
+                        }
+                    ]
+                }
+            ],
+            "fechaInicio": "2021-07-12T15:59:33.8421431-03:00",
+            "estoyEnAyuda": false,
+            "ambiente": "DESA",
+            "cnnStr": "Server=localhost\\SQLEXPRESS;Database=CedeiraSERVICIOS;Trusted_Connection=false;user id=cedeira;password=ibg0220",
+            "urLsite": "cedeira.ddns.net:8072",
+            "administradoresSiteEmail": null
+        }
+    }
+]
