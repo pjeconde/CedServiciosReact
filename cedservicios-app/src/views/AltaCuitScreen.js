@@ -107,7 +107,7 @@ export const AltaCuitScreen = () => {
             <Container fluid>
                 <h2 style={{ marginTop: '10px' }}>Alta Cuit</h2>
                 <Form className="form-alta-cuit" onSubmit={handleSubmit}>
-                    <Row className="mb-2" >
+                    <Row className="mb-2 justify-content-md-center">
                         <Form.Group
                             as={Col}
                             sm={2}
@@ -138,7 +138,7 @@ export const AltaCuitScreen = () => {
                                 onChange={handleInputChange} />
                         </Form.Group>
                     </Row>
-                    <Row className="mb-2" >
+                    <Row className="mb-2 justify-content-md-center" >
                         <Form.Group
                             as={Col}
                             sm={2}
@@ -193,7 +193,7 @@ export const AltaCuitScreen = () => {
                                 onChange={handleInputChange} />
                         </Form.Group>
                     </Row>
-                    <Row className="mb-2">
+                    <Row className="mb-2 justify-content-md-center">
                         <Form.Group
                             as={Col}
                             sm={2}
@@ -233,8 +233,9 @@ export const AltaCuitScreen = () => {
                                 value={manzana}
                                 onChange={handleInputChange} />
                         </Form.Group>
+                        <Col sm={1}></Col>
                     </Row>
-                    <Row className="mb-2">
+                    <Row className="mb-2 justify-content-md-center">
                         <Form.Group
                             as={Col}
                             sm={2}
@@ -275,7 +276,7 @@ export const AltaCuitScreen = () => {
                                 maxLength="6" />
                         </Form.Group>
                     </Row>
-                    <Row className="mb-2">
+                    <Row className="mb-2 justify-content-md-center">
                         <Form.Group as={Col} sm={2} className="mb-2" controlId="nombreContacto">
                             <Form.Label>nombre de contacto</Form.Label>
                             <Form.Control
@@ -295,34 +296,39 @@ export const AltaCuitScreen = () => {
                                 value={telefono}
                                 onChange={handleInputChange} />
                         </Form.Group>
+                        <Col sm={1}></Col>
                     </Row>
-                    <Form.Group
-                        as={Col}
-                        sm={3}
-                        className="mb-2"
-                        controlId="email">
-                        <Form.Label>email</Form.Label>
-                        <Form.Control
-                            type="email"
-                            name="email"
-                            required
-                            autoComplete="none"
-                            value={email}
-                            onChange={handleInputChange} />
-                    </Form.Group>
-                    <Form.Group
-                        as={Col}
-                        sm={3}
-                        className="mb-3"
-                        controlId="condIva">
-                        <Form.Label>cond. IVA</Form.Label>
-                        <Select
-                            name="condIva"
-                            options={condIva}
-                            onChange={handleDropdownChange}
-                            classNamePrefix="react-select" />
-                    </Form.Group>
-                    <Row className="mb-3">
+                    <Row className="mb-2 justify-content-md-center">
+                        <Form.Group
+                            as={Col}
+                            sm={3}
+                            controlId="email">
+                            <Form.Label>email</Form.Label>
+                            <Form.Control
+                                type="email"
+                                name="email"
+                                required
+                                autoComplete="none"
+                                value={email}
+                                onChange={handleInputChange} />
+                        </Form.Group>
+                        <Col sm={2}></Col>
+                    </Row>
+                    <Row className="mb-3 justify-content-md-center">
+                        <Form.Group
+                            as={Col}
+                            sm={3}
+                            controlId="condIva">
+                            <Form.Label>cond. IVA</Form.Label>
+                            <Select
+                                name="condIva"
+                                options={condIva}
+                                onChange={handleDropdownChange}
+                                classNamePrefix="react-select" />
+                        </Form.Group>
+                        <Col sm={2}></Col>
+                    </Row>
+                    <Row className="mb-3 justify-content-md-center">
                         <Form.Group as={Col} sm={3} className="mb-2" controlId="condIngBruto">
                             <Form.Label>Con.Ing.Brutos</Form.Label>
                             <Select
@@ -340,19 +346,21 @@ export const AltaCuitScreen = () => {
                                 onChange={handleInputChange} />
                         </Form.Group>
                     </Row>
-                    <Form.Group
-                        as={Col}
-                        sm={3}
-                        controlId="dateStart"
-                        className="mb-3">
-                        <Form.Label>fecha inicio de actividades</Form.Label>
-                        <Form.Control
-                            type="date"
-                            name="dateStart"
-                            value={dateStart}
-                            onChange={handleInputChange} />
-                    </Form.Group>
-                    <Row className="mb-3">
+                    <Row className="mb-2 justify-content-md-center">
+                        <Form.Group
+                            as={Col}
+                            sm={3}
+                            controlId="dateStart">
+                            <Form.Label>fecha inicio de actividades</Form.Label>
+                            <Form.Control
+                                type="date"
+                                name="dateStart"
+                                value={dateStart}
+                                onChange={handleInputChange} />
+                        </Form.Group>
+                        <Col sm={2}></Col>
+                    </Row>
+                    <Row className="mb-3 justify-content-md-center">
                         <Form.Group
                             as={Col}
                             sm={1}
@@ -379,33 +387,38 @@ export const AltaCuitScreen = () => {
                                 value={codigoInterno}
                                 onChange={handleInputChange} />
                         </Form.Group>
+                        <Col sm={2}></Col>
                     </Row>
-                    <Form.Group
-                        as={Col}
-                        sm={3}
-                        className="mb-3"
-                        controlId="recomendado">
-                        <Form.Label>¿Cómo nos conoció?</Form.Label>
-                        <Select
-                            name="recomendado"
-                            options={recomendaciones}
-                            onChange={handleDropdownChange}
-                            classNamePrefix="react-select" />
-                    </Form.Group>
-                    <Form.Group
-                        as={Col}
-                        sm={3}
-                        className="mb-4"
-                        controlId="servicio">
-                        <Form.Label>servicios</Form.Label>
-                        <Form.Check
-                            type="checkbox"
-                            name="facturaElectronica"
-                            label="factura electrónica"
-                            checked={facturaElectronica}
-                            onChange={handleInputCheck} />
-                    </Form.Group>
-                    <Row className="mb-3">
+                    <Row className="mb-3 justify-content-md-center">
+                        <Form.Group
+                            as={Col}
+                            sm={3}
+                            controlId="recomendado">
+                            <Form.Label>¿Cómo nos conoció?</Form.Label>
+                            <Select
+                                name="recomendado"
+                                options={recomendaciones}
+                                onChange={handleDropdownChange}
+                                classNamePrefix="react-select" />
+                        </Form.Group>
+                        <Col sm={2}></Col>
+                    </Row>
+                    <Row className="mb-3 justify-content-md-center">
+                        <Form.Group
+                            as={Col}
+                            sm={3}
+                            controlId="servicio">
+                            <Form.Label>servicios</Form.Label>
+                            <Form.Check
+                                type="checkbox"
+                                name="facturaElectronica"
+                                label="factura electrónica"
+                                checked={facturaElectronica}
+                                onChange={handleInputCheck} />
+                        </Form.Group>
+                        <Col sm={2}></Col>
+                    </Row>
+                    <Row className="mb-3 justify-content-md-center">
                         <h6 className="mb-4 title-comprobantes">
                             Destinos de comprobantes
                             (para servicio de
@@ -441,7 +454,7 @@ export const AltaCuitScreen = () => {
                                 onChange={handleInputCheck} />
                         </Col>
                     </Row>
-                    <Row className="mb-2">
+                    <Row className="mb-2 justify-content-md-center">
                         <Col sm={1} className="mb-2">
                             <Button type="submit" variant="primary">
                                 Aceptar
