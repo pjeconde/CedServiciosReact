@@ -17,7 +17,7 @@ import {
 } from '../helpers/admin';
 import { useForm } from '../hooks/useForm';
 
-import '../styles/admin-cuit.css';
+// import '../styles/admin-cuit.css';
 
 const now = moment().format('YYYY-MM-DD');
 

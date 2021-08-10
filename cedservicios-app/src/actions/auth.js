@@ -4,25 +4,29 @@ import { types } from '../types/types';
 import { startLoading, finishLoading, setError } from './ui';
 
 
-export const startLogin = (IdUsuario, clave) => {
+export const startLogin = (email, clave) => {
     return async (dispatch) => {
         try {
             dispatch(startLoading());
             const resp = await axios.get('Usuario/Ingresar', {
                 params: {
-                    IdUsuario,
+                    email,
                     clave
                 }
             });
-            const { respuesta } = resp.data[0];
 
-            if (resp.status === 200 && respuesta.resultado.severidad === 0) {
+            if (resp.status === 200) {
+                const { idUsuario, nombreCuenta } = resp.data;
+
+                // localStorage.setItem('token', token);
+                // localStorage.setItem('token-init-date', expiracion);
+
                 dispatch(login({
-                    uid: new Date().getTime(),
-                    username: IdUsuario
+                    uid: idUsuario,
+                    username: nombreCuenta
                 }));
             } else {
-                dispatch(setError(respuesta.resultado.descripcion));
+                dispatch(setError('Error al ingresar al sistema.'));
             }
             dispatch(finishLoading());
 
@@ -125,8 +129,7 @@ export const startCheckUserIdById = (id) => {
 export const startCheckUserIdByEmail = (email) => {
     return async (dispatch) => {
         try {
-            dispatch(startLoading());
-            const resp = await axios.get('Usuario/ConsultarIdUsuarioPorEmail', {
+            dispatch(startLoading()); const resp = await axios.get('Usuario/ConsultarIdUsuarioPorEmail', {
                 params: {
                     email
                 }
@@ -287,18 +290,19 @@ export const startChangePassword = (idUsuario, email, answer, password) => {
 
 export const startChecking = () => {
     return (dispatch) => {
-        const pepe = true;
+        // const pepe = true;
         //Aca deberiamos renovar el token
         // localStorage.setItem('token', token);
         // localStorage.setItem('token-init-date', new Date().getTime());
+        dispatch(checkingFinish());
 
-        if (pepe)
-            dispatch(login({
-                uid: new Date().getTime(),
-                name: 'gmontiel'
-            }));
-        else
-            dispatch(checkingFinish());
+        // if (pepe)
+        //     dispatch(login({
+        //         uid: new Date().getTime(),
+        //         name: 'gmontiel'
+        //     }));
+        // else
+        //     dispatch(checkingFinish());
     }
 }
 

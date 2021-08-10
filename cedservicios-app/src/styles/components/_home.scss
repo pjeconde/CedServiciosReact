@@ -1,0 +1,261 @@
+// MENU
+.contenedor-menu {
+    width: 90%;
+    margin: auto;
+    overflow: hidden;
+    padding: $paddingSecciones;
+}
+
+.menu-navegacion {
+    padding: 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 80px;
+}
+
+.logo {
+    height: 80px;
+}
+
+.logo img {
+    display: block;
+    height: 100%;
+}
+
+.enlaces li{
+    display: inline-block;
+    list-style: none;
+}
+
+// HERO
+
+.hero {
+    height: 800px;
+    background-image: url("../../images/hero.jpg");
+    background-position: center;
+    background-size: cover;
+    background-attachment: fixed;
+}
+
+.contenedor-textos {
+    padding: 0;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+}
+
+.border-text {
+    border: 5px solid #212121;
+    padding: 2%;
+    letter-spacing: 4px;
+    font-weight: 400;
+}
+
+.hero h1 {
+    font-size: 35px;
+    font-weight: 700;
+}
+
+.hero p {
+    font-size: 25px;
+    font-weight: 400;
+    letter-spacing: 2px;
+    margin: 0;
+    margin-top: 20px;
+    margin-bottom: 20%;
+}
+
+.hero a {
+    width: 45px;
+    height: 45px;
+    display: block;
+    margin: 0 auto;
+    padding: 15px 0;
+    font-size: 20px;
+    text-decoration: none;
+    color: #fff;
+    background-color: #000;
+    border-radius: 50%;
+    text-align: center;
+}
+
+// .btn {
+//     width: 150px;
+//     display: block;
+//     margin: 0 auto;
+//     padding: 15px 0;
+//     background-color: $colorBotones;
+//     color: #fff;
+//     text-decoration: none;
+//     border-radius: 10px;
+// }
+
+// Welcome
+
+.container-bienvenido {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+}
+
+.relatos {
+    width: 40%;
+    padding-top: 30px;
+}
+
+.ilustracion {
+    width: 45%;
+}
+
+.relato {
+    margin: 20px 0;
+}
+
+.relato p {
+    text-align: left;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.t-relato-top {
+    font-weight: 300;
+}
+
+.t-relato-botton {
+    font-weight: 700;
+}
+
+.title-section {
+    text-align: center;
+    font-size: 45px;
+    font-weight: 700;
+    text-transform: capitalize;
+    margin-bottom: 10px;
+}
+
+.subtitle {
+    text-align: center;
+    font-size: 24px;
+    font-weight: 300;
+    text-transform: uppercase;
+    padding: 20px 0;
+}
+
+.subtitle-blue {
+    color: $colorSubtitulo;
+    font-weight: 700;
+}
+
+// Servicios
+.servicios-section {
+    background-color: #f3f3f3;
+}
+
+.contenedor-servicios {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    padding-top: $marginElementos;
+}
+
+.servicio {
+    width: 40%;
+    margin-bottom: 30px;
+}
+
+.servicio i {
+    width: 40px;
+    height: 40px;
+    background-color: #3bb2df;
+    color: #fff;
+    border-radius: 50%;
+    text-align: center;
+    line-height: 40px;
+}
+
+.servicio h3 {
+    display: inline;
+    padding: 5px;
+    margin-left: 10px;
+    text-transform: uppercase;
+}
+
+.servicio p {
+    padding-top: 10px;
+    text-transform: uppercase;
+    font-weight: 500;
+    letter-spacing: 1px;
+    text-align: left;
+}
+
+//Productos
+
+.contenedor-productos {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}
+
+.producto {
+    width: 31%;
+    height: 400px;
+    margin-bottom: 20px;
+    background-color: #f3f3f3;
+    border-radius: 10px;
+}
+
+.producto img {
+    display: block;
+    width: 100%;
+    height: 70%;
+    object-fit: cover;
+    box-shadow: 0 0 3px rgba(0, 0, 0, .5);
+    border-radius: 5px;
+}
+
+.producto h4 {
+    padding: $marginElementos;
+    font-size: 15px;
+    text-align: center;
+    line-height: 18px;
+    font-weight: 700;
+    text-transform: uppercase;
+}
+
+//Busqueda 
+.busqueda-section {
+    background-image: url("../../images/busqueda.jpg");
+    background-size: cover;
+    background-attachment: fixed;
+}
+
+//Clientes
+
+.clientes {
+    background-color: #f3f3f3;
+}
+
+.contenedor-clientes {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-evenly;
+    width: 88%;
+    height: 100%;
+    margin: 30px auto;
+}
+
+.contenedor-clientes img {
+    width: 28%;
+    border-radius: 5px;
+    margin-bottom: 15px;
+    box-shadow: 0 0 2px rgba(0, 0, 0, .5);
+}
+
+.clientes i {
+    font-size: 30px;
+    color: #212121;
+}
