@@ -8,18 +8,13 @@ export const startLogin = (email, clave) => {
     return async (dispatch) => {
         try {
             dispatch(startLoading());
-            const resp = await axios.get('Usuario/Ingresar', {
-                params: {
-                    email,
-                    clave
-                }
-            });
+            const resp = await axios.post('Usuario/Ingresar', { email, clave });
 
             if (resp.status === 200) {
-                const { idUsuario, nombreCuenta } = resp.data;
+                const { idUsuario, nombreCuenta, token, expiracion } = resp.data;
 
-                // localStorage.setItem('token', token);
-                // localStorage.setItem('token-init-date', expiracion);
+                localStorage.setItem('token', token);
+                localStorage.setItem('token-exp', expiracion);
 
                 dispatch(login({
                     uid: idUsuario,
@@ -290,19 +285,19 @@ export const startChangePassword = (idUsuario, email, answer, password) => {
 
 export const startChecking = () => {
     return (dispatch) => {
-        // const pepe = true;
+        const pepe = true;
         //Aca deberiamos renovar el token
         // localStorage.setItem('token', token);
         // localStorage.setItem('token-init-date', new Date().getTime());
         dispatch(checkingFinish());
 
-        // if (pepe)
-        //     dispatch(login({
-        //         uid: new Date().getTime(),
-        //         name: 'gmontiel'
-        //     }));
-        // else
-        //     dispatch(checkingFinish());
+        if (pepe)
+            dispatch(login({
+                uid: new Date().getTime(),
+                name: 'gmontiel'
+            }));
+        else
+            dispatch(checkingFinish());
     }
 }
 
