@@ -70,6 +70,14 @@ body {
     margin-bottom: 20px;
 }
 
+.mr-1 {
+    margin-right: 5px;
+}
+
+.mr-3 {
+    margin-right: 15px;
+}
+
 .pointer {
     cursor: pointer;
 }
@@ -83,4 +91,8 @@ body {
     height: 15px;
     background: #fff;
     transform: rotate(45deg);
+}
+
+.btn i {
+    margin-right: 10px;
 }

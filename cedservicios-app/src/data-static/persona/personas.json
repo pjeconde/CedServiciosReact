@@ -1,0 +1,107 @@
+[
+	{
+		"cuit": "20140513815",
+		"tipoDni": "CUIT",
+		"dni": "12121212",
+		"razonSocial": "BANCO SAFRA S.A.",
+		"direccion": "Av. San Martin 999",
+		"localidad": "CABA",
+		"codigoPostal": "",
+		"nombreContacto": "Reinaldo Pepe",
+		"telefono": "47484748",
+		"email": "pepe@gmail.com",
+		"estado": true
+	},
+	{
+		"cuit": "20140513811",
+		"tipoDni": "CUIT",
+		"dni": "12121212",
+		"razonSocial": "BANCO SAFRA S.A.",
+		"direccion": "Av. San Martin 999",
+		"localidad": "CABA",
+		"codigoPostal": "",
+		"nombreContacto": "Reinaldo Pepe",
+		"telefono": "47484748",
+		"email": "pepe@gmail.com",
+		"estado": true
+	},
+	{
+		"cuit": "20140513812",
+		"tipoDni": "CUIT",
+		"dni": "12121212",
+		"razonSocial": "BANCO SAFRA S.A.",
+		"direccion": "Av. San Martin 999",
+		"localidad": "CABA",
+		"codigoPostal": "",
+		"nombreContacto": "Reinaldo Pepe",
+		"telefono": "47484748",
+		"email": "pepe@gmail.com",
+		"estado": true
+	},
+	{
+		"cuit": "20140513813",
+		"tipoDni": "CUIT",
+		"dni": "12121212",
+		"razonSocial": "BANCO SAFRA S.A.",
+		"direccion": "Av. San Martin 999",
+		"localidad": "CABA",
+		"codigoPostal": "",
+		"nombreContacto": "Reinaldo Pepe",
+		"telefono": "47484748",
+		"email": "pepe@gmail.com",
+		"estado": true
+	},
+	{
+		"cuit": "20140513814",
+		"tipoDni": "CUIT",
+		"dni": "12121212",
+		"razonSocial": "BANCO SAFRA S.A.",
+		"direccion": "Av. San Martin 999",
+		"localidad": "CABA",
+		"codigoPostal": "",
+		"nombreContacto": "Reinaldo Pepe",
+		"telefono": "47484748",
+		"email": "pepe@gmail.com",
+		"estado": true
+	},
+	{
+		"cuit": "20140513810",
+		"tipoDni": "CUIT",
+		"dni": "12121212",
+		"razonSocial": "BANCO SAFRA S.A.",
+		"direccion": "Av. San Martin 999",
+		"localidad": "CABA",
+		"codigoPostal": "",
+		"nombreContacto": "Reinaldo Pepe",
+		"telefono": "47484748",
+		"email": "pepe@gmail.com",
+		"estado": true
+	},
+	{
+		"cuit": "20140513818",
+		"tipoDni": "CUIT",
+		"dni": "12121212",
+		"razonSocial": "BANCO SAFRA S.A.",
+		"direccion": "Av. San Martin 999",
+		"localidad": "CABA",
+		"codigoPostal": "",
+		"nombreContacto": "Reinaldo Pepe",
+		"telefono": "47484748",
+		"email": "pepe@gmail.com",
+		"estado": true
+	},
+	{
+		"cuit": "20140513819",
+		"tipoDni": "CUIT",
+		"dni": "12121212",
+		"razonSocial": "BANCO SAFRA S.A.",
+		"direccion": "Av. San Martin 999",
+		"localidad": "CABA",
+		"codigoPostal": "",
+		"nombreContacto": "Reinaldo Pepe",
+		"telefono": "47484748",
+		"email": "pepe@gmail.com",
+		"estado": true
+	}
+]
+

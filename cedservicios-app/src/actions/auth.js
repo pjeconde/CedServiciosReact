@@ -73,7 +73,8 @@ export const startRegister = (formValues) => {
 
 export const startLogout = () => {
     return async (dispatch) => {
-
+        localStorage.clear();
+        dispatch(logout());
     }
 }
 
@@ -82,9 +83,9 @@ const login = (user) => ({
     payload: user
 });
 
-// const logout = () => ({
-//     type: types.authLogout
-// });
+const logout = () => ({
+    type: types.authLogout
+});
 
 export const startCheckUserIdById = (id) => {
     return async (dispatch) => {

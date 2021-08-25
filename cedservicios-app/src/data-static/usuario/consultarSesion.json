@@ -625,29 +625,8 @@
                 {
                     "nombre": "Persona",
                     "habilitada": true,
-                    "url": null,
-                    "menu": [
-                        {
-                            "nombre": "Alta",
-                            "habilitada": true,
-                            "url": "/personas/alta"
-                        },
-                        {
-                            "nombre": "Baja",
-                            "habilitada": true,
-                            "url": "/personas/baja"
-                        },
-                        {
-                            "nombre": "Modificación",
-                            "habilitada": true,
-                            "url": "/personas/modificacion"
-                        },
-                        {
-                            "nombre": "Consulta",
-                            "habilitada": true,
-                            "url": "/personas/consulta"
-                        }
-                    ]
+                    "url": "/Persona",
+                    "menu": []
                 },
                 {
                     "nombre": "Articulos",
