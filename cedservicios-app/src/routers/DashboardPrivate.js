@@ -6,7 +6,7 @@ import { PersonaScreen } from '../views/PersonaScreen';
 
 export const DashboardPrivate = () => {
     return (
-        <>
+        <div>
             <Menu />
 
             <main className="bg-light">
@@ -15,9 +15,9 @@ export const DashboardPrivate = () => {
 
                     <Route path="/admin/cuit/alta" component={AltaCuitScreen} />
 
-                    <Redirect to="/admin/cuit/alta" />
+                    <Redirect to="/persona" />
                 </Switch>
             </main>
-        </>
+        </div>
     )
 }

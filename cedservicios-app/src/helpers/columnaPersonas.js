@@ -1,3 +1,5 @@
+// import { BadgeStatus } from "../components/ui/BadgeStatus";
+
 export const columnaPersonas = [
     {
         name: 'Cuit',
@@ -43,6 +45,7 @@ export const columnaPersonas = [
     },
     {
         name: 'Estado',
-        selector: 'estado'
+        selector: 'estado',
+        // cell: row => <BadgeStatus color={row.estado ? 'success' : 'gray'} text={row.estado ? 'Open' : 'Closed'} />
     }
 ];

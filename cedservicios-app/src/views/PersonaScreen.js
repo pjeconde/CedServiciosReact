@@ -17,18 +17,18 @@ export const PersonaScreen = () => {
 
     return (
         <div>
-            <header className="sticky-top">
+            <header>
                 <div className="container-fluid">
-                    <div className="header__wrapper">
+                    <div className="header__wrapper my-3">
                         <div className="header__title">
                             <h1>Personas</h1>
                         </div>
                         <div className="header__toolbar">
-                            <button type="button" className="btn btn-primary">
+                            <button type="button" className="btn btn-secondary">
                                 <i className="fas fa-plus"></i>
                                 Agregar
                             </button>
-                            <button type="button" className="btn btn-outline-primary">
+                            <button type="button" className="btn btn-outline-secondary">
                                 <i className="fas fa-filter"></i>
                                 Filtrar
                             </button>

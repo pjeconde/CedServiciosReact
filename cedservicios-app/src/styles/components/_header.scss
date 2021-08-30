@@ -1,3 +1,7 @@
+.header__menu {
+    min-width: 1300px;
+}
+
 .header__wrapper {
     display: flex;
     justify-content: space-between;
@@ -18,4 +22,8 @@
 
 .header__wrapper .header__toolbar .btn {
     margin-right: .5rem;
+}
+
+.header__toolbar .btn i {
+    margin-right: 10px;
 }
