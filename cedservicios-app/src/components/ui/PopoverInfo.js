@@ -20,7 +20,7 @@ export const PopoverInfo = ({ boxElement, placement, title, body }) => {
                 {
                     name: 'offset',
                     options: {
-                        offset: [0, 10]
+                        offset: [0, 10],
                     }
                 },
                 {
@@ -28,7 +28,7 @@ export const PopoverInfo = ({ boxElement, placement, title, body }) => {
                     options: {
                         element: arrowRef.current,
                     }
-                },
+                }
             ]
         });
 
@@ -59,8 +59,8 @@ export const PopoverInfo = ({ boxElement, placement, title, body }) => {
                 {...attributes}
                 className={!show ? 'visually-hidden' : ''}>
                 <div ref={arrowRef} data-popper-arrow></div>
-                <Popover.Title as="h3">{title}</Popover.Title>
-                <Popover.Content>{body}</Popover.Content>
+                <Popover.Header as="h3" style={{ margin: '0' }} >{title}</Popover.Header>
+                <Popover.Body>{body}</Popover.Body>
             </Popover>
         </div>
     );

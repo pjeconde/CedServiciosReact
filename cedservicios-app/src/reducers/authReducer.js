@@ -3,7 +3,8 @@ import { types } from "../types/types";
 const initialState = {
     checking: true,
     uid: null,
-    username: null
+    username: null,
+    cuit: null
 }
 
 export const authReducer = (state = initialState, action) => {
@@ -14,7 +15,8 @@ export const authReducer = (state = initialState, action) => {
                 ...state,
                 uid: action.payload.uid,
                 username: action.payload.username,
-                checking: false
+                cuit: 20398724357,
+                checking: false,
             };
         case types.authCheckingFinish:
             return {

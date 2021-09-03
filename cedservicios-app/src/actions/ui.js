@@ -19,3 +19,13 @@ export const startLoading = () => ({
 export const finishLoading = () => ({
     type: types.uiFinishLoading
 });
+
+export const openModal = (modal) => ({
+    type: types.uiShowModal,
+    payload: modal
+});
+
+export const closeModal = () => ({
+    type: types.uiCloseModal,
+    payload: ''
+});

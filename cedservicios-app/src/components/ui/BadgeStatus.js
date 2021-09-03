@@ -1,9 +1,10 @@
 import React from 'react';
+import { Badge } from 'react-bootstrap';
 
-export const BadgeStatus = ({ status, text }) => {
+export const BadgeStatus = ({ status = false, text = '' }) => {
     return (
         <>
-            <span className={`badge badge__status-${status}`}>{text}</span>
+            <Badge pill bg={status ? 'success' : 'danger'} >{text}</Badge>
         </>
     )
 }

@@ -82,14 +82,18 @@ body {
     cursor: pointer;
 }
 
-.popover::after {
-    position: absolute;
-    left: -7px;
-    top: 43%;
-    content: '';
-    width: 15px;
-    height: 15px;
-    background: #fff;
-    transform: rotate(45deg);
-}
+// .popover::after {
+//     position: absolute;
+//     left: -7px;
+//     top: 43%;
+//     content: '';
+//     width: 15px;
+//     height: 15px;
+//     background: #fff;
+//     transform: rotate(45deg);
+// }
 
+.bs-popover-auto[data-popper-placement^=right]>.popover-arrow,
+.bs-popover-end>.popover-arrow {
+    top: 50%;
+}

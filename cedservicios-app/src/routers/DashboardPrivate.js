@@ -12,8 +12,8 @@ export const DashboardPrivate = () => {
             <main className="bg-light">
                 <Switch>
                     <Route exact path="/persona" component={PersonaScreen} />
-
-                    <Route path="/admin/cuit/alta" component={AltaCuitScreen} />
+                    
+                    <Route path="/admin/cuit" component={AltaCuitScreen} />
 
                     <Redirect to="/persona" />
                 </Switch>

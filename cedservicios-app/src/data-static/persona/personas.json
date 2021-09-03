@@ -36,7 +36,7 @@
 		"nombreContacto": "Reinaldo Pepe",
 		"telefono": "47484748",
 		"email": "pepe@gmail.com",
-		"estado": true
+		"estado": false
 	},
 	{
 		"cuit": "20140513813",
@@ -62,7 +62,7 @@
 		"nombreContacto": "Reinaldo Pepe",
 		"telefono": "47484748",
 		"email": "pepe@gmail.com",
-		"estado": true
+		"estado": false
 	},
 	{
 		"cuit": "20140513810",

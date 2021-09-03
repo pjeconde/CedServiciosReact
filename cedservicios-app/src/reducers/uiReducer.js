@@ -3,7 +3,8 @@ import { types } from '../types/types';
 const initialState = {
     loading: false,
     msgError: null,
-    label: null
+    label: null,
+    showModal: false
 }
 
 export const uiReducer = (state = initialState, action) => {
@@ -12,7 +13,8 @@ export const uiReducer = (state = initialState, action) => {
             return {
                 ...state,
                 msgError: action.payload.msgError,
-                label: action.payload.label
+                label: action.payload.label,
+                showModal: false
             };
         case types.uiRemoveError:
             return {
@@ -29,6 +31,17 @@ export const uiReducer = (state = initialState, action) => {
             return {
                 ...state,
                 loading: false
+            };
+
+        case types.uiShowModal:
+            return {
+                ...state,
+                showModal: action.payload
+            };
+        case types.uiCloseModal:
+            return {
+                ...state,
+                showModal: action.payload
             };
         default:
             return state;

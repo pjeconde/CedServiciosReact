@@ -23,7 +23,7 @@ export const Menu = () => {
                     expand="lg"
                     bg="dark"
                     variant="dark">
-                    <Link className="logo navbar-brand" to="./">
+                    <Link className="logo navbar-brand me-5" to="./">
                         <img src={`${process.env.PUBLIC_URL}/assets/logo-white.png`} alt="Cedeira Software Factory" />
                     </Link>
                     <Navbar.Toggle className="" aria-controls="menuPrivate" />
