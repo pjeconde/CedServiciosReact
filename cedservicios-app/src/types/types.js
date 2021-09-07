@@ -1,17 +1,24 @@
 export const types = {
 
-    authLogin: '[Auth] Login',
-    authLogout: '[Auth] Logout',
-    authCheckingFinish: '[Auth] Finish checking',
-    authSetQuestion: '[Auth] Set question',
-    authRemoveQuestion: '[Auth] Remove question',
-    authSetValidAnswer: '[Auth] Set valid answer',
-    authRemoveValidAnswer: '[Auth] Remove valid answer',
+    authLogin: '[auth] Login',
+    authLogout: '[auth] Logout',
+    authCheckingFinish: '[auth] Finish checking',
+    authSetQuestion: '[auth] Set question',
+    authRemoveQuestion: '[auth] Remove question',
+    authSetValidAnswer: '[auth] Set valid answer',
+    authRemoveValidAnswer: '[auth] Remove valid answer',
 
-    uiSetError: '[UI] Set error',
-    uiRemoveError: '[UI] Remove error',
-    uiStartLoading: '[UI] Start loading',
-    uiFinishLoading: '[UI] Finish loading',
-    uiShowModal: '[UI] Show modal',
-    uiCloseModal: '[UI] Close modal'
+    uiSetError: '[ui] Set error',
+    uiRemoveError: '[ui] Remove error',
+    uiStartLoading: '[ui] Start loading',
+    uiFinishLoading: '[ui] Finish loading',
+    uiShowModal: '[ui] Show modal',
+    uiCloseModal: '[ui] Close modal',
+
+    personAddNew: '[person] Add new',
+    personSetActive: '[person] Set active',
+    personClearActive: '[person] Clear active',
+    personUpdated: '[person] Person updated',
+    personDeleted: '[person] Person deleted',
+    personLoaded: '[person] Person loaded',
 };

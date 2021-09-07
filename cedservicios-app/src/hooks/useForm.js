@@ -44,7 +44,8 @@ export const useForm = (initialState = {}) => {
         handleDropdownChange,
         reset,
         handleInputCheck,
-        handleInputNumericChange
+        handleInputNumericChange,
+        setValues
     };
 
 }

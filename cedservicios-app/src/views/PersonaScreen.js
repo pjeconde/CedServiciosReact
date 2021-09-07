@@ -1,22 +1,36 @@
 import React, { useState } from 'react';
+import { useSelector } from 'react-redux';
 
 import DataTable from 'react-data-table-component';
 import { Button } from 'react-bootstrap';
 import { BadgeStatus } from '../components/ui/BadgeStatus';
 import { Expanded } from '../components/ui/Expanded';
 import { InputFilter } from '../components/ui/InputFilter';
-import { ModalFilter } from '../components/dashboardPrivate/persona/ModalFilter';
+import { ModalFilter } from '../components/dashboardPrivate/person/ModalFilter';
 
-import Personas from '../data-static/persona/personas.json';
-import { ModalAdd } from '../components/dashboardPrivate/persona/ModalAdd';
+import { UpdatePerson } from '../components/ui/persons/UpdatePerson';
+import { ModalPerson } from '../components/dashboardPrivate/person/ModalPerson';
+import { AddPerson } from '../components/ui/persons/AddPerson';
 
 export const PaginationOptions = { rowsPerPageText: 'Filas por pagina' };
 
 
+const customStyles = {
+    headCells: {
+        style: {
+            color: '#202124',
+            fontSize: '15px',
+            fontWeight: 600,
+            // textTransform: 'uppercase',
+        },
+    },
+}
+
 const columnaPersonas = [
     {
-        name: 'Cuit',
-        selector: 'cuit',
+        name: 'NumeroDocumento',
+        selector: 'nroDocumento',
+        center: true,
         style: {
             color: '#202124',
             fontSize: '14px',
@@ -27,9 +41,15 @@ const columnaPersonas = [
     //     name: 'TipoDni',
     //     selector: 'tipoDni',
     // },
+    // {
+    //     selector: 'tipoPersona',
+    //     omit: true,
+    //     cell: row => row.tipoPersona.label
+    // },
     {
-        name: 'Dni',
-        selector: 'dni',
+        name: 'TipoDocumento',
+        selector: 'tipoDocumento',
+        cell: row => row.tipoDocumento.label,
         sortable: true
     },
     {
@@ -38,7 +58,7 @@ const columnaPersonas = [
     },
     {
         name: 'Direccion',
-        selector: 'direccion'
+        cell: (row) => `${row.calle} ${row.nro}`
     },
     {
         name: 'Localidad',
@@ -70,7 +90,7 @@ const columnaPersonas = [
     },
     {
         name: 'Modificar',
-        cell: () => <Button variant="secondary" size="sm"><i className="fas fa-edit"></i></Button>,
+        cell: row => <UpdatePerson person={row} />,
         center: true
     },
     {
@@ -80,18 +100,9 @@ const columnaPersonas = [
     }
 ];
 
-const customStyles = {
-    headCells: {
-        style: {
-            color: '#202124',
-            fontSize: '15px',
-            fontWeight: 600,
-            // textTransform: 'uppercase',
-        },
-    },
-}
-
 export const PersonaScreen = () => {
+
+    const { persons } = useSelector(state => state.person);
 
     const [filterText, setFilterText] = useState('');
 
@@ -108,9 +119,12 @@ export const PersonaScreen = () => {
                             <h1>Personas</h1>
                         </div>
                         <div className="header__toolbar">
-                            <ModalAdd />
+
+                            <AddPerson />
 
                             <ModalFilter />
+
+                            <ModalPerson />
                         </div>
                     </div>
                 </div>
@@ -122,9 +136,9 @@ export const PersonaScreen = () => {
                             <div className="datatable">
                                 <DataTable
                                     key="datatable-personas"
-                                    keyField="cuit"
+                                    keyField="nroDocumento"
                                     columns={columnaPersonas}
-                                    data={Personas}
+                                    data={persons}
                                     pagination
                                     paginationTotalRows={50}
                                     paginationComponentOptions={PaginationOptions}

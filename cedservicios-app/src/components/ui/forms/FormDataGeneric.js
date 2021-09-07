@@ -5,7 +5,7 @@ import Select from 'react-select';
 import { condIngBrutos, condIva, provincias } from '../../../helpers/admin';
 
 
-export const FormPersona = ({
+export const FormDataGeneric = ({
     formValues,
     handleDropdownChange,
     handleInputNumericChange,
@@ -29,7 +29,7 @@ export const FormPersona = ({
         nroIngBruto,
         dateStart,
         gln,
-        codigoInterno } = formValues;
+        codigoInterno } = !!formValues;
 
     return (
         <>
@@ -80,7 +80,7 @@ export const FormPersona = ({
                     onChange={handleDropdownChange}
                     classNamePrefix="react-select" />
             </div>
-            <div className="col-sm-12 col-md-12 col-lg-4">
+            <div className="col-sm-12 col-md-12 col-lg-6">
                 <Form.Label htmlFor="localidad">Localidad</Form.Label>
                 <Form.Control
                     type="text"
@@ -89,7 +89,7 @@ export const FormPersona = ({
                     value={localidad}
                     onChange={handleInputChange} />
             </div>
-            <div className="col-sm-12 col-md-4 col-lg-2">
+            <div className="col-sm-12 col-md-4 col-lg-3">
                 <Form.Label htmlFor="codigoPostal">Código Postal</Form.Label>
                 <Form.Control
                     type="text"
