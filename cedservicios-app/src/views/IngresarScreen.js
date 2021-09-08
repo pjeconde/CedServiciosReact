@@ -3,12 +3,12 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import validator from 'validator';
 import { useForm } from '../hooks/useForm';
-import { startLogin } from '../actions/auth';
+import { iniciarIngresarUsuario } from '../actions/auth';
 import { removeError, setError } from '../actions/ui';
 import { Informacion } from '../components/dashboardPublic/Informacion';
 import { RegimeGeneral } from '../components/dashboardPublic/RegimeGeneral';
 
-export const LoginScreen = () => {
+export const IngresarScreen = () => {
 
   const dispatch = useDispatch();
   const { msgError, loading } = useSelector(state => state.ui);
@@ -21,7 +21,7 @@ export const LoginScreen = () => {
   const handleLogin = (e) => {
     e.preventDefault();
     if (isFormValid()) {
-      dispatch(startLogin(email, clave));
+      dispatch(iniciarIngresarUsuario(email, clave));
     }
   }
 

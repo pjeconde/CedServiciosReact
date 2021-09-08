@@ -1,12 +1,12 @@
 export const types = {
 
-    authLogin: '[auth] Login',
-    authLogout: '[auth] Logout',
-    authCheckingFinish: '[auth] Finish checking',
-    authSetQuestion: '[auth] Set question',
-    authRemoveQuestion: '[auth] Remove question',
-    authSetValidAnswer: '[auth] Set valid answer',
-    authRemoveValidAnswer: '[auth] Remove valid answer',
+    authIngresarUsuario: '[auth] Ingresar usuario',
+    authSalirUsuario: '[auth] Salir usuario',
+    authFinalizarComprobacion: '[auth] Finalizar comprobacion',
+    authSetPreguntaSeguridad: '[auth] Set pregunta seguridad',
+    authRemoverPreguntaSeguridad: '[auth] Remover pregunta seguridad',
+    authSetRespuestaSeguridadValida: '[auth] Set respuesta seguridad valida',
+    authRemoverRespuestaSeguridadValida: '[auth] Remover respuesta seguridad valida',
 
     uiSetError: '[ui] Set error',
     uiRemoveError: '[ui] Remove error',
@@ -15,10 +15,10 @@ export const types = {
     uiShowModal: '[ui] Show modal',
     uiCloseModal: '[ui] Close modal',
 
-    personAddNew: '[person] Add new',
-    personSetActive: '[person] Set active',
-    personClearActive: '[person] Clear active',
-    personUpdated: '[person] Person updated',
-    personDeleted: '[person] Person deleted',
-    personLoaded: '[person] Person loaded',
+    personaAgregada: '[persona] Persona nueva agregada',
+    personaSetActiva: '[persona] Set persona activa',
+    personaRemoverActiva: '[persona] Remover persona activa',
+    personaActualizada: '[persona] Persona actualizada',
+    personaEliminada: '[persona] Persona eliminada',
+    personaCargado: '[persona] Persona cargado',
 };

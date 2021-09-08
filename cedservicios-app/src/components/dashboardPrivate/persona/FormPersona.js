@@ -7,7 +7,7 @@ import { tipoDePersonas } from '../../../helpers/tipoPersona';
 import { tipoDocumentos } from '../../../helpers/tipoDocumento';
 import { FormDataGeneric } from '../../ui/forms/FormDataGeneric';
 
-export const FormPerson = ({
+export const FormPersona = ({
     typeModal,
     values,
     handleDropdownChange,

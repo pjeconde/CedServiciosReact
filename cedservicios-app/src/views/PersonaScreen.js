@@ -2,15 +2,17 @@ import React, { useState } from 'react';
 import { useSelector } from 'react-redux';
 
 import DataTable from 'react-data-table-component';
-import { Button } from 'react-bootstrap';
 import { BadgeStatus } from '../components/ui/BadgeStatus';
 import { Expanded } from '../components/ui/Expanded';
 import { InputFilter } from '../components/ui/InputFilter';
-import { ModalFilter } from '../components/dashboardPrivate/person/ModalFilter';
+import { ModalFiltro } from '../components/dashboardPrivate/persona/ModalFiltro';
 
-import { UpdatePerson } from '../components/ui/persons/UpdatePerson';
-import { ModalPerson } from '../components/dashboardPrivate/person/ModalPerson';
-import { AddPerson } from '../components/ui/persons/AddPerson';
+import { ButtonActualizar } from '../components/ui/personas/ButtonActualizar';
+import { ModalPersona } from '../components/dashboardPrivate/persona/ModalPersona';
+import { ButtonAgregar } from '../components/ui/personas/ButtonAgregar';
+import { ButtonDetalle } from '../components/ui/personas/ButtonDetalle';
+import { ButtonEliminar } from '../components/ui/personas/ButtonEliminar';
+import { ModalEliminar } from '../components/dashboardPrivate/persona/ModalEliminar';
 
 export const PaginationOptions = { rowsPerPageText: 'Filas por pagina' };
 
@@ -29,7 +31,7 @@ const customStyles = {
 const columnaPersonas = [
     {
         name: 'NumeroDocumento',
-        selector: 'nroDocumento',
+        selector: 'numeroDocumento',
         center: true,
         style: {
             color: '#202124',
@@ -83,26 +85,32 @@ const columnaPersonas = [
         selector: 'email'
     },
     {
+
         name: 'Estado',
         selector: 'estado',
         cell: row => <BadgeStatus status={row.estado} text={row.estado ? 'Activo' : 'Inactivo'} />,
         center: true
     },
     {
+        name: 'Detalle',
+        cell: row => <ButtonDetalle persona={row} />,
+        center: true
+    },
+    {
         name: 'Modificar',
-        cell: row => <UpdatePerson person={row} />,
+        cell: row => <ButtonActualizar persona={row} />,
         center: true
     },
     {
         name: 'Eliminar',
-        cell: () => <Button variant="danger" size="sm"><i className="fas fa-trash"></i></Button>,
+        cell: row => <ButtonEliminar persona={row} />,
         center: true
     }
 ];
 
 export const PersonaScreen = () => {
 
-    const { persons } = useSelector(state => state.person);
+    const { personas } = useSelector(state => state.persona);
 
     const [filterText, setFilterText] = useState('');
 
@@ -120,11 +128,13 @@ export const PersonaScreen = () => {
                         </div>
                         <div className="header__toolbar">
 
-                            <AddPerson />
+                            <ButtonAgregar />
 
-                            <ModalFilter />
+                            <ModalFiltro />
 
-                            <ModalPerson />
+                            <ModalPersona />
+
+                            <ModalEliminar />
                         </div>
                     </div>
                 </div>
@@ -136,9 +146,9 @@ export const PersonaScreen = () => {
                             <div className="datatable">
                                 <DataTable
                                     key="datatable-personas"
-                                    keyField="nroDocumento"
+                                    keyField="numeroDocumento"
                                     columns={columnaPersonas}
-                                    data={persons}
+                                    data={personas}
                                     pagination
                                     paginationTotalRows={50}
                                     paginationComponentOptions={PaginationOptions}

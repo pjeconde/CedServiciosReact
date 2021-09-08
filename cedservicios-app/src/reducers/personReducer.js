@@ -1,36 +1,50 @@
 import { types } from '../types/types';
-import Personas from '../data-static/persona/personas.json';
+import DatoPersonas from '../data-static/persona/personas.json';
 
+/*
 const initialState = {
     persons: Personas,
     activePerson: null
 };
+*/
 
-export const personReducer = (state = initialState, action) => {
+const initialState = {
+    personas: DatoPersonas,
+    personaActiva: null
+};
+
+export const personaReducer = (state = initialState, action) => {
 
     switch (action.type) {
-        case types.personAddNew:
+        case types.personaAgregada:
             return {
                 ...state,
-                persons: [...state.persons, action.payload]
-                // activePerson: action.payload
+                personas: [...state.personas, action.payload]
             };
-        case types.personSetActive:
+        case types.personaSetActiva:
             return {
                 ...state,
-                activePerson: action.payload
+                personaActiva: action.payload
             };
-        case types.personClearActive:
+        case types.personaRemoverActiva:
             return {
                 ...state,
-                activePerson: null
+                personaActiva: null
             };
-        case types.personUpdated:
+        case types.personaActualizada:
             return {
                 ...state,
-                persons: state.persons.map(
+                personas: state.personas.map(
                     p => (p.nroDocumento === action.payload.nroDocumento) ? action.payload : p
                 )
+            };
+        case types.personaEliminada:
+            return {
+                ...state,
+                personas: state.personas.filter(
+                    p => (p.numeroDocumento !== state.personaActiva.numeroDocumento)
+                ),
+                personaActiva: null
             };
         default:
             return state;

@@ -1,7 +1,7 @@
 import { createStore, applyMiddleware, combineReducers, compose } from "redux";
 import thunk from "redux-thunk";
 import { authReducer } from "../reducers/authReducer";
-import { personReducer } from "../reducers/personReducer";
+import { personaReducer } from "../reducers/personReducer";
 import { uiReducer } from "../reducers/uiReducer";
 
 const composeEnhancers = (typeof window !== 'undefined' && window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__) || compose;
@@ -9,7 +9,7 @@ const composeEnhancers = (typeof window !== 'undefined' && window.__REDUX_DEVTOO
 const reducers = combineReducers({
     auth: authReducer,
     ui: uiReducer,
-    person: personReducer
+    persona: personaReducer
 });
 
 export const store = createStore(

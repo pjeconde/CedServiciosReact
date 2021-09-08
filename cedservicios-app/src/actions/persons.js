@@ -1,12 +1,12 @@
 import { types } from "../types/types";
 
 
-export const personStartAddNew = (person) => {
+export const iniciarAgregarPersona = (persona) => {
     return (dispatch) => {
 
         try {
             //Conectamos con la Api
-            dispatch(personAddNew(person));
+            dispatch(agregarPersona(persona));
 
         } catch (error) {
             console.error(error);
@@ -15,26 +15,26 @@ export const personStartAddNew = (person) => {
     }
 }
 
-const personAddNew = (person) => ({
-    type: types.personAddNew,
-    payload: person
+const agregarPersona = (persona) => ({
+    type: types.personaAgregada,
+    payload: persona
 });
 
-export const personSetActive = (person) => ({
-    type: types.personSetActive,
-    payload: person
+export const setPersonaActiva = (persona) => ({
+    type: types.personaSetActiva,
+    payload: persona
 });
 
-export const personClearActive = () => ({ type: types.personClearActive });
+export const removerPersonaActiva = () => ({ type: types.personaRemoverActiva });
 
-export const personStartUpdate = (person) => {
+export const iniciarActualizarPersona = (person) => {
 
     return (dispatch) => {
 
         try {
 
             //Conectar con la api(PersonaController/Actualizar)
-            dispatch(personUpdated(person));
+            dispatch(actualizarPersona(person));
 
         } catch (error) {
             console.error(error);
@@ -44,7 +44,24 @@ export const personStartUpdate = (person) => {
 
 }
 
-const personUpdated = (person) => ({
-    type: types.personUpdated,
-    payload: person
+const actualizarPersona = (persona) => ({
+    type: types.personaActualizada,
+    payload: persona
 })
+
+export const iniciarEliminarPersona = () => {
+
+    return (dispatch) => {
+        try {
+
+            //Conectar con la api
+            dispatch(eliminarPersona());
+
+        } catch (error) {
+            console.error(error);
+        }
+
+    }
+}
+
+const eliminarPersona = () => ({ type: types.personaEliminada });

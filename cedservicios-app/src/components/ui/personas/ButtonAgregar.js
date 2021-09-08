@@ -2,17 +2,18 @@ import React from 'react';
 import { useDispatch } from 'react-redux';
 import { Button } from 'react-bootstrap';
 import { openModal } from '../../../actions/ui';
-import { personClearActive } from '../../../actions/persons';
+import { removerPersonaActiva } from '../../../actions/persons';
 
-const nameModal = 'modalPerson';
+const nameModal = 'modalPersona';
+const typeModal = 'Agregar';
 
-export const AddPerson = () => {
+export const ButtonAgregar = () => {
 
     const dispatch = useDispatch();
 
     const handleOnClick = () => {
-        dispatch(personClearActive());
-        dispatch(openModal(nameModal));
+        dispatch(removerPersonaActiva());
+        dispatch(openModal(nameModal, typeModal));
     }
 
     return (

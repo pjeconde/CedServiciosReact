@@ -1,6 +1,6 @@
 [
 	{
-		"nroDocumento": "39875555",
+		"numeroDocumento": "39875555",
 		"tipoPersona": {
 			"value": "Ambos",
 			"label": "Ambos"
@@ -9,7 +9,7 @@
 			"value": 80,
 			"label": "CUIT"
 		},
-		"idPersona": "",
+		"idPersona": "pjeconde",
 		"razonSocial": "BANCO SAFRA S.A.",
 		"calle": "Av. San Martin",
 		"nro": "998",
@@ -19,24 +19,30 @@
 		"torre": "",
 		"manzana": "",
 		"localidad": "CABA",
+		"provincia": "",
+		"condicionIva": "",
 		"codigoPostal": "",
 		"nombreContacto": "Reinaldo Pepe",
 		"email": "pepe@gmail.com",
 		"telefono": "47484748",
-		"nroIngBruto": "",
+		"numeroIngresoBrutos": "",
+		"condicionIngresoBrutos": "",
 		"dateStart": "",
 		"gln": "",
 		"codigoInterno": "",
 		"estado": true
 	},
 	{
-		"nroDocumento": "39875570",
-		"tipoPersona": "",
+		"numeroDocumento": "39875570",
+		"tipoPersona": {
+			"value": "Ambos",
+			"label": "Ambos"
+		},
 		"tipoDocumento": {
 			"value": 80,
 			"label": "CUIT"
 		},
-		"idPersona": "",
+		"idPersona": "pjeconde",
 		"razonSocial": "BANCO SAFRA S.A.",
 		"calle": "Av. San Martin",
 		"nro": "998",
@@ -46,24 +52,30 @@
 		"torre": "",
 		"manzana": "",
 		"localidad": "CABA",
+		"provincia": "",
+		"condicionIva": "",
 		"codigoPostal": "",
 		"nombreContacto": "Reinaldo Pepe",
 		"email": "pepe@gmail.com",
 		"telefono": "47484748",
-		"nroIngBruto": "",
+		"numeroIngresoBrutos": "",
+		"condicionIngresoBrutos": "",
 		"dateStart": "",
 		"gln": "",
 		"codigoInterno": "",
 		"estado": true
 	},
 	{
-		"nroDocumento": "39875571",
-		"tipoPersona": "",
+		"numeroDocumento": "39875571",
+		"tipoPersona": {
+			"value": "Ambos",
+			"label": "Ambos"
+		},
 		"tipoDocumento": {
 			"value": 80,
 			"label": "CUIT"
 		},
-		"idPersona": "",
+		"idPersona": "pjeconde",
 		"razonSocial": "BANCO SAFRA S.A.",
 		"calle": "Av. San Martin",
 		"nro": "998",
@@ -73,24 +85,30 @@
 		"torre": "",
 		"manzana": "",
 		"localidad": "CABA",
+		"provincia": "",
+		"condicionIva": "",
 		"codigoPostal": "",
 		"nombreContacto": "Reinaldo Pepe",
 		"email": "pepe@gmail.com",
 		"telefono": "47484748",
-		"nroIngBruto": "",
+		"numeroIngresoBrutos": "",
+		"condicionIngresoBrutos": "",
 		"dateStart": "",
 		"gln": "",
 		"codigoInterno": "",
 		"estado": true
 	},
 	{
-		"nroDocumento": "39875572",
-		"tipoPersona": "",
+		"numeroDocumento": "39875572",
+		"tipoPersona": {
+			"value": "Ambos",
+			"label": "Ambos"
+		},
 		"tipoDocumento": {
 			"value": 80,
 			"label": "CUIT"
 		},
-		"idPersona": "",
+		"idPersona": "pjeconde",
 		"razonSocial": "BANCO SAFRA S.A.",
 		"calle": "Av. San Martin",
 		"nro": "998",
@@ -100,24 +118,30 @@
 		"torre": "",
 		"manzana": "",
 		"localidad": "CABA",
+		"provincia": "",
+		"condicionIva": "",
 		"codigoPostal": "",
 		"nombreContacto": "Reinaldo Pepe",
 		"email": "pepe@gmail.com",
 		"telefono": "47484748",
-		"nroIngBruto": "",
+		"numeroIngresoBrutos": "",
+		"condicionIngresoBrutos": "",
 		"dateStart": "",
 		"gln": "",
 		"codigoInterno": "",
 		"estado": false
 	},
 	{
-		"nroDocumento": "39875573",
-		"tipoPersona": "",
+		"numeroDocumento": "39875573",
+		"tipoPersona": {
+			"value": "Ambos",
+			"label": "Ambos"
+		},
 		"tipoDocumento": {
 			"value": 80,
 			"label": "CUIT"
 		},
-		"idPersona": "",
+		"idPersona": "pjeconde",
 		"razonSocial": "BANCO SAFRA S.A.",
 		"calle": "Av. San Martin",
 		"nro": "998",
@@ -127,24 +151,30 @@
 		"torre": "",
 		"manzana": "",
 		"localidad": "CABA",
+		"provincia": "",
+		"condicionIva": "",
 		"codigoPostal": "",
 		"nombreContacto": "Reinaldo Pepe",
 		"email": "pepe@gmail.com",
 		"telefono": "47484748",
-		"nroIngBruto": "",
+		"numeroIngresoBrutos": "",
+		"condicionIngresoBrutos": "",
 		"dateStart": "",
 		"gln": "",
 		"codigoInterno": "",
 		"estado": true
 	},
 	{
-		"nroDocumento": "39875574",
-		"tipoPersona": "",
+		"numeroDocumento": "39875574",
+		"tipoPersona": {
+			"value": "Ambos",
+			"label": "Ambos"
+		},
 		"tipoDocumento": {
 			"value": 80,
 			"label": "CUIT"
 		},
-		"idPersona": "",
+		"idPersona": "pjeconde",
 		"razonSocial": "BANCO SAFRA S.A.",
 		"calle": "Av. San Martin",
 		"nro": "998",
@@ -154,24 +184,30 @@
 		"torre": "",
 		"manzana": "",
 		"localidad": "CABA",
+		"provincia": "",
+		"condicionIva": "",
 		"codigoPostal": "",
 		"nombreContacto": "Reinaldo Pepe",
 		"email": "pepe@gmail.com",
 		"telefono": "47484748",
-		"nroIngBruto": "",
+		"numeroIngresoBrutos": "",
+		"condicionIngresoBrutos": "",
 		"dateStart": "",
 		"gln": "",
 		"codigoInterno": "",
 		"estado": false
 	},
 	{
-		"nroDocumento": "39875575",
-		"tipoPersona": "",
+		"numeroDocumento": "39875575",
+		"tipoPersona": {
+			"value": "Ambos",
+			"label": "Ambos"
+		},
 		"tipoDocumento": {
 			"value": 80,
 			"label": "CUIT"
 		},
-		"idPersona": "",
+		"idPersona": "pjeconde",
 		"razonSocial": "BANCO SAFRA S.A.",
 		"calle": "Av. San Martin",
 		"nro": "998",
@@ -181,24 +217,30 @@
 		"torre": "",
 		"manzana": "",
 		"localidad": "CABA",
+		"provincia": "",
+		"condicionIva": "",
 		"codigoPostal": "",
 		"nombreContacto": "Reinaldo Pepe",
 		"email": "pepe@gmail.com",
 		"telefono": "47484748",
-		"nroIngBruto": "",
+		"numeroIngresoBrutos": "",
+		"condicionIngresoBrutos": "",
 		"dateStart": "",
 		"gln": "",
 		"codigoInterno": "",
 		"estado": true
 	},
 	{
-		"nroDocumento": "39875576",
-		"tipoPersona": "",
+		"numeroDocumento": "39875576",
+		"tipoPersona": {
+			"value": "Ambos",
+			"label": "Ambos"
+		},
 		"tipoDocumento": {
 			"value": 80,
 			"label": "CUIT"
 		},
-		"idPersona": "",
+		"idPersona": "pjeconde",
 		"razonSocial": "BANCO SAFRA S.A.",
 		"calle": "Av. San Martin",
 		"nro": "998",
@@ -208,24 +250,30 @@
 		"torre": "",
 		"manzana": "",
 		"localidad": "CABA",
+		"provincia": "",
+		"condicionIva": "",
 		"codigoPostal": "",
 		"nombreContacto": "Reinaldo Pepe",
 		"email": "pepe@gmail.com",
 		"telefono": "47484748",
-		"nroIngBruto": "",
+		"numeroIngresoBrutos": "",
+		"condicionIngresoBrutos": "",
 		"dateStart": "",
 		"gln": "",
 		"codigoInterno": "",
 		"estado": true
 	},
 	{
-		"nroDocumento": "39875579",
-		"tipoPersona": "",
+		"numeroDocumento": "39875579",
+		"tipoPersona": {
+			"value": "Ambos",
+			"label": "Ambos"
+		},
 		"tipoDocumento": {
 			"value": 80,
 			"label": "CUIT"
 		},
-		"idPersona": "",
+		"idPersona": "pjeconde",
 		"razonSocial": "BANCO SAFRA S.A.",
 		"calle": "Av. San Martin",
 		"nro": "998",
@@ -235,11 +283,14 @@
 		"torre": "",
 		"manzana": "",
 		"localidad": "CABA",
+		"provincia": "",
+		"condicionIva": "",
 		"codigoPostal": "",
 		"nombreContacto": "Reinaldo Pepe",
 		"email": "pepe@gmail.com",
 		"telefono": "47484748",
-		"nroIngBruto": "",
+		"numeroIngresoBrutos": "",
+		"condicionIngresoBrutos": "",
 		"dateStart": "",
 		"gln": "",
 		"codigoInterno": "",

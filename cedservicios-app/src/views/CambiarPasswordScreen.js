@@ -11,9 +11,14 @@ import {
 import Swal from 'sweetalert2';
 import validator from 'validator';
 import { useForm } from '../hooks/useForm';
-import { startChangePassword, startCheckAnswer, startCheckQuestion, startRemoveQuestionAndAnswer } from '../actions/auth';
+import {
+    iniciarCambiarContraseña,
+    iniciarValidarRespuestaSeguridad,
+    iniciarValidarPreguntaSeguridad,
+    iniciarRemoverPreguntaYRespuesta
+} from '../actions/auth';
 
-export const RecoverPasswordScreen = () => {
+export const CambiarPasswordScreen = () => {
 
     const history = useHistory();
     const dispatch = useDispatch();
@@ -37,28 +42,31 @@ export const RecoverPasswordScreen = () => {
     const handleSecurityQuestion = async (e) => {
         e.preventDefault();
         if (userId && validator.isEmail(email)) {
-            dispatch(startCheckQuestion(userId, email));
+            dispatch(
+                iniciarValidarPreguntaSeguridad(userId
+                    ,
+                    email));
         }
     }
 
     const handleRequestPassword = (e) => {
         e.preventDefault();
         if (respuesta.length > 4) {
-            dispatch(startCheckAnswer(userId, email, respuesta));
+            dispatch(iniciarValidarRespuestaSeguridad(userId, email, respuesta));
         }
     }
 
     const handleConfirmPassword = (e) => {
         e.preventDefault();
         if (password === password2) {
-            dispatch(startChangePassword(userId, email, respuesta, password));
+            dispatch(iniciarCambiarContraseña(userId, email, respuesta, password));
         } else {
             Swal.fire('Error', 'Las contraseñas no son iguales.', 'error');
         }
     }
 
     const handleCancel = () => {
-        dispatch(startRemoveQuestionAndAnswer());
+        dispatch(iniciarRemoverPreguntaYRespuesta());
         history.goBack();
     }
 

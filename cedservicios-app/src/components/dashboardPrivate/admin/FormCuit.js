@@ -4,12 +4,7 @@ import Select from 'react-select';
 import { useForm } from '../../../hooks/useForm';
 
 import { PopoverInfo } from '../../ui/PopoverInfo';
-import {
-    // condIngBrutos,
-    // condIva,
-    // provincias,
-    recomendaciones
-} from '../../../helpers/admin';
+import { recomendaciones } from '../../../helpers/admin';
 import { FormPersona } from '../../ui/forms/FormPersona';
 
 

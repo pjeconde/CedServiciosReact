@@ -7,7 +7,7 @@ import {
 } from 'react-bootstrap';
 
 import consultaSesionJSON from '../../data-static/usuario/consultarSesion.json';
-import { DropdownUser } from './DropdownUser';
+import { DropdownUsuario } from './DropdownUsuario';
 
 const menu = consultaSesionJSON[0].sesion.menu;
 
@@ -67,7 +67,7 @@ export const Menu = () => {
                             }
                         </div>
                         <Nav className="ms-auto">
-                            <DropdownUser />
+                            <DropdownUsuario />
                         </Nav>
                     </Navbar.Collapse>
                 </Navbar>

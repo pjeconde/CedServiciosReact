@@ -8,8 +8,9 @@ import { Estados } from '../../../helpers/estados';
 import { closeModal, openModal } from '../../../actions/ui';
 
 const nameModal = 'filtroPersona';
+const typeModal = 'filtro';
 
-export const ModalFilter = () => {
+export const ModalFiltro = () => {
 
     const dispatch = useDispatch();
     const { showModal } = useSelector(state => state.ui);
@@ -25,7 +26,7 @@ export const ModalFilter = () => {
 
     const { razonSocial, numeroDocumento, estado } = values;
 
-    const handleShow = () => dispatch(openModal(nameModal));
+    const handleShow = () => dispatch(openModal(nameModal, typeModal));
 
     const handleClose = () => dispatch(closeModal());
 

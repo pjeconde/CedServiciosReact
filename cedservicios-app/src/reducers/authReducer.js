@@ -1,54 +1,63 @@
 import { types } from "../types/types";
 
+/*
 const initialState = {
     checking: true,
     uid: null,
     username: null,
     cuit: null
 }
+*/
+
+const initialState = {
+    comprobacion: true,
+    idUsuario: null,
+    nombreCuenta: null,
+    cuit: null
+}
 
 export const authReducer = (state = initialState, action) => {
 
     switch (action.type) {
-        case types.authLogin:
+        case types.authIngresarUsuario:
             return {
                 ...state,
-                uid: action.payload.uid,
-                username: action.payload.username,
+                idUsuario: action.payload.idUsuario,
+                nombreCuenta: action.payload.nombreCuenta,
                 cuit: 20398724357,
-                checking: false,
+                comprobacion: false,
             };
-        case types.authCheckingFinish:
+        case types.authFinalizarComprobacion:
             return {
                 ...state,
-                checking: false
+                comprobacion: false
             };
-        case types.authLogout:
+        case types.authSalirUsuario:
             return {
                 ...state,
-                checking: false,
-                uid: null,
-                username: null
+                comprobacion: false,
+                idUsuario: null,
+                nombreCuenta: null
             };
-        case types.authSetQuestion:
+        case types.authSetPreguntaSeguridad:
             return {
                 ...state,
-                question: action.payload
+                preguntaSeguridad: action.payload
             };
-        case types.authRemoveQuestion:
+        case types.authRemoverPreguntaSeguridad:
             return {
                 ...state,
-                question: null
+                preguntaSeguridad: null
             };
-        case types.authSetValidAnswer:
+        case types.authSetRespuestaSeguridadValida:
             return {
                 ...state,
-                validAnswer: action.payload
+                respuestaSeguridad: action.payload
             };
-        case types.authRemoveValidAnswer:
+        case types.authRemoverRespuestaSeguridadValida:
             return {
                 ...state,
-                validAnswer: null
+                respuestaSeguridad: null
             };
         default:
             return state;

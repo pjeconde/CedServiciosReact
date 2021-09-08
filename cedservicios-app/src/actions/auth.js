@@ -4,7 +4,7 @@ import { types } from '../types/types';
 import { startLoading, finishLoading, setError } from './ui';
 
 
-export const startLogin = (email, clave) => {
+export const iniciarIngresarUsuario = (email, clave) => {
     return async (dispatch) => {
         try {
             dispatch(startLoading());
@@ -16,9 +16,9 @@ export const startLogin = (email, clave) => {
                 localStorage.setItem('token', token);
                 localStorage.setItem('token-exp', expiracion);
 
-                dispatch(login({
-                    uid: idUsuario,
-                    username: nombreCuenta
+                dispatch(ingresarUsuario({
+                    idUsuario,
+                    nombreCuenta
                 }));
             } else {
                 dispatch(setError('Error al ingresar al sistema.'));
@@ -36,7 +36,7 @@ export const startLogin = (email, clave) => {
     }
 }
 
-export const startRegister = (formValues) => {
+export const iniciarRegistroUsuario = (formValues) => {
     return async (dispatch) => {
         try {
             dispatch(startLoading());
@@ -45,9 +45,10 @@ export const startRegister = (formValues) => {
             const { respuesta } = resp.data[0];
 
             if (resp.status === 200 && respuesta.resultado.severidad === 0) {
-                dispatch(login({
-                    id: formValues.id,
-                    username: formValues.name
+                const { idUsuario, nombreCuenta } = formValues;
+                dispatch(ingresarUsuario({
+                    idUsuario,
+                    nombreCuenta
                 }));
             } else {
                 Swal.fire({
@@ -71,23 +72,23 @@ export const startRegister = (formValues) => {
     }
 }
 
-export const startLogout = () => {
+export const iniciarSalirUsuario = () => {
     return async (dispatch) => {
         localStorage.clear();
-        dispatch(logout());
+        dispatch(salirUsuario());
     }
 }
 
-const login = (user) => ({
-    type: types.authLogin,
+const ingresarUsuario = (user) => ({
+    type: types.authIngresarUsuario,
     payload: user
 });
 
-const logout = () => ({
-    type: types.authLogout
+const salirUsuario = () => ({
+    type: types.authSalirUsuario
 });
 
-export const startCheckUserIdById = (id) => {
+export const iniciarValidarIdUsuarioPorId = (id) => {
     return async (dispatch) => {
         try {
             dispatch(startLoading());
@@ -122,7 +123,7 @@ export const startCheckUserIdById = (id) => {
     }
 }
 
-export const startCheckUserIdByEmail = (email) => {
+export const iniciarValidarIdUsuarioPorEmail = (email) => {
     return async (dispatch) => {
         try {
             dispatch(startLoading()); const resp = await axios.get('Usuario/ConsultarIdUsuarioPorEmail', {
@@ -156,7 +157,7 @@ export const startCheckUserIdByEmail = (email) => {
     }
 }
 
-export const startCheckQuestion = (id, email) => {
+export const iniciarValidarPreguntaSeguridad = (id, email) => {
     return async (dispatch) => {
         try {
             dispatch(startLoading());
@@ -169,7 +170,7 @@ export const startCheckQuestion = (id, email) => {
             const { respuesta, valor } = resp.data[0];
 
             if (resp.status === 200 && respuesta.resultado.severidad === 0) {
-                dispatch(setQuestion(valor));
+                dispatch(setPreguntaSeguridad(valor));
             } else {
                 Swal.fire({
                     icon: 'error',
@@ -192,24 +193,24 @@ export const startCheckQuestion = (id, email) => {
     }
 }
 
-export const startCheckAnswer = (id, email, answer) => {
+export const iniciarValidarRespuestaSeguridad = (id, email, respuestaSeguridad) => {
     return async (dispatch, getState) => {
         try {
             dispatch(startLoading());
 
-            const { question: pregunta } = getState().auth;
+            const { preguntaSeguridad: pregunta } = getState().auth;
             const resp = await axios.get('Usuario/ValidarRespuestaPreguntaDeSeguridad', {
                 params: {
                     id,
                     email,
                     pregunta,
-                    respuesta: answer
+                    respuesta: respuestaSeguridad
                 }
             });
             const { respuesta, valor } = resp.data[0];
 
             if (resp.status === 200 && respuesta.resultado.severidad === 0) {
-                dispatch(setValidAnswer(valor));
+                dispatch(setRespuestaSeguridad(valor));
             } else {
                 Swal.fire({
                     icon: 'error',
@@ -232,28 +233,28 @@ export const startCheckAnswer = (id, email, answer) => {
     }
 }
 
-const setQuestion = (question) => ({
-    type: types.authSetQuestion,
-    payload: question
+const setPreguntaSeguridad = (preguntaSeguridad) => ({
+    type: types.authSetPreguntaSeguridad,
+    payload: preguntaSeguridad
 });
 
-const setValidAnswer = (validAnswer) => ({
-    type: types.authSetValidAnswer,
-    payload: validAnswer
+const setRespuestaSeguridad = (respuestaSeguridad) => ({
+    type: types.authSetRespuestaSeguridadValida,
+    payload: respuestaSeguridad
 });
 
-export const startChangePassword = (idUsuario, email, answer, password) => {
+export const iniciarCambiarContraseña = (idUsuario, email, respuestaSeguridad, password) => {
     return async (dispatch, getState) => {
         try {
             dispatch(startLoading());
 
-            const { question: pregunta } = getState().auth;
+            const { preguntaSeguridad: pregunta } = getState().auth;
 
             const resp = await axios.post('Usuario/CambiarClaveConPreguntaSeg', {
                 idUsuario,
                 email,
                 pregunta,
-                respuesta: answer,
+                respuesta: respuestaSeguridad,
                 claveNueva: password,
                 claveNuevaConfirmacion: password
             });
@@ -284,37 +285,37 @@ export const startChangePassword = (idUsuario, email, answer, password) => {
     }
 }
 
-export const startChecking = () => {
+export const iniciarComprobacion = () => {
     return (dispatch) => {
         const pepe = true;
         //Aca deberiamos renovar el token
         // localStorage.setItem('token', token);
         // localStorage.setItem('token-init-date', new Date().getTime());
-        dispatch(checkingFinish());
+        dispatch(finalizarComprobacion());
 
         if (pepe)
-            dispatch(login({
-                uid: new Date().getTime(),
-                name: 'gmontiel'
+            dispatch(ingresarUsuario({
+                idUsuario: new Date().getTime(),
+                nombreCuenta: 'gmontiel'
             }));
         else
-            dispatch(checkingFinish());
+            dispatch(finalizarComprobacion());
     }
 }
 
-export const startRemoveQuestionAndAnswer = () => {
+export const iniciarRemoverPreguntaYRespuesta = () => {
     return (dispatch) => {
-        dispatch(removeQuestion());
-        dispatch(removeValidAnswer());
+        dispatch(removerPreguntaSeguridad());
+        dispatch(removerRespuestaSeguridad());
     }
 }
 
-const checkingFinish = () => ({ type: types.authCheckingFinish });
+const finalizarComprobacion = () => ({ type: types.authFinalizarComprobacion });
 
-const removeQuestion = () => ({
-    type: types.authRemoveQuestion
+const removerPreguntaSeguridad = () => ({
+    type: types.authRemoverPreguntaSeguridad
 });
 
-const removeValidAnswer = () => ({
-    type: types.authRemoveValidAnswer
+const removerRespuestaSeguridad = () => ({
+    type: types.authRemoverRespuestaSeguridadValida
 });

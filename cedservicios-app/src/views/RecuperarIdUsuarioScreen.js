@@ -9,11 +9,11 @@ import {
     Button
 } from 'react-bootstrap';
 import validator from 'validator';
-import { startCheckUserIdByEmail } from '../actions/auth';
+import { iniciarValidarIdUsuarioPorEmail } from '../actions/auth';
 import { useForm } from '../hooks/useForm';
 
 
-export const RecoverUserIdScreen = () => {
+export const RecuperarIdUsuarioScreen = () => {
 
     const history = useHistory();
     const dispatch = useDispatch();
@@ -26,7 +26,7 @@ export const RecoverUserIdScreen = () => {
 
     const handleCheckUserId = () => {
         if (validator.isEmail(email)) {
-            dispatch(startCheckUserIdByEmail(email));
+            dispatch(iniciarValidarIdUsuarioPorEmail(email));
         }
     }
 

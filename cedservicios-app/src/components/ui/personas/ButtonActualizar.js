@@ -1,18 +1,19 @@
 import React from 'react';
 import { useDispatch } from 'react-redux';
 import { Button } from 'react-bootstrap';
-import { personSetActive } from '../../../actions/persons';
+import { setPersonaActiva } from '../../../actions/persons';
 import { openModal } from '../../../actions/ui';
 
-const nameModal = 'modalPerson';
+const nameModal = 'modalPersona';
+const typeModal = 'Actualizar';
 
-export const UpdatePerson = ({ person }) => {
+export const ButtonActualizar = ({ persona }) => {
 
     const dispatch = useDispatch();
 
     const handleOnClick = () => {
-        dispatch(personSetActive(person));
-        dispatch(openModal(nameModal));
+        dispatch(setPersonaActiva(persona));
+        dispatch(openModal(nameModal, typeModal));
     }
 
     return (

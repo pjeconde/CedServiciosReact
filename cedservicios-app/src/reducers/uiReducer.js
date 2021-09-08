@@ -4,7 +4,8 @@ const initialState = {
     loading: false,
     msgError: null,
     label: null,
-    showModal: false
+    showModal: false,
+    typeModal: null
 }
 
 export const uiReducer = (state = initialState, action) => {
@@ -36,12 +37,14 @@ export const uiReducer = (state = initialState, action) => {
         case types.uiShowModal:
             return {
                 ...state,
-                showModal: action.payload
+                showModal: action.payload.nameModal,
+                typeModal: action.payload.typeModal
             };
         case types.uiCloseModal:
             return {
                 ...state,
-                showModal: action.payload
+                showModal: action.payload,
+                typeModal: null
             };
         default:
             return state;

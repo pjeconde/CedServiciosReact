@@ -1,15 +1,15 @@
 import React from 'react';
 import { useDispatch } from 'react-redux';
 import { Dropdown } from 'react-bootstrap';
-import { startLogout } from '../../actions/auth';
+import { iniciarSalirUsuario } from '../../actions/auth';
 
 
-export const DropdownUser = () => {
+export const DropdownUsuario = () => {
 
     const dispatch = useDispatch();
 
     const handleLogout = () => {
-        dispatch(startLogout());
+        dispatch(iniciarSalirUsuario());
     }
 
     return (
@@ -17,9 +17,9 @@ export const DropdownUser = () => {
             <Dropdown
                 align="end"
                 drop="down"
-                key="dropdownUserMenu"
-                id="dropdownUser">
-                <Dropdown.Toggle className="menu__user" variant="secondary" id="dropdownUserMenu" >
+                key="dropdownUsuarioMenu"
+                id="dropdownUsuario">
+                <Dropdown.Toggle className="menu__user" variant="secondary" id="dropdownUsuarioMenu" >
                     <i className="fas fa-user"></i>
                 </Dropdown.Toggle>
                 <Dropdown.Menu variant="dark">

@@ -11,12 +11,10 @@ import {
 import { textoTerminoYCondiciones } from '../helpers/terminoYCondiciones';
 
 import { useForm } from '../hooks/useForm';
-import { startCheckUserIdById, startRegister } from '../actions/auth';
+import { iniciarValidarIdUsuarioPorId, iniciarRegistroUsuario } from '../actions/auth';
 import { removeError, setError } from '../actions/ui';
 
-
-
-export const RegisterScreen = () => {
+export const RegistrarScreen = () => {
 
     const history = useHistory();
     const dispatch = useDispatch();
@@ -24,32 +22,34 @@ export const RegisterScreen = () => {
     const [validated, setValidated] = useState(false);
 
     const { values: formValues, handleInputChange } = useForm({
-        nombre: 'Prueba test',
+        nombreCuenta: 'Prueba test',
         telefono: '1010202030',
         email: 'prueba@gmail.com',
-        uid: 'gmprueba',
+        idUsuario: 'gmprueba',
         password: '123456',
         password2: '123456',
         pregunta: 'Pregunta de seguridad',
         respuesta: 'respuesta',
     });
 
-    const { nombre,
-        uid,
+    const {
+        nombreCuenta,
+        idUsuario,
         telefono,
         email,
         password,
         password2,
         pregunta,
-        respuesta } = formValues;
+        respuesta
+    } = formValues;
 
     const handleRegister = (e) => {
         e.preventDefault();
         if (isFormValid()) {
-            dispatch(startRegister({
-                id: uid,
+            dispatch(iniciarRegistroUsuario({
+                idUsuario,
                 password,
-                nombre,
+                nombreCuenta,
                 telefono,
                 email,
                 pregunta,
@@ -61,8 +61,8 @@ export const RegisterScreen = () => {
     }
 
     const handleCkecUserId = () => {
-        if (uid) {
-            dispatch(startCheckUserIdById(uid));
+        if (idUsuario) {
+            dispatch(iniciarValidarIdUsuarioPorId(idUsuario));
         }
     }
 
@@ -71,12 +71,12 @@ export const RegisterScreen = () => {
     }
 
     const isFormValid = () => {
-        if (nombre.trim().length < 4) {
-            dispatch(setError('El nombre y apellido no es válido.', 'nombre'));
+        if (nombreCuenta.trim().length < 4) {
+            dispatch(setError('El nombre y apellido no es válido.', 'nombreCuenta'));
             return false;
         }
-        else if (!uid || uid.trim().length < 5) {
-            dispatch(setError('El ID de Usuario no es válido.', 'uid'));
+        else if (!idUsuario || idUsuario.trim().length < 5) {
+            dispatch(setError('El Id de Usuario no es válido.', 'idUsuario'));
             return false;
         }
         else if (!validator.isEmail(email)) {
@@ -111,12 +111,12 @@ export const RegisterScreen = () => {
                     </Col>
                     <Col sm={4}>
                         <Form.Control
-                            name="nombre"
+                            name="nombreCuenta"
                             type="text"
                             autoComplete="none"
                             required
-                            isInvalid={label === 'nombre'}
-                            value={nombre}
+                            isInvalid={label === 'nombreCuenta'}
+                            value={nombreCuenta}
                             onChange={handleInputChange} />
                     </Col>
                 </Row>
@@ -158,12 +158,12 @@ export const RegisterScreen = () => {
                     </Col>
                     <Col sm={4}>
                         <Form.Control
-                            name="uid"
+                            name="idUsuario"
                             type="text"
                             autoComplete="none"
                             required
-                            isInvalid={label === 'uid'}
-                            value={uid}
+                            isInvalid={label === 'idUsuario'}
+                            value={idUsuario}
                             onChange={handleInputChange} />
                     </Col>
                     <Col sm={3}>
