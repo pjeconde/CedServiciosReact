@@ -13,6 +13,7 @@ import { ButtonAgregar } from '../components/ui/personas/ButtonAgregar';
 import { ButtonDetalle } from '../components/ui/personas/ButtonDetalle';
 import { ButtonEliminar } from '../components/ui/personas/ButtonEliminar';
 import { ModalEliminar } from '../components/dashboardPrivate/persona/ModalEliminar';
+import { FiltroAplicados } from '../components/ui/FiltroAplicados';
 
 export const PaginationOptions = { rowsPerPageText: 'Filas por pagina' };
 
@@ -113,9 +114,22 @@ export const PersonaScreen = () => {
     const { personas } = useSelector(state => state.persona);
 
     const [filterText, setFilterText] = useState('');
+    const [filtroAplicados, setFiltroAplicados] = useState({
+        razonSocial: 'Banco Patagonia',
+        numeroDocumento: '20398724357',
+        estado: 'Vigente'
+    })
 
     const handleOnChangeFilterText = (value) => {
         setFilterText(value);
+    }
+
+    const handleEliminarFiltro = (f) => {
+        console.log(f);
+    }
+
+    const handleEliminarFiltros = () => {
+        console.log('Eliminar todos los filtros');
     }
 
     return (
@@ -143,6 +157,15 @@ export const PersonaScreen = () => {
                 <div className="container-fluid">
                     <div className="card">
                         <div className="card-body">
+                            {
+                                filtroAplicados &&
+                                (
+                                    <FiltroAplicados
+                                        filtros={filtroAplicados}
+                                        eliminarFiltro={handleEliminarFiltro}
+                                        eliminarFiltros={handleEliminarFiltros} />
+                                )
+                            }
                             <div className="datatable">
                                 <DataTable
                                     key="datatable-personas"

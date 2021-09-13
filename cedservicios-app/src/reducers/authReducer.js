@@ -11,8 +11,9 @@ const initialState = {
 
 const initialState = {
     comprobacion: true,
-    idUsuario: null,
+    nombreCompleto: null,
     nombreCuenta: null,
+    email: null,
     cuit: null
 }
 
@@ -22,7 +23,8 @@ export const authReducer = (state = initialState, action) => {
         case types.authIngresarUsuario:
             return {
                 ...state,
-                idUsuario: action.payload.idUsuario,
+                nombreCompleto: action.payload.nombreCompleto,
+                email: action.payload.email,
                 nombreCuenta: action.payload.nombreCuenta,
                 cuit: 20398724357,
                 comprobacion: false,
@@ -35,9 +37,8 @@ export const authReducer = (state = initialState, action) => {
         case types.authSalirUsuario:
             return {
                 ...state,
+                ...initialState,
                 comprobacion: false,
-                idUsuario: null,
-                nombreCuenta: null
             };
         case types.authSetPreguntaSeguridad:
             return {

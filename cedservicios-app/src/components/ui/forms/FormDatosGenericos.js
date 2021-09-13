@@ -5,7 +5,7 @@ import Select from 'react-select';
 import { condIngBrutos, condIva, provincias } from '../../../helpers/admin';
 
 
-export const FormDataGeneric = ({
+export const FormDatosGenericos = ({
     formValues,
     handleDropdownChange,
     handleInputNumericChange,

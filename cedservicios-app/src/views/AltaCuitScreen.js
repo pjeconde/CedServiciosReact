@@ -4,7 +4,7 @@ import validator from 'validator';
 import Select from 'react-select';
 
 import { Container, Form, Button } from 'react-bootstrap';
-import { FormDataGeneric } from '../components/ui/forms/FormDataGeneric';
+import { FormDatosGenericos } from '../components/ui/forms/FormDatosGenericos';
 import { PopoverInfo } from '../components/ui/PopoverInfo';
 import { useForm } from '../hooks/useForm';
 import { recomendaciones } from '../helpers/admin';
@@ -105,7 +105,7 @@ export const AltaCuitScreen = () => {
                                             body="En esta página se registran todos los datos de la persona que emitirá comprobantes de venta." />
                                     </div>
                                 </div>
-                                <FormDataGeneric
+                                <FormDatosGenericos
                                     formValues={values}
                                     handleInputChange={handleInputChange}
                                     handleDropdownChange={handleDropdownChange}

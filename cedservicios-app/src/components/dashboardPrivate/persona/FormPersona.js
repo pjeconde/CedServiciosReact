@@ -5,7 +5,7 @@ import { Form, InputGroup } from 'react-bootstrap';
 import Select from 'react-select';
 import { tipoDePersonas } from '../../../helpers/tipoPersona';
 import { tipoDocumentos } from '../../../helpers/tipoDocumento';
-import { FormDataGeneric } from '../../ui/forms/FormDataGeneric';
+import { FormDatosGenericos } from '../../ui/forms/FormDatosGenericos';
 
 export const FormPersona = ({
     typeModal,
@@ -71,7 +71,7 @@ export const FormPersona = ({
                         onChange={handleInputChange}
                     />
                 </div>
-                <FormDataGeneric
+                <FormDatosGenericos
                     formValues={values}
                     handleInputChange={handleInputChange}
                     handleDropdownChange={handleDropdownChange}

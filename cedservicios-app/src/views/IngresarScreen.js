@@ -1,7 +1,6 @@
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
-import validator from 'validator';
 import { useForm } from '../hooks/useForm';
 import { iniciarIngresarUsuario } from '../actions/auth';
 import { removeError, setError } from '../actions/ui';
@@ -13,21 +12,21 @@ export const IngresarScreen = () => {
   const dispatch = useDispatch();
   const { msgError, loading } = useSelector(state => state.ui);
   const { values: formValues, handleInputChange } = useForm({
-    email: 'german_montiel96@hotmail.com',
-    clave: 'Asd123.'
+    nombreCuenta: 'prueba@gmail.com',
+    clave: '123456'
   })
-  const { email, clave } = formValues;
+  const { nombreCuenta, clave } = formValues;
 
   const handleLogin = (e) => {
     e.preventDefault();
     if (isFormValid()) {
-      dispatch(iniciarIngresarUsuario(email, clave));
+      dispatch(iniciarIngresarUsuario(nombreCuenta, clave));
     }
   }
 
   const isFormValid = () => {
-    if (!validator.isEmail(email)) {
-      dispatch(setError('Debe de ingresar un email.'));
+    if (!nombreCuenta) {
+      dispatch(setError('Debe de ingresar el nombre de la cuenta.'));
       return false;
     }
     else if (!clave || clave.length < 5) {
@@ -54,14 +53,14 @@ export const IngresarScreen = () => {
               <form onSubmit={handleLogin} className="p-4 p-md-5 border rounded-3 bg-light">
                 <div className="form-floating mb-3">
                   <input
-                    type="email"
+                    type="nombreCuenta"
                     className="form-control"
-                    id="email"
-                    name="email"
-                    value={email}
+                    id="nombreCuenta"
+                    name="nombreCuenta"
+                    value={nombreCuenta}
                     onChange={handleInputChange}
-                    placeholder="Email.." />
-                  <label htmlFor="email">Email</label>
+                    placeholder="nombreCuenta.." />
+                  <label htmlFor="nombreCuenta">Nombre de cuenta</label>
                 </div>
                 <div className="form-floating mb-3">
                   <input

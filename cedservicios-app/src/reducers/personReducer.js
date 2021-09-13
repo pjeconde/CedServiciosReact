@@ -35,7 +35,7 @@ export const personaReducer = (state = initialState, action) => {
             return {
                 ...state,
                 personas: state.personas.map(
-                    p => (p.nroDocumento === action.payload.nroDocumento) ? action.payload : p
+                    p => (p.numeroDocumento === action.payload.numeroDocumento) ? action.payload : p
                 )
             };
         case types.personaEliminada:

@@ -22,23 +22,25 @@ export const RegistrarScreen = () => {
     const [validated, setValidated] = useState(false);
 
     const { values: formValues, handleInputChange } = useForm({
-        nombreCuenta: 'Prueba test',
+        nombreCuenta: 'gmontiel',
         telefono: '1010202030',
         email: 'prueba@gmail.com',
-        idUsuario: 'gmprueba',
-        password: '123456',
-        password2: '123456',
+        nombre: 'German',
+        apellido: 'Montiel',
+        clave: '123456',
+        clave2: '123456',
         pregunta: 'Pregunta de seguridad',
         respuesta: 'respuesta',
     });
 
     const {
         nombreCuenta,
-        idUsuario,
+        nombre,
+        apellido,
         telefono,
         email,
-        password,
-        password2,
+        clave,
+        clave2,
         pregunta,
         respuesta
     } = formValues;
@@ -47,9 +49,10 @@ export const RegistrarScreen = () => {
         e.preventDefault();
         if (isFormValid()) {
             dispatch(iniciarRegistroUsuario({
-                idUsuario,
-                password,
                 nombreCuenta,
+                nombre,
+                apellido,
+                clave,
                 telefono,
                 email,
                 pregunta,
@@ -61,8 +64,8 @@ export const RegistrarScreen = () => {
     }
 
     const handleCkecUserId = () => {
-        if (idUsuario) {
-            dispatch(iniciarValidarIdUsuarioPorId(idUsuario));
+        if (nombreCuenta) {
+            dispatch(iniciarValidarIdUsuarioPorId(nombreCuenta));
         }
     }
 
@@ -71,20 +74,24 @@ export const RegistrarScreen = () => {
     }
 
     const isFormValid = () => {
-        if (nombreCuenta.trim().length < 4) {
-            dispatch(setError('El nombre y apellido no es válido.', 'nombreCuenta'));
+        if (!nombreCuenta || nombreCuenta.trim().length < 5) {
+            dispatch(setError('Nombre de cuenta no válido.', 'nombreCuenta'));
             return false;
         }
-        else if (!idUsuario || idUsuario.trim().length < 5) {
-            dispatch(setError('El Id de Usuario no es válido.', 'idUsuario'));
+        else if (!nombre) {
+            dispatch(setError('El nombre no es válido.', 'nombre'));
+            return false;
+        }
+        else if (!apellido) {
+            dispatch(setError('El apellido no es válido.', 'apellido'));
             return false;
         }
         else if (!validator.isEmail(email)) {
             dispatch(setError('El email no es válido.', 'email'));
             return false;
         }
-        else if (!password || password !== password2) {
-            dispatch(setError('Password no válido.', 'password'));
+        else if (!clave || clave !== clave2) {
+            dispatch(setError('La contraseña no es valida.', 'clave'));
             return false;
         }
         else if (pregunta.trim().length < 7) {
@@ -107,16 +114,31 @@ export const RegistrarScreen = () => {
                 validated={validated} >
                 <Row style={{ margin: '5px' }}>
                     <Col sm={2}>
-                        <Form.Label>Nombre Y Apellido</Form.Label>
+                        <Form.Label>Nombre</Form.Label>
                     </Col>
                     <Col sm={4}>
                         <Form.Control
-                            name="nombreCuenta"
+                            name="nombre"
                             type="text"
                             autoComplete="none"
                             required
-                            isInvalid={label === 'nombreCuenta'}
-                            value={nombreCuenta}
+                            isInvalid={label === 'nombre'}
+                            value={nombre}
+                            onChange={handleInputChange} />
+                    </Col>
+                </Row>
+                <Row style={{ margin: '5px' }}>
+                    <Col sm={2}>
+                        <Form.Label>Apellido</Form.Label>
+                    </Col>
+                    <Col sm={4}>
+                        <Form.Control
+                            name="apellido"
+                            type="text"
+                            autoComplete="none"
+                            required
+                            isInvalid={label === 'apellido'}
+                            value={apellido}
                             onChange={handleInputChange} />
                     </Col>
                 </Row>
@@ -154,16 +176,16 @@ export const RegistrarScreen = () => {
                 </Row>
                 <Row style={{ margin: '5px' }}>
                     <Col sm={2}>
-                        <Form.Label>Id Usuario</Form.Label>
+                        <Form.Label>Nombre Cuenta</Form.Label>
                     </Col>
                     <Col sm={4}>
                         <Form.Control
-                            name="idUsuario"
+                            name="nombreCuenta"
                             type="text"
                             autoComplete="none"
                             required
-                            isInvalid={label === 'idUsuario'}
-                            value={idUsuario}
+                            isInvalid={label === 'nombreCuenta'}
+                            value={nombreCuenta}
                             onChange={handleInputChange} />
                     </Col>
                     <Col sm={3}>
@@ -172,7 +194,7 @@ export const RegistrarScreen = () => {
                             variant="secondary"
                             onClick={handleCkecUserId}
                         >
-                            Id.Usuario Disponible?
+                            ¿Nombre de cuenta disponible?
                         </Button>
                     </Col>
                 </Row>
@@ -182,12 +204,12 @@ export const RegistrarScreen = () => {
                     </Col>
                     <Col sm={4}>
                         <Form.Control
-                            name="password"
+                            name="clave"
                             type="password"
                             autoComplete="none"
                             required
-                            isInvalid={label === 'password'}
-                            value={password}
+                            isInvalid={label === 'clave'}
+                            value={clave}
                             onChange={handleInputChange} />
                     </Col>
                 </Row>
@@ -197,12 +219,12 @@ export const RegistrarScreen = () => {
                     </Col>
                     <Col sm={4}>
                         <Form.Control
-                            name="password2"
+                            name="clave2"
                             type="password"
                             autoComplete="none"
                             required
-                            isInvalid={label === 'password'}
-                            value={password2}
+                            isInvalid={label === 'clave'}
+                            value={clave2}
                             onChange={handleInputChange} />
                     </Col>
                 </Row>

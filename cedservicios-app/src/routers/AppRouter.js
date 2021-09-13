@@ -15,7 +15,7 @@ import { Loading } from '../components/ui/Loading';
 
 export const AppRouter = () => {
 
-    const { comprobacion, idUsuario } = useSelector(state => state.auth);
+    const { comprobacion, nombreCuenta } = useSelector(state => state.auth);
     const dispatch = useDispatch();
 
     useEffect(() => {
@@ -31,12 +31,12 @@ export const AppRouter = () => {
             <Switch>
                 <PublicRoute
                     path="/auth"
-                    isAuthenticated={!!idUsuario}
+                    isAuthenticated={!!nombreCuenta}
                     component={DashboardPublic} />
 
                 <PrivateRoute
                     path="/"
-                    isAuthenticated={!!idUsuario}
+                    isAuthenticated={!!nombreCuenta}
                     component={DashboardPrivate} />
 
                 <Redirect to="/auth/login" />
