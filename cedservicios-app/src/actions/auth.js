@@ -1,7 +1,8 @@
 import Swal from 'sweetalert2';
+import queryString from 'query-string';
 import { fetchSinToken } from '../config/fetch';
 import { types } from '../types/types';
-import { startLoading, finishLoading, setError } from './ui';
+import { startLoading, finishLoading, setError, removeError } from './ui';
 
 
 export const iniciarIngresarUsuario = (nombreCuenta, clave) => {
@@ -9,7 +10,7 @@ export const iniciarIngresarUsuario = (nombreCuenta, clave) => {
         try {
             dispatch(startLoading());
 
-            const resp = await fetchSinToken('Usuario/Ingresar', { email: nombreCuenta, clave }, 'POST');
+            const resp = await fetchSinToken('Usuario/Ingresar', { nombreCuenta, clave }, 'POST');
             const body = await resp.json();
 
             if (resp.status === 200) {
@@ -34,8 +35,8 @@ export const iniciarIngresarUsuario = (nombreCuenta, clave) => {
             }
             dispatch(finishLoading());
 
-        } catch (error) {
-
+        }
+        catch (error) {
             dispatch(finishLoading());
             Swal.fire({
                 icon: 'error',
@@ -53,7 +54,7 @@ export const iniciarRegistroUsuario = (formValues) => {
 
             const resp = await fetchSinToken('Usuario', formValues, 'POST');
             const body = await resp.json();
-            
+
             if (resp.status === 201) {
 
                 const {
@@ -109,27 +110,25 @@ const salirUsuario = () => ({
     type: types.authSalirUsuario
 });
 
-export const iniciarValidarIdUsuarioPorId = (id) => {
+export const iniciarValidarNombreCuenta = (nombreCuenta) => {
     return async (dispatch) => {
         try {
             dispatch(startLoading());
-            // const resp = await axios.get('Usuario/ConsultarIdDisponible', {
-            //     params: {
-            //         id
-            //     }
-            // });
-            // const { valor } = resp.data[0];
 
-            // if (resp.status === 200 && valor) {
-            //     Swal.fire('Id Usuario', 'Id usuario disponible.', 'success');
-            // } else {
-            //     Swal.fire({
-            //         icon: 'error',
-            //         title: 'Oops...',
-            //         text: 'El Id Usuario no está disponible.'
-            //     });
-            //     dispatch(setError('El Id Usuario no está disponible'));
-            // }
+            const resp = await fetchSinToken(`Usuario/ValidarNombreCuenta?${queryString.stringify({ nombreCuenta })}`);
+            const body = await resp.json();
+
+            if (body) {
+                Swal.fire('Nombre Cuenta', 'Nombre de cuenta disponible.', 'success');
+                dispatch(removeError());
+            } else {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Oops...',
+                    text: 'El Nombre de cuenta no está disponible.'
+                });
+                dispatch(setError('El Nombre de cuenta no está disponible.', 'nombreCuenta'));
+            }
             dispatch(finishLoading());
 
         } catch (error) {
@@ -180,119 +179,137 @@ export const iniciarValidarIdUsuarioPorEmail = (email) => {
     }
 }
 
-export const iniciarValidarPreguntaSeguridad = (id, email) => {
-    return async (dispatch) => {
+export const iniciarObtenerPreguntaSeguridad = (nombreCuenta, email) => {
+    return async (dispatch, getState) => {
         try {
             dispatch(startLoading());
-            // const resp = await axios.get('Usuario/ConsultarPreguntaDeSeguridad', {
-            //     params: {
-            //         id,
-            //         email
-            //     }
-            // });
-            // const { respuesta, valor } = resp.data[0];
 
-            // if (resp.status === 200 && respuesta.resultado.severidad === 0) {
-            //     dispatch(setPreguntaSeguridad(valor));
-            // } else {
-            //     Swal.fire({
-            //         icon: 'error',
-            //         title: 'Oops...',
-            //         text: respuesta.resultado.descripcion
-            //     });
-            //     dispatch(setError(respuesta.resultado.descripcion));
-            // }
+            const resp = await fetchSinToken(`Usuario/ObtenerPreguntaSeguridad?${queryString.stringify({ email, nombreCuenta })}`);
+            const body = await resp.json();
+
+            if (resp.status === 200) {
+                const { formSeguridad } = getState().auth;
+                dispatch(setFormSeguridad({
+                    ...formSeguridad,
+                    pregunta: body,
+                    nombreCuenta,
+                    email
+                }))
+            }
+            else {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Oops...',
+                    text: body.errors[0].detail
+                });
+                dispatch(setError(body.errors[0].detail));
+            }
+
             dispatch(finishLoading());
-
-        } catch (error) {
+        }
+        catch (error) {
             console.log(error);
             dispatch(finishLoading());
             Swal.fire({
                 icon: 'error',
                 title: 'Oops...',
-                text: 'Por favor contactese con el administrador'
+                text: 'Ocurrió un error inesperado.'
             });
         }
     }
 }
 
-export const iniciarValidarRespuestaSeguridad = (id, email, respuestaSeguridad) => {
+export const iniciarValidarRespuestaSeguridad = (respuesta) => {
     return async (dispatch, getState) => {
         try {
             dispatch(startLoading());
 
-            // const { preguntaSeguridad: pregunta } = getState().auth;
-            // const resp = await axios.get('Usuario/ValidarRespuestaPreguntaDeSeguridad', {
-            //     params: {
-            //         id,
-            //         email,
-            //         pregunta,
-            //         respuesta: respuestaSeguridad
-            //     }
-            // });
-            // const { respuesta, valor } = resp.data[0];
+            const { formSeguridad } = getState().auth;
+            const { nombreCuenta, pregunta } = formSeguridad;
 
-            // if (resp.status === 200 && respuesta.resultado.severidad === 0) {
-            //     dispatch(setRespuestaSeguridad(valor));
-            // } else {
-            //     Swal.fire({
-            //         icon: 'error',
-            //         title: 'Oops...',
-            //         text: respuesta.resultado.descripcion
-            //     });
-            //     dispatch(setError(respuesta.resultado.descripcion));
-            // }
+            const resp = await fetchSinToken(`Usuario/ValidarRespuestaSeguridad?${queryString.stringify({
+                nombreCuenta,
+                pregunta,
+                respuesta
+            })}`);
+            const body = await resp.json();
+
+            if (resp.status === 200) {
+                dispatch(setFormSeguridad({
+                    ...formSeguridad,
+                    respuestaValida: body,
+                    respuesta
+                }));
+                if (!body)
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Oops...',
+                        text: 'La respuesta no es válida.'
+                    });
+            }
+            else {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Oops...',
+                    text: body.errors[0].detail
+                });
+                dispatch(setError(body.errors[0].detail));
+                dispatch(setFormSeguridad({
+                    ...formSeguridad,
+                    respuestaValida: false,
+                    respuesta
+                }));
+            }
             dispatch(finishLoading());
-
-        } catch (error) {
+        }
+        catch (error) {
             console.log(error);
             dispatch(finishLoading());
             Swal.fire({
                 icon: 'error',
                 title: 'Oops...',
-                text: 'Por favor contactese con el administrador'
+                text: 'Ocurrió un error inesperado.'
             });
         }
     }
 }
 
-const setPreguntaSeguridad = (preguntaSeguridad) => ({
-    type: types.authSetPreguntaSeguridad,
-    payload: preguntaSeguridad
+export const setFormSeguridad = (formSeguridad) => ({
+    type: types.authSetFormSeguridad,
+    payload: formSeguridad
 });
 
-const setRespuestaSeguridad = (respuestaSeguridad) => ({
-    type: types.authSetRespuestaSeguridadValida,
-    payload: respuestaSeguridad
+export const removerFormSeguridad = () => ({
+    type: types.authRemoverFormSeguridad
 });
 
-export const iniciarCambiarContraseña = (idUsuario, email, respuestaSeguridad, password) => {
+export const iniciarCambiarContraseña = (password) => {
     return async (dispatch, getState) => {
         try {
             dispatch(startLoading());
 
-            const { preguntaSeguridad: pregunta } = getState().auth;
+            const { formSeguridad } = getState().auth;
+            const { nombreCuenta, respuesta } = formSeguridad;
 
-            // const resp = await axios.post('Usuario/CambiarClaveConPreguntaSeg', {
-            //     idUsuario,
-            //     email,
-            //     pregunta,
-            //     respuesta: respuestaSeguridad,
-            //     claveNueva: password,
-            //     claveNuevaConfirmacion: password
-            // });
-            // const { respuesta, valor } = resp.data[0];
+            const resp = await fetchSinToken(`Usuario/ActualizarClavePorNombreCuenta`, {
+                nombreCuenta,
+                respuesta,
+                nuevaClave: password
+            }, 'PUT');
+            const body = await resp.json();
 
-            // if (resp.status === 200 && valor) {
-            //     Swal.fire('Success', 'Cambio de contraseña exitoso.', 'success');
-            // } else {
-            //     Swal.fire({
-            //         icon: 'error',
-            //         title: 'Oops...',
-            //         text: respuesta.resultado.descripcion
-            //     });
-            //     dispatch(setError(respuesta.resultado.descripcion));
-            // }
+            if (resp.status === 200) {
+                Swal.fire('Success', 'Cambio de contraseña exitoso.', 'success');
+                dispatch(removerFormSeguridad());
+            }
+            else {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Oops...',
+                    text: body.errors[0].detail
+                });
+                dispatch(setError(body.errors[0].detail));
+            }
             dispatch(finishLoading());
 
         } catch (error) {
@@ -326,19 +343,5 @@ export const iniciarComprobacion = () => {
     }
 }
 
-export const iniciarRemoverPreguntaYRespuesta = () => {
-    return (dispatch) => {
-        dispatch(removerPreguntaSeguridad());
-        dispatch(removerRespuestaSeguridad());
-    }
-}
-
 const finalizarComprobacion = () => ({ type: types.authFinalizarComprobacion });
 
-const removerPreguntaSeguridad = () => ({
-    type: types.authRemoverPreguntaSeguridad
-});
-
-const removerRespuestaSeguridad = () => ({
-    type: types.authRemoverRespuestaSeguridadValida
-});

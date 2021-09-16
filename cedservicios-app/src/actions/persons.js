@@ -16,16 +16,16 @@ export const iniciarAgregarPersona = (persona) => {
 }
 
 const agregarPersona = (persona) => ({
-    type: types.personaAgregada,
+    type: types.personaAgregarPersona,
     payload: persona
 });
 
 export const setPersonaActiva = (persona) => ({
-    type: types.personaSetActiva,
+    type: types.personaSetPersonaActiva,
     payload: persona
 });
 
-export const removerPersonaActiva = () => ({ type: types.personaRemoverActiva });
+export const removerPersonaActiva = () => ({ type: types.personaRemoverPersonaActiva });
 
 export const iniciarActualizarPersona = (person) => {
 
@@ -45,7 +45,7 @@ export const iniciarActualizarPersona = (person) => {
 }
 
 const actualizarPersona = (persona) => ({
-    type: types.personaActualizada,
+    type: types.personaActualizarPersona,
     payload: persona
 })
 
@@ -64,4 +64,16 @@ export const iniciarEliminarPersona = () => {
     }
 }
 
-const eliminarPersona = () => ({ type: types.personaEliminada });
+const eliminarPersona = () => ({ type: types.personaEliminarPersona });
+
+export const agregarFiltro = (filtro) => ({
+    type: types.personaAgregarFiltro,
+    payload: filtro
+});
+
+export const removerFiltro = (filtro) => ({
+    type: types.personaRemoverFiltro,
+    payload: filtro
+});
+
+export const removerLosFiltros = () => ({ type: types.personaRemoverLosFiltro });

@@ -12,9 +12,16 @@ const initialState = {
 const initialState = {
     comprobacion: true,
     nombreCompleto: null,
-    nombreCuenta: null,
+    nombreCuenta: '',
     email: null,
-    cuit: null
+    cuit: null,
+    formSeguridad: {
+        nombreCuenta: '',
+        email: '',
+        respuesta: '',
+        respuestaValida: false,
+        pregunta: '',
+    }
 }
 
 export const authReducer = (state = initialState, action) => {
@@ -40,25 +47,15 @@ export const authReducer = (state = initialState, action) => {
                 ...initialState,
                 comprobacion: false,
             };
-        case types.authSetPreguntaSeguridad:
+        case types.authSetFormSeguridad:
             return {
                 ...state,
-                preguntaSeguridad: action.payload
+                formSeguridad: action.payload
             };
-        case types.authRemoverPreguntaSeguridad:
+        case types.authRemoverFormSeguridad:
             return {
                 ...state,
-                preguntaSeguridad: null
-            };
-        case types.authSetRespuestaSeguridadValida:
-            return {
-                ...state,
-                respuestaSeguridad: action.payload
-            };
-        case types.authRemoverRespuestaSeguridadValida:
-            return {
-                ...state,
-                respuestaSeguridad: null
+                formSeguridad: null
             };
         default:
             return state;

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import {
@@ -14,61 +14,75 @@ import { useForm } from '../hooks/useForm';
 import {
     iniciarCambiarContraseña,
     iniciarValidarRespuestaSeguridad,
-    iniciarValidarPreguntaSeguridad,
-    iniciarRemoverPreguntaYRespuesta
+    iniciarObtenerPreguntaSeguridad,
+    removerFormSeguridad,
 } from '../actions/auth';
+
+const initForm = {
+    nombreCuenta: '',
+    email: '',
+    respuesta: '',
+    password: '',
+    password2: ''
+}
 
 export const CambiarPasswordScreen = () => {
 
     const history = useHistory();
     const dispatch = useDispatch();
-    const { question, validAnswer } = useSelector(state => state.auth);
+    const { formSeguridad } = useSelector(state => state.auth);
     const { loading } = useSelector(state => state.ui);
-    const { values: formValues, handleInputChange } = useForm({
-        userId: '',
-        email: '',
-        respuesta: '',
-        password: '',
-        password2: ''
-    });
+    const { values: formValues, handleInputChange, reset } = useForm(initForm);
+    const [password, setPassword] = useState('');
+    const [password2, setPassword2] = useState('');
 
     const {
-        userId,
+        nombreCuenta,
         email,
         respuesta,
-        password,
-        password2 } = formValues;
+        respuestaValida,
+        pregunta
+    } = formValues;
 
-    const handleSecurityQuestion = async (e) => {
+    const onSubmitPreguntaSeguridad = (e) => {
         e.preventDefault();
-        if (userId && validator.isEmail(email)) {
-            dispatch(
-                iniciarValidarPreguntaSeguridad(userId
-                    ,
-                    email));
+        if (nombreCuenta && validator.isEmail(email)) {
+            dispatch(iniciarObtenerPreguntaSeguridad(nombreCuenta, email));
         }
     }
 
-    const handleRequestPassword = (e) => {
+    const onSubmitRespuestaSeguridad = (e) => {
         e.preventDefault();
         if (respuesta.length > 4) {
-            dispatch(iniciarValidarRespuestaSeguridad(userId, email, respuesta));
+            dispatch(iniciarValidarRespuestaSeguridad(respuesta));
         }
     }
 
-    const handleConfirmPassword = (e) => {
+    const onSubmitCambiarClave = (e) => {
         e.preventDefault();
         if (password === password2) {
-            dispatch(iniciarCambiarContraseña(userId, email, respuesta, password));
+            dispatch(iniciarCambiarContraseña(password));
         } else {
             Swal.fire('Error', 'Las contraseñas no son iguales.', 'error');
         }
     }
 
     const handleCancel = () => {
-        dispatch(iniciarRemoverPreguntaYRespuesta());
+        dispatch(removerFormSeguridad());
         history.goBack();
     }
+
+    useEffect(() => {
+        if (formSeguridad) {
+            reset(formSeguridad);
+        }
+        else {
+            setTimeout(() => {
+                history.replace('/auth/ingresar');
+            }, 1000);
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [formSeguridad])
 
     return (
         <Container>
@@ -77,21 +91,21 @@ export const CambiarPasswordScreen = () => {
             <span>Para establecer una nueva Contraseña para su cuenta eFact, siga las siguientes instrucciones: </span>
             <br />
             <br />
-            <Form onSubmit={handleSecurityQuestion}>
+            <Form onSubmit={onSubmitPreguntaSeguridad}>
                 <Row>
-                    <span >1) Ingrese Id.Usuario e Email
+                    <span >1) Ingrese Nombre de cuenta e Email
                         (luego haga clic en el botón 'Solicitar Pregunta de seguridad').
                     </span>
                 </Row>
                 <Row>
                     <Col>
                         <Form.Control
-                            name="userId"
+                            name="nombreCuenta"
                             type="text"
                             autoComplete="none"
-                            value={userId}
+                            value={nombreCuenta}
                             onChange={handleInputChange}
-                            placeholder="ID Usuario" />
+                            placeholder="Nombre de cuenta" />
                     </Col>
                     <Col>
                         <Form.Control
@@ -110,7 +124,7 @@ export const CambiarPasswordScreen = () => {
                 </Button>
             </Form>
             <br />
-            <Form onSubmit={handleRequestPassword}>
+            <Form onSubmit={onSubmitRespuestaSeguridad}>
                 <Row>
                     <span >2) Responda la Pregunta de Seguridad
                         (luego haga clic en el botón 'Solicitar nuevo ingreso de Contraseña')
@@ -119,7 +133,7 @@ export const CambiarPasswordScreen = () => {
                         <span>
                             <strong>
                                 {
-                                    (question) && `¿${question}?`
+                                    (pregunta) && `¿${pregunta}?`
                                 }
                             </strong>
                         </span>
@@ -141,14 +155,14 @@ export const CambiarPasswordScreen = () => {
                     </Col>
                 </Row>
                 <Button
-                    disabled={!question}
+                    disabled={!pregunta}
                     variant="dark"
                     type="submit" >
                     Solicitar nuevo ingreso de Contraseña
                 </Button>
             </Form>
             <br />
-            <Form onSubmit={handleConfirmPassword}>
+            <Form onSubmit={onSubmitCambiarClave}>
                 <Row>
                     <Col>
                         <span >
@@ -164,7 +178,7 @@ export const CambiarPasswordScreen = () => {
                             type="password"
                             name="password"
                             value={password}
-                            onChange={handleInputChange}
+                            onChange={(e) => setPassword(e.target.value)}
                             placeholder="Contraseña Nueva" />
                     </Col>
                     <Col>
@@ -172,7 +186,7 @@ export const CambiarPasswordScreen = () => {
                             type="password"
                             name="password2"
                             value={password2}
-                            onChange={handleInputChange}
+                            onChange={(e) => setPassword2(e.target.value)}
                             placeholder="Confirmar contraseña" />
                     </Col>
                 </Row>
@@ -180,7 +194,7 @@ export const CambiarPasswordScreen = () => {
                     <Col></Col>
                     <Col>
                         <Button
-                            disabled={!validAnswer}
+                            disabled={!respuestaValida}
                             variant="dark"
                             type="submit" >
                             Acceptar

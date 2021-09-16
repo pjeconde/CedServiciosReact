@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { useSelector } from 'react-redux';
+import React, { useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 
 import DataTable from 'react-data-table-component';
 import { BadgeStatus } from '../components/ui/BadgeStatus';
@@ -14,6 +14,7 @@ import { ButtonDetalle } from '../components/ui/personas/ButtonDetalle';
 import { ButtonEliminar } from '../components/ui/personas/ButtonEliminar';
 import { ModalEliminar } from '../components/dashboardPrivate/persona/ModalEliminar';
 import { FiltroAplicados } from '../components/ui/FiltroAplicados';
+import { removerFiltro, removerLosFiltros } from '../actions/persons';
 
 export const PaginationOptions = { rowsPerPageText: 'Filas por pagina' };
 
@@ -111,26 +112,34 @@ const columnaPersonas = [
 
 export const PersonaScreen = () => {
 
+    const dispatch = useDispatch();
     const { personas } = useSelector(state => state.persona);
-
+    const { filtro } = useSelector(state => state.persona);
+    const [filtrosAplicado, setFiltrosAplicado] = useState([]);
     const [filterText, setFilterText] = useState('');
-    const [filtroAplicados, setFiltroAplicados] = useState({
-        razonSocial: 'Banco Patagonia',
-        numeroDocumento: '20398724357',
-        estado: 'Vigente'
-    })
 
     const handleOnChangeFilterText = (value) => {
         setFilterText(value);
     }
 
     const handleEliminarFiltro = (f) => {
-        console.log(f);
+        dispatch(removerFiltro(f));
     }
 
     const handleEliminarFiltros = () => {
-        console.log('Eliminar todos los filtros');
+        dispatch(removerLosFiltros());
     }
+
+    useEffect(() => {
+        if (filtro) {
+            setFiltrosAplicado(Object.keys(filtro).map(
+                (i) => ({ key: i, value: filtro[i]?.value ? filtro[i].value : filtro[i] })
+            ));
+        }
+        else {
+            setFiltrosAplicado([]);
+        }
+    }, [filtro])
 
     return (
         <div>
@@ -158,10 +167,10 @@ export const PersonaScreen = () => {
                     <div className="card">
                         <div className="card-body">
                             {
-                                filtroAplicados &&
+                                filtrosAplicado.length > 0 &&
                                 (
                                     <FiltroAplicados
-                                        filtros={filtroAplicados}
+                                        filtros={filtrosAplicado}
                                         eliminarFiltro={handleEliminarFiltro}
                                         eliminarFiltros={handleEliminarFiltros} />
                                 )

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
 import Select from 'react-select';
@@ -6,23 +6,28 @@ import { Button, Form, Modal } from 'react-bootstrap';
 import { useForm } from '../../../hooks/useForm';
 import { Estados } from '../../../helpers/estados';
 import { closeModal, openModal } from '../../../actions/ui';
+import { agregarFiltro } from '../../../actions/persons';
 
 const nameModal = 'filtroPersona';
 const typeModal = 'filtro';
+
+const initForm = {
+    razonSocial: '',
+    numeroDocumento: '',
+    estado: { value: 'Todos', label: 'Todos' }
+};
 
 export const ModalFiltro = () => {
 
     const dispatch = useDispatch();
     const { showModal } = useSelector(state => state.ui);
+    const { filtro } = useSelector(state => state.persona);
 
     const { values,
         handleInputChange,
         handleDropdownChange,
-        handleInputNumericChange } = useForm({
-            razonSocial: '',
-            numeroDocumento: '',
-            estado: { value: 'Todos', label: 'Todos' }
-        })
+        handleInputNumericChange,
+        reset } = useForm(initForm);
 
     const { razonSocial, numeroDocumento, estado } = values;
 
@@ -32,8 +37,19 @@ export const ModalFiltro = () => {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        console.log(`values`, values);
+        dispatch(agregarFiltro(values));
+        handleClose();
     }
+
+    useEffect(() => {
+        if (filtro) {
+            reset(filtro);
+        }
+        else {
+            reset(initForm);
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [filtro])
 
     return (
         <div>

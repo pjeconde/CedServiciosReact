@@ -2,6 +2,7 @@ import React from 'react';
 import { Button } from 'react-bootstrap';
 
 export const FiltroAplicados = ({ filtros, eliminarFiltro, eliminarFiltros }) => {
+    
     return (
         <div className="filter__container">
             <span>Filtrado por:</span>
@@ -9,13 +10,16 @@ export const FiltroAplicados = ({ filtros, eliminarFiltro, eliminarFiltros }) =>
                 {
                     filtros &&
                     (
-                        Object.values(filtros).map((f, i) => (
-                            <li key={i} className="filter__badge--dismissible">
-                                <button onClick={() => eliminarFiltro(f)} type="button">
-                                    <span className="mx-2 py-1" >&times;</span>
-                                </button>
-                                {f}
-                            </li>
+                        filtros.map(({ key, value }) => (
+                            value &&
+                            (
+                                <li key={key} className="filter__badge--dismissible">
+                                    <button onClick={() => eliminarFiltro(key)} type="button">
+                                        <span className="mx-2 py-1" >&times;</span>
+                                    </button>
+                                    {value}
+                                </li>
+                            )
                         ))
                     )
                 }

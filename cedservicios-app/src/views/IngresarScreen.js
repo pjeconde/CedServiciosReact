@@ -88,13 +88,13 @@ export const IngresarScreen = () => {
                 </button>
                 <hr className="my-4" />
                 <div className="auth__enlaces">
-                  <Link to="/auth/register" className="link">
+                  <Link to="/auth/registrar" className="link">
                     Registrarse
                   </Link>
-                  <Link to="/auth/recover/userId" className="link">
+                  <Link to="/auth/recuperar/nombreCuenta" className="link">
                     ¿Olvidó su usuario?
                   </Link>
-                  <Link to="/auth/recover/password" className="link">
+                  <Link to="/auth/recuperar/clave" className="link">
                     ¿Olvidó su clave?
                   </Link>
                 </div>

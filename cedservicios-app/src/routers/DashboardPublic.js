@@ -17,10 +17,10 @@ export const DashboardPublic = () => {
 
                 <Switch>
                     <Route exact path="/auth" component={HomeScreen} />
-                    <Route exact path="/auth/login" component={IngresarScreen} />
-                    <Route exact path="/auth/register" component={RegistrarScreen} />
-                    <Route exact path="/auth/recover/userId" component={RecuperarIdUsuarioScreen} />
-                    <Route exact path="/auth/recover/password" component={CambiarPasswordScreen} />
+                    <Route exact path="/auth/ingresar" component={IngresarScreen} />
+                    <Route exact path="/auth/registrar" component={RegistrarScreen} />
+                    <Route exact path="/auth/recuperar/nombreCuenta" component={RecuperarIdUsuarioScreen} />
+                    <Route exact path="/auth/recuperar/clave" component={CambiarPasswordScreen} />
 
                     <Redirect to="/auth" />
                 </Switch>

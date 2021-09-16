@@ -11,7 +11,7 @@ import {
 import { textoTerminoYCondiciones } from '../helpers/terminoYCondiciones';
 
 import { useForm } from '../hooks/useForm';
-import { iniciarValidarIdUsuarioPorId, iniciarRegistroUsuario } from '../actions/auth';
+import { iniciarValidarNombreCuenta, iniciarRegistroUsuario } from '../actions/auth';
 import { removeError, setError } from '../actions/ui';
 
 export const RegistrarScreen = () => {
@@ -22,15 +22,15 @@ export const RegistrarScreen = () => {
     const [validated, setValidated] = useState(false);
 
     const { values: formValues, handleInputChange } = useForm({
-        nombreCuenta: 'gmontiel',
-        telefono: '1010202030',
-        email: 'prueba@gmail.com',
-        nombre: 'German',
-        apellido: 'Montiel',
-        clave: '123456',
-        clave2: '123456',
-        pregunta: 'Pregunta de seguridad',
-        respuesta: 'respuesta',
+        nombreCuenta: '',
+        telefono: '',
+        email: '',
+        nombre: '',
+        apellido: '',
+        clave: '',
+        clave2: '',
+        pregunta: '',
+        respuesta: '',
     });
 
     const {
@@ -63,9 +63,9 @@ export const RegistrarScreen = () => {
         setValidated(false);
     }
 
-    const handleCkecUserId = () => {
+    const handleValidarIdUsuario = () => {
         if (nombreCuenta) {
-            dispatch(iniciarValidarIdUsuarioPorId(nombreCuenta));
+            dispatch(iniciarValidarNombreCuenta(nombreCuenta));
         }
     }
 
@@ -76,6 +76,10 @@ export const RegistrarScreen = () => {
     const isFormValid = () => {
         if (!nombreCuenta || nombreCuenta.trim().length < 5) {
             dispatch(setError('Nombre de cuenta no válido.', 'nombreCuenta'));
+            return false;
+        }
+        else if (nombreCuenta === label) {
+            dispatch(setError('El nombre de cuenta no disponible.', 'nombreCuenta'));
             return false;
         }
         else if (!nombre) {
@@ -114,7 +118,10 @@ export const RegistrarScreen = () => {
                 validated={validated} >
                 <Row style={{ margin: '5px' }}>
                     <Col sm={2}>
-                        <Form.Label>Nombre</Form.Label>
+                        <Form.Label>
+                            Nombre
+                            <span> (*)</span>
+                        </Form.Label>
                     </Col>
                     <Col sm={4}>
                         <Form.Control
@@ -192,7 +199,7 @@ export const RegistrarScreen = () => {
                         <Button
                             style={{ marginTop: '0' }}
                             variant="secondary"
-                            onClick={handleCkecUserId}
+                            onClick={handleValidarIdUsuario}
                         >
                             ¿Nombre de cuenta disponible?
                         </Button>
