@@ -1,7 +1,7 @@
 import React from 'react';
 import { useDispatch } from 'react-redux';
 import { Button } from 'react-bootstrap';
-import { setPersonaActiva } from '../../../actions/persons';
+import { setPersonaActiva } from '../../../actions/persona';
 import { openModal } from '../../../actions/ui';
 
 const nameModal = 'modalPersona';

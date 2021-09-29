@@ -14,7 +14,8 @@ import { ButtonDetalle } from '../components/ui/personas/ButtonDetalle';
 import { ButtonEliminar } from '../components/ui/personas/ButtonEliminar';
 import { ModalEliminar } from '../components/dashboardPrivate/persona/ModalEliminar';
 import { FiltroAplicados } from '../components/ui/FiltroAplicados';
-import { removerFiltro, removerLosFiltros } from '../actions/persons';
+import { iniciarObtenerPersonas, removerFiltro, removerLosFiltros } from '../actions/persona';
+import { setPaginaActual, setRegistrosPorPagina } from '../actions/grilla';
 
 export const PaginationOptions = { rowsPerPageText: 'Filas por pagina' };
 
@@ -41,19 +42,10 @@ const columnaPersonas = [
             fontWeight: 700,
         }
     },
-    // {
-    //     name: 'TipoDni',
-    //     selector: 'tipoDni',
-    // },
-    // {
-    //     selector: 'tipoPersona',
-    //     omit: true,
-    //     cell: row => row.tipoPersona.label
-    // },
     {
         name: 'TipoDocumento',
         selector: 'tipoDocumento',
-        cell: row => row.tipoDocumento.label,
+        cell: row => row.tipoDocumento?.descripcion,
         sortable: true
     },
     {
@@ -61,12 +53,8 @@ const columnaPersonas = [
         selector: 'razonSocial'
     },
     {
-        name: 'Direccion',
-        cell: (row) => `${row.calle} ${row.nro}`
-    },
-    {
         name: 'Localidad',
-        selector: 'localidad'
+        selector: 'domicilio.localidad'
     },
     // {
     //     name: 'C.P',
@@ -74,7 +62,7 @@ const columnaPersonas = [
     // },
     {
         name: 'NombreContacto',
-        selector: 'nombreContacto',
+        selector: 'contacto.nombre',
         sortable: true,
         grow: 2
     },
@@ -84,13 +72,13 @@ const columnaPersonas = [
     // },
     {
         name: 'Email',
-        selector: 'email'
+        selector: 'contacto.email'
     },
     {
 
         name: 'Estado',
         selector: 'estado',
-        cell: row => <BadgeStatus status={row.estado} text={row.estado ? 'Activo' : 'Inactivo'} />,
+        cell: row => <BadgeStatus status={row.estado.id === 1} text={row.estado.descripcion} />,
         center: true
     },
     {
@@ -113,8 +101,9 @@ const columnaPersonas = [
 export const PersonaScreen = () => {
 
     const dispatch = useDispatch();
-    const { personas } = useSelector(state => state.persona);
-    const { filtro } = useSelector(state => state.persona);
+    const { personas, filtro } = useSelector(state => state.persona);
+    const { loading } = useSelector(state => state.ui);
+    const { cuentaTotal } = useSelector(state => state.grilla);
     const [filtrosAplicado, setFiltrosAplicado] = useState([]);
     const [filterText, setFilterText] = useState('');
 
@@ -130,6 +119,16 @@ export const PersonaScreen = () => {
         dispatch(removerLosFiltros());
     }
 
+    const handleCambiarPagina = (pagina) => {
+        dispatch(setPaginaActual(pagina));
+        dispatch(iniciarObtenerPersonas());
+    }
+
+    const handleFilasPorPagina = (filas) => {
+        dispatch(setRegistrosPorPagina(filas));
+        dispatch(iniciarObtenerPersonas());
+    }
+
     useEffect(() => {
         if (filtro) {
             setFiltrosAplicado(Object.keys(filtro).map(
@@ -140,6 +139,10 @@ export const PersonaScreen = () => {
             setFiltrosAplicado([]);
         }
     }, [filtro])
+
+    useEffect(() => {
+        dispatch(iniciarObtenerPersonas());
+    }, [dispatch])
 
     return (
         <div>
@@ -178,12 +181,17 @@ export const PersonaScreen = () => {
                             <div className="datatable">
                                 <DataTable
                                     key="datatable-personas"
-                                    keyField="numeroDocumento"
+                                    keyField="id"
                                     columns={columnaPersonas}
                                     data={personas}
+                                    progressPending={loading}
                                     pagination
-                                    paginationTotalRows={50}
+                                    paginationServer
+                                    paginationTotalRows={cuentaTotal}
+                                    paginationDefaultPage={1}
                                     paginationComponentOptions={PaginationOptions}
+                                    onChangePage={handleCambiarPagina}
+                                    onChangeRowsPerPage={handleFilasPorPagina}
                                     expandableRows={true}
                                     expandableRowsComponent={<Expanded />}
                                     customStyles={customStyles}

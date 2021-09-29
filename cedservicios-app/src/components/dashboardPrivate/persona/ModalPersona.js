@@ -11,7 +11,7 @@ import {
 } from 'react-bootstrap';
 
 import { closeModal } from '../../../actions/ui';
-import { removerPersonaActiva, iniciarAgregarPersona, iniciarActualizarPersona } from '../../../actions/persons';
+import { removerPersonaActiva, iniciarAgregarPersona, iniciarActualizarPersona } from '../../../actions/persona';
 import { tipoDePersonas } from '../../../helpers/tipoPersona';
 import { tipoDocumentos } from '../../../helpers/tipoDocumento';
 import { condIngBrutos, condIva, provincias } from '../../../helpers/admin';
@@ -27,26 +27,25 @@ const initPerson = {
     tipoDocumento: { value: 80, label: 'CUIT' },
     provincia: { value: 1, label: 'Buenos Aires' },
     condicionIva: '',
-    condicionIngresoBrutos: '',
-    idPersona: '',
-    razonSocial: '',
+    condicionIngresoBruto: '',
     calle: '',
-    nro: '',
+    numero: '',
     piso: '',
-    depto: '',
+    departamento: '',
     sector: '',
     torre: '',
     manzana: '',
     localidad: '',
     codigoPostal: '',
-    nombreContacto: '',
+    descripcion: '',
+    razonSocial: '',
+    nombre: '',
     email: '',
     telefono: '',
-    numeroIngresoBrutos: '',
-    dateStart: moment().format("YYYY-MM-DD"),
     gln: '',
     codigoInterno: '',
-    estado: true
+    numeroIngresoBruto: '',
+    fechaInicioActividades: moment().format("YYYY-MM-DD"),
 };
 
 export const ModalPersona = () => {
@@ -69,27 +68,27 @@ export const ModalPersona = () => {
     const { tipoPersona,
         tipoDocumento,
         numeroDocumento,
-        idPersona,
+        descripcion,
         razonSocial,
+        numeroIngresoBruto,
+        fechaInicioActividades,
+        condicionIva,
+        provincia,
+        condicionIngresoBruto,
         calle,
-        nro,
+        numero,
         piso,
-        depto,
+        departamento,
         sector,
         torre,
         manzana,
         localidad,
         codigoPostal,
-        nombreContacto,
+        nombre,
         email,
         telefono,
-        numeroIngresoBrutos,
-        dateStart,
         gln,
-        codigoInterno,
-        condicionIva,
-        provincia,
-        condicionIngresoBrutos } = formValues;
+        codigoInterno } = formValues;
 
     const handleCloseModal = () => {
         dispatch(closeModal());
@@ -175,7 +174,7 @@ export const ModalPersona = () => {
                                     onChange={handleDropdownChange} />
                             </div>
                             <div className="col-sm-6 col-md-6 col-lg-4">
-                                <Form.Label>Nro documento</Form.Label>
+                                <Form.Label>Numero documento</Form.Label>
                                 <Form.Control
                                     type="text"
                                     name="numeroDocumento"
@@ -187,14 +186,14 @@ export const ModalPersona = () => {
                                 />
                             </div>
                             <div className="col-sm-12 col-md-6 col-lg-4">
-                                <Form.Label>Id persona</Form.Label>
+                                <Form.Label>Descripcion</Form.Label>
                                 <Form.Control
                                     type="text"
-                                    name="idPersona"
-                                    disabled={!camposHabilitados["idPersona"]}
+                                    name="descripcion"
+                                    disabled={!camposHabilitados["descripcion"]}
                                     autoComplete="off"
                                     maxLength="50"
-                                    value={idPersona}
+                                    value={descripcion}
                                     onChange={handleInputChange}
                                 />
                             </div>
@@ -209,13 +208,13 @@ export const ModalPersona = () => {
                                     onChange={handleInputChange} />
                             </div>
                             <div className="col-sm-12 col-md-12 col-lg-6">
-                                <Form.Label htmlFor="nombreContacto">Nombre de Contacto</Form.Label>
+                                <Form.Label htmlFor="nombre">Nombre de Contacto</Form.Label>
                                 <Form.Control
                                     type="text"
-                                    name="nombreContacto"
-                                    disabled={!camposHabilitados["nombreContacto"]}
+                                    name="nombre"
+                                    disabled={!camposHabilitados["nombre"]}
                                     required
-                                    value={nombreContacto}
+                                    value={nombre || ''}
                                     onChange={handleInputChange} />
                             </div>
                             <div className="col-sm-12 col-md-12 col-lg-6">
@@ -226,7 +225,7 @@ export const ModalPersona = () => {
                                     disabled={!camposHabilitados["telefono"]}
                                     required
                                     autoComplete="none"
-                                    value={telefono}
+                                    value={telefono || ''}
                                     onChange={handleInputNumericChange} />
                             </div>
                             <div className="col-sm-12 col-md-12 col-lg-6">
@@ -237,7 +236,7 @@ export const ModalPersona = () => {
                                     disabled={!camposHabilitados["email"]}
                                     required
                                     autoComplete="none"
-                                    value={email}
+                                    value={email || ''}
                                     onChange={handleInputChange} />
                             </div>
                             <div className="col-sm-12 col-md-12 col-lg-6">
@@ -258,7 +257,7 @@ export const ModalPersona = () => {
                                     name="localidad"
                                     disabled={!camposHabilitados["localidad"]}
                                     required
-                                    value={localidad}
+                                    value={localidad || ''}
                                     onChange={handleInputChange} />
                             </div>
                             <div className="col-sm-12 col-md-4 col-lg-3">
@@ -268,7 +267,7 @@ export const ModalPersona = () => {
                                     name="codigoPostal"
                                     disabled={!camposHabilitados["codigoPostal"]}
                                     required
-                                    value={codigoPostal}
+                                    value={codigoPostal || ''}
                                     onChange={handleInputChange}
                                     maxLength="6" />
                             </div>
@@ -279,18 +278,18 @@ export const ModalPersona = () => {
                                     name="calle"
                                     disabled={!camposHabilitados["calle"]}
                                     required
-                                    value={calle}
+                                    value={calle || ''}
                                     onChange={handleInputChange} />
                             </div>
                             <div className="col-sm-6 col-md-4 col-lg-4">
-                                <Form.Label htmlFor="nro">Nro.</Form.Label>
+                                <Form.Label htmlFor="numero">Numero</Form.Label>
                                 <Form.Control
                                     type="text"
-                                    name="nro"
-                                    disabled={!camposHabilitados["nro"]}
+                                    name="numero"
+                                    disabled={!camposHabilitados["numero"]}
                                     autoComplete="off"
                                     required
-                                    value={nro}
+                                    value={numero || ''}
                                     onChange={handleInputNumericChange} />
                             </div>
                             <div className="col-sm-6 col-md-4 col-lg-4">
@@ -300,17 +299,17 @@ export const ModalPersona = () => {
                                     autoComplete="off"
                                     name="piso"
                                     disabled={!camposHabilitados["piso"]}
-                                    value={piso}
+                                    value={piso || ''}
                                     onChange={handleInputNumericChange} />
                             </div>
                             <div className="col-sm-6 col-md-4 col-lg-4">
-                                <Form.Label htmlFor="depto">Depto.</Form.Label>
+                                <Form.Label htmlFor="departamento">Departamento.</Form.Label>
                                 <Form.Control
                                     type="text"
                                     autoComplete="off"
-                                    name="depto"
-                                    disabled={!camposHabilitados["depto"]}
-                                    value={depto}
+                                    name="departamento"
+                                    disabled={!camposHabilitados["departamento"]}
+                                    value={departamento || ''}
                                     onChange={handleInputChange} />
                             </div>
                             <div className="col-sm-6 col-md-4 col-lg-4">
@@ -320,7 +319,7 @@ export const ModalPersona = () => {
                                     autoComplete="off"
                                     name="sector"
                                     disabled={!camposHabilitados["sector"]}
-                                    value={sector}
+                                    value={sector || ''}
                                     onChange={handleInputChange} />
                             </div>
                             <div className="col-sm-6 col-md-4 col-lg-4">
@@ -330,7 +329,7 @@ export const ModalPersona = () => {
                                     autoComplete="off"
                                     name="torre"
                                     disabled={!camposHabilitados["torre"]}
-                                    value={torre}
+                                    value={torre || ''}
                                     onChange={handleInputChange} />
                             </div>
                             <div className="col-sm-6 col-md-4 col-lg-4">
@@ -340,7 +339,7 @@ export const ModalPersona = () => {
                                     autoComplete="off"
                                     name="manzana"
                                     disabled={!camposHabilitados["manzana"]}
-                                    value={manzana}
+                                    value={manzana || ''}
                                     onChange={handleInputChange} />
                             </div>
                             <div className="col-sm-12 col-md-6 col-lg-5">
@@ -355,32 +354,32 @@ export const ModalPersona = () => {
                                     classNamePrefix="react-select" />
                             </div>
                             <div className="col-sm-12 col-md-6 col-lg-5">
-                                <Form.Label htmlFor="condicionIngresoBrutos">Cond. Ing Brutos</Form.Label>
+                                <Form.Label htmlFor="condicionIngresoBruto">Cond. Ing Brutos</Form.Label>
                                 <Select
-                                    name="condicionIngresoBrutos"
-                                    isDisabled={!camposHabilitados["condicionIngresoBrutos"]}
+                                    name="condicionIngresoBruto"
+                                    isDisabled={!camposHabilitados["condicionIngresoBruto"]}
                                     placeholder=""
                                     options={condIngBrutos}
-                                    value={condicionIngresoBrutos}
+                                    value={condicionIngresoBruto}
                                     onChange={handleDropdownChange}
                                     classNamePrefix="react-select" />
                             </div>
                             <div className="col-sm-6 col-md-4 col-lg-2">
-                                <Form.Label htmlFor="numeroIngresoBrutos">Ing. Brutos</Form.Label>
+                                <Form.Label htmlFor="numeroIngresoBruto">Ing. Brutos</Form.Label>
                                 <Form.Control
                                     type="text"
-                                    name="numeroIngresoBrutos"
-                                    disabled={!camposHabilitados["numeroIngresoBrutos"]}
-                                    value={numeroIngresoBrutos}
+                                    name="numeroIngresoBruto"
+                                    disabled={!camposHabilitados["numeroIngresoBruto"]}
+                                    value={numeroIngresoBruto}
                                     onChange={handleInputChange} />
                             </div>
                             <div className="col-sm-12 col-md-8 col-lg-6">
-                                <Form.Label htmlFor="dateStart">Fecha inicio de actividades</Form.Label>
+                                <Form.Label htmlFor="fechaInicioActividades">Fecha inicio de actividades</Form.Label>
                                 <Form.Control
                                     type="date"
-                                    name="dateStart"
-                                    disabled={!camposHabilitados["dateStart"]}
-                                    value={dateStart}
+                                    name="fechaInicioActividades"
+                                    disabled={!camposHabilitados["fechaInicioActividades"]}
+                                    value={fechaInicioActividades}
                                     onChange={handleInputChange} />
                             </div>
                             <div className="col-sm-12 col-md-6 col-lg-3">
@@ -390,7 +389,7 @@ export const ModalPersona = () => {
                                     name="gln"
                                     disabled={!camposHabilitados["gln"]}
                                     maxLength="13"
-                                    value={gln}
+                                    value={gln || ''}
                                     onChange={handleInputChange} />
                             </div>
                             <div className="col-sm-12 col-md-6 col-lg-3">
@@ -400,7 +399,7 @@ export const ModalPersona = () => {
                                     name="codigoInterno"
                                     disabled={!camposHabilitados["codigoInterno"]}
                                     maxLength="20"
-                                    value={codigoInterno}
+                                    value={codigoInterno || ''}
                                     onChange={handleInputChange} />
                             </div>
                         </div>

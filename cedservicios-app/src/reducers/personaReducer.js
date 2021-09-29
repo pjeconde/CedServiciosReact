@@ -1,15 +1,7 @@
 import { types } from '../types/types';
-import DatoPersonas from '../data-static/persona/personas.json';
-
-/*
-const initialState = {
-    persons: Personas,
-    activePerson: null
-};
-*/
 
 const initialState = {
-    personas: DatoPersonas,
+    personas: [],
     personaActiva: null,
     filtro: null
 };
@@ -17,6 +9,11 @@ const initialState = {
 export const personaReducer = (state = initialState, action) => {
 
     switch (action.type) {
+        case types.personaCargarPersonas:
+            return {
+                ...state,
+                personas: [...action.payload]
+            };
         case types.personaAgregarPersona:
             return {
                 ...state,

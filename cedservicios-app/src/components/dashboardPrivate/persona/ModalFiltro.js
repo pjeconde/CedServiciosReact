@@ -6,7 +6,7 @@ import { Button, Form, Modal } from 'react-bootstrap';
 import { useForm } from '../../../hooks/useForm';
 import { Estados } from '../../../helpers/estados';
 import { closeModal, openModal } from '../../../actions/ui';
-import { agregarFiltro } from '../../../actions/persons';
+import { agregarFiltro } from '../../../actions/persona';
 
 const nameModal = 'filtroPersona';
 const typeModal = 'filtro';

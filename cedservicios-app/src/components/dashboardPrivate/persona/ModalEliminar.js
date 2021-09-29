@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Modal, Button, InputGroup, Form } from 'react-bootstrap';
 import { closeModal } from '../../../actions/ui';
-import { iniciarEliminarPersona, removerPersonaActiva } from '../../../actions/persons';
+import { iniciarEliminarPersona, removerPersonaActiva } from '../../../actions/persona';
 
 const nameModal = 'modalEliminarPersona';
 

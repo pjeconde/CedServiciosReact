@@ -3,27 +3,27 @@ const getFieldsByStatus = (status) => ({
     numeroDocumento: status,
     tipoPersona: status,
     tipoDocumento: status,
-    idPersona: status,
+    descripcion: status,
     razonSocial: status,
     calle: status,
-    nro: status,
+    numero: status,
     piso: status,
-    depto: status,
+    departamento: status,
     sector: status,
     torre: status,
     manzana: status,
     localidad: status,
     codigoPostal: status,
-    nombreContacto: status,
+    nombre: status,
     email: status,
     telefono: status,
-    numeroIngresoBrutos: status,
-    dateStart: status,
+    numeroIngresoBruto: status,
+    fechaInicioActividades: status,
     gln: status,
     codigoInterno: status,
     provincia: status,
     condicionIva: status,
-    condicionIngresoBrutos: status,
+    condicionIngresoBruto: status,
 });
 
 export const getCamposHabilitados = (tipoModal) => {
@@ -40,7 +40,7 @@ export const getCamposHabilitados = (tipoModal) => {
                 ...formPersona,
                 tipoDocumento: false,
                 numeroDocumento: false,
-                idPersona: false
+                descripcion: false
             };
         case 'Detalle':
             formPersona = getFieldsByStatus(false);

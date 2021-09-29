@@ -21,5 +21,10 @@ export const types = {
     personaCargarPersonas: '[persona] Personas cargada',
     personaAgregarFiltro: '[persona] Filtro agregado',
     personaRemoverFiltro: '[persona] Filtro removido',
-    personaRemoverLosFiltro: '[persona] Filtros removidos'
+    personaRemoverLosFiltro: '[persona] Filtros removidos',
+
+    grillaSetPaginaActual: '[grilla] Set pagina actual',
+    grillaSetRegistrosPorPagina: '[grilla] Set registros por pagina',
+    grillaSetDatosGrilla: '[grilla] Set datos grilla'
+
 };
