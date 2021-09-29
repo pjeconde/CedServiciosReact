@@ -1,7 +1,8 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import validator from 'validator';
+import Swal from 'sweetalert2';
 import {
     Form,
     Col,
@@ -11,8 +12,9 @@ import {
 import { textoTerminoYCondiciones } from '../helpers/terminoYCondiciones';
 
 import { useForm } from '../hooks/useForm';
-import { iniciarValidarNombreCuenta, iniciarRegistroUsuario } from '../actions/auth';
+import { iniciarValidarNombreUsuario, iniciarRegistroUsuario } from '../actions/auth';
 import { removeError, setError } from '../actions/ui';
+
 
 export const RegistrarScreen = () => {
 
@@ -22,7 +24,7 @@ export const RegistrarScreen = () => {
     const [validated, setValidated] = useState(false);
 
     const { values: formValues, handleInputChange } = useForm({
-        nombreCuenta: '',
+        nombreUsuario: '',
         telefono: '',
         email: '',
         nombre: '',
@@ -34,7 +36,7 @@ export const RegistrarScreen = () => {
     });
 
     const {
-        nombreCuenta,
+        nombreUsuario,
         nombre,
         apellido,
         telefono,
@@ -49,7 +51,7 @@ export const RegistrarScreen = () => {
         e.preventDefault();
         if (isFormValid()) {
             dispatch(iniciarRegistroUsuario({
-                nombreCuenta,
+                nombreUsuario,
                 nombre,
                 apellido,
                 clave,
@@ -63,9 +65,9 @@ export const RegistrarScreen = () => {
         setValidated(false);
     }
 
-    const handleValidarIdUsuario = () => {
-        if (nombreCuenta) {
-            dispatch(iniciarValidarNombreCuenta(nombreCuenta));
+    const handleValidarNombreUsuario = () => {
+        if (nombreUsuario) {
+            dispatch(iniciarValidarNombreUsuario(nombreUsuario));
         }
     }
 
@@ -74,12 +76,12 @@ export const RegistrarScreen = () => {
     }
 
     const isFormValid = () => {
-        if (!nombreCuenta || nombreCuenta.trim().length < 5) {
-            dispatch(setError('Nombre de cuenta no válido.', 'nombreCuenta'));
+        if (!nombreUsuario) {
+            dispatch(setError('Nombre de usuario no válido.', 'nombreUsuario'));
             return false;
         }
-        else if (nombreCuenta === label) {
-            dispatch(setError('El nombre de cuenta no disponible.', 'nombreCuenta'));
+        else if (nombreUsuario === label) {
+            dispatch(setError('Nombre de usuario no disponible.', 'nombreUsuario'));
             return false;
         }
         else if (!nombre) {
@@ -110,6 +112,16 @@ export const RegistrarScreen = () => {
         return true;
     }
 
+    useEffect(() => {
+        if (msgError) {
+            Swal.fire({
+                icon: 'error',
+                title: 'Error',
+                text: msgError
+            });
+        }
+    }, [msgError])
+
     return (
         <div className="container" >
             <Form
@@ -120,7 +132,6 @@ export const RegistrarScreen = () => {
                     <Col sm={2}>
                         <Form.Label>
                             Nombre
-                            <span> (*)</span>
                         </Form.Label>
                     </Col>
                     <Col sm={4}>
@@ -183,25 +194,25 @@ export const RegistrarScreen = () => {
                 </Row>
                 <Row style={{ margin: '5px' }}>
                     <Col sm={2}>
-                        <Form.Label>Nombre Cuenta</Form.Label>
+                        <Form.Label>Nombre Usuario</Form.Label>
                     </Col>
                     <Col sm={4}>
                         <Form.Control
-                            name="nombreCuenta"
+                            name="nombreUsuario"
                             type="text"
                             autoComplete="none"
                             required
-                            isInvalid={label === 'nombreCuenta'}
-                            value={nombreCuenta}
+                            isInvalid={label === 'nombreUsuario'}
+                            value={nombreUsuario}
                             onChange={handleInputChange} />
                     </Col>
                     <Col sm={3}>
                         <Button
                             style={{ marginTop: '0' }}
                             variant="secondary"
-                            onClick={handleValidarIdUsuario}
+                            onClick={handleValidarNombreUsuario}
                         >
-                            ¿Nombre de cuenta disponible?
+                            ¿Nombre de usuario disponible?
                         </Button>
                     </Col>
                 </Row>

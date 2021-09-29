@@ -5,17 +5,17 @@ import { types } from '../types/types';
 import { startLoading, finishLoading, setError, removeError } from './ui';
 
 
-export const iniciarIngresarUsuario = (nombreCuenta, clave) => {
+export const iniciarIngresarUsuario = (nombreUsuario, clave) => {
     return async (dispatch) => {
         try {
             dispatch(startLoading());
 
-            const resp = await fetchSinToken('Usuario/Ingresar', { nombreCuenta, clave }, 'POST');
+            const resp = await fetchSinToken('Usuario/Ingresar', { nombreUsuario, clave }, 'POST');
             const body = await resp.json();
-
+            
             if (resp.status === 200) {
                 const {
-                    nombreCuenta,
+                    nombreUsuario,
                     nombreCompleto,
                     email,
                     token,
@@ -25,7 +25,7 @@ export const iniciarIngresarUsuario = (nombreCuenta, clave) => {
                 localStorage.setItem('token-exp', fechaExpiracion);
 
                 dispatch(ingresarUsuario({
-                    nombreCuenta,
+                    nombreUsuario,
                     nombreCompleto,
                     email
                 }));
@@ -47,18 +47,17 @@ export const iniciarIngresarUsuario = (nombreCuenta, clave) => {
     }
 }
 
-export const iniciarRegistroUsuario = (formValues) => {
+export const iniciarRegistroUsuario = (usuario) => {
     return async (dispatch) => {
         try {
             dispatch(startLoading());
 
-            const resp = await fetchSinToken('Usuario', formValues, 'POST');
+            const resp = await fetchSinToken('Usuario', usuario, 'POST');
             const body = await resp.json();
-
-            if (resp.status === 201) {
-
+            
+            if (resp.status === 200) {
                 const {
-                    nombreCuenta,
+                    nombreUsuario,
                     nombreCompleto,
                     email,
                     token,
@@ -68,7 +67,7 @@ export const iniciarRegistroUsuario = (formValues) => {
                 localStorage.setItem('token-exp', fechaExpiracion);
 
                 dispatch(ingresarUsuario({
-                    nombreCuenta,
+                    nombreUsuario,
                     nombreCompleto,
                     email
                 }));
@@ -110,24 +109,24 @@ const salirUsuario = () => ({
     type: types.authSalirUsuario
 });
 
-export const iniciarValidarNombreCuenta = (nombreCuenta) => {
+export const iniciarValidarNombreUsuario = (nombreUsuario) => {
     return async (dispatch) => {
         try {
             dispatch(startLoading());
 
-            const resp = await fetchSinToken(`Usuario/ValidarNombreCuenta?${queryString.stringify({ nombreCuenta })}`);
+            const resp = await fetchSinToken(`Usuario/ValidarNombreUsuario?${queryString.stringify({ nombreUsuario })}`);
             const body = await resp.json();
 
             if (body) {
-                Swal.fire('Nombre Cuenta', 'Nombre de cuenta disponible.', 'success');
+                Swal.fire('Nombre Usuario', 'Nombre de usuario disponible.', 'success');
                 dispatch(removeError());
             } else {
                 Swal.fire({
                     icon: 'error',
                     title: 'Oops...',
-                    text: 'El Nombre de cuenta no está disponible.'
+                    text: 'El Nombre de usuario no está disponible.'
                 });
-                dispatch(setError('El Nombre de cuenta no está disponible.', 'nombreCuenta'));
+                dispatch(setError('El Nombre de usuario no está disponible.', 'nombreUsuario'));
             }
             dispatch(finishLoading());
 
@@ -137,7 +136,7 @@ export const iniciarValidarNombreCuenta = (nombreCuenta) => {
             Swal.fire({
                 icon: 'error',
                 title: 'Oops...',
-                text: 'Por favor contactese con el administrador'
+                text: 'Ocurrió un error inesperado.'
             });
         }
     }
@@ -173,18 +172,18 @@ export const iniciarValidarIdUsuarioPorEmail = (email) => {
             Swal.fire({
                 icon: 'error',
                 title: 'Oops...',
-                text: 'Por favor contactese con el administrador'
+                text: 'Ocurrió un error inesperado.'
             });
         }
     }
 }
 
-export const iniciarObtenerPreguntaSeguridad = (nombreCuenta, email) => {
+export const iniciarObtenerPreguntaSeguridad = (nombreUsuario, email) => {
     return async (dispatch, getState) => {
         try {
             dispatch(startLoading());
 
-            const resp = await fetchSinToken(`Usuario/ObtenerPreguntaSeguridad?${queryString.stringify({ email, nombreCuenta })}`);
+            const resp = await fetchSinToken(`Usuario/ObtenerPreguntaSeguridad?${queryString.stringify({ email, nombreUsuario })}`);
             const body = await resp.json();
 
             if (resp.status === 200) {
@@ -192,7 +191,7 @@ export const iniciarObtenerPreguntaSeguridad = (nombreCuenta, email) => {
                 dispatch(setFormSeguridad({
                     ...formSeguridad,
                     pregunta: body,
-                    nombreCuenta,
+                    nombreUsuario,
                     email
                 }))
             }
@@ -225,10 +224,10 @@ export const iniciarValidarRespuestaSeguridad = (respuesta) => {
             dispatch(startLoading());
 
             const { formSeguridad } = getState().auth;
-            const { nombreCuenta, pregunta } = formSeguridad;
+            const { nombreUsuario, pregunta } = formSeguridad;
 
             const resp = await fetchSinToken(`Usuario/ValidarRespuestaSeguridad?${queryString.stringify({
-                nombreCuenta,
+                nombreUsuario,
                 pregunta,
                 respuesta
             })}`);
@@ -289,10 +288,10 @@ export const iniciarCambiarContraseña = (password) => {
             dispatch(startLoading());
 
             const { formSeguridad } = getState().auth;
-            const { nombreCuenta, respuesta } = formSeguridad;
+            const { nombreUsuario, respuesta } = formSeguridad;
 
-            const resp = await fetchSinToken(`Usuario/ActualizarClavePorNombreCuenta`, {
-                nombreCuenta,
+            const resp = await fetchSinToken(`Usuario/ActualizarClavePorNombreUsuario`, {
+                nombreUsuario,
                 respuesta,
                 nuevaClave: password
             }, 'PUT');
@@ -318,7 +317,7 @@ export const iniciarCambiarContraseña = (password) => {
             Swal.fire({
                 icon: 'error',
                 title: 'Oops...',
-                text: 'Por favor contactese con el administrador'
+                text: 'Ocurrió un error inesperado.'
             });
         }
 
@@ -336,7 +335,7 @@ export const iniciarComprobacion = () => {
         if (pepe)
             dispatch(ingresarUsuario({
                 idUsuario: new Date().getTime(),
-                nombreCuenta: 'gmontiel'
+                nombreUsuario: 'gmontiel'
             }));
         else
             dispatch(finalizarComprobacion());

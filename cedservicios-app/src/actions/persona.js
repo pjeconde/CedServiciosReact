@@ -1,27 +1,39 @@
-import moment from 'moment';
 import queryString from 'query-string';
 import Swal from 'sweetalert2';
 import { fetchConToken } from "../config/fetch";
-import { tipoDePersonas } from '../helpers/tipoPersona';
+import { getPersonaConDto, getPersonaSinDto } from '../helpers/persona/getPersona';
 import { types } from "../types/types";
 import { setDatosGrilla } from './grilla';
-import { finishLoading, startLoading } from "./ui";
+import { finishLoading, setError, startLoading } from "./ui";
 
 
 export const iniciarAgregarPersona = (persona) => {
-    return async (dispatch) => {
+    return async (dispatch, getState) => {
         try {
-            const resp = await fetchConToken('Persona', persona, 'POST');
+            dispatch(startLoading());
+            let personaConDto = getPersonaConDto(persona);
+            const { cuit } = getState().auth;
+            console.log(`objeto agregar persona`, { ...personaConDto, cuit });
+            
+            const resp = await fetchConToken('Persona', { ...personaConDto, cuit }, 'POST');
             const body = await resp.json();
 
-            console.log(body);
             if (resp.status === 200) {
+                dispatch(finishLoading());
+                Swal.fire('Success', 'Persona agregada con exito.', 'success');
                 iniciarObtenerPersonas();
             }
-
-            // dispatch(agregarPersona(persona));
+            else {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Oops...',
+                    text: body.errors[0].detail
+                });
+                dispatch(setError(body.errors[0].detail));
+            }
 
         } catch (error) {
+            dispatch(finishLoading());
             console.error(error);
             Swal.fire({
                 icon: 'error',
@@ -29,53 +41,35 @@ export const iniciarAgregarPersona = (persona) => {
                 text: 'Ocurrió un error inesperado.'
             });
         }
-
     }
 }
 
-const agregarPersona = (persona) => ({
-    type: types.personaAgregarPersona,
+// const agregarPersona = (persona) => ({
+//     type: types.personaAgregarPersona,
+//     payload: persona
+// });
+
+export const iniciarSetPersonaActiva = (persona) => {
+    return (dispatch) => {
+        try {
+            let personaSinDto = getPersonaSinDto(persona);
+            dispatch(setPersonaActiva(personaSinDto));
+        }
+        catch (error) {
+            console.error(error);
+            Swal.fire({
+                icon: 'error',
+                title: 'Oops...',
+                text: 'Ocurrió un error inesperado.'
+            });
+        }
+    }
+}
+
+const setPersonaActiva = (persona) => ({
+    type: types.personaSetPersonaActiva,
     payload: persona
 });
-
-export const setPersonaActiva = (persona) => {
-    let objPersona = { ...persona };
-
-    let { tipoDocumento,
-        condicionIva,
-        condicionIngresoBruto,
-        provincia,
-        fechaInicioActividades,
-        esCliente,
-        esProveedor,
-        domicilio,
-        contacto,
-        datosIdentificatorios
-    } = persona;
-
-    delete objPersona.domicilio;
-    delete objPersona.contacto;
-    delete objPersona.datosIdentificatorios;
-    delete objPersona.fechaInicioActividades;
-
-    let newPersona = {
-        ...objPersona,
-        ...domicilio,
-        ...contacto,
-        ...datosIdentificatorios,
-        tipoDocumento: { value: tipoDocumento.id, label: tipoDocumento.descripcion },
-        condicionIva: { value: condicionIva.id, label: condicionIva.descripcion },
-        condicionIngresoBruto: { value: condicionIngresoBruto.id, label: condicionIngresoBruto.descripcion },
-        provincia: { value: provincia.id, label: provincia.descripcion },
-        fechaInicioActividades: moment(fechaInicioActividades).format("YYYY-MM-DD"),
-        tipoPersona: (esCliente && esProveedor) ? tipoDePersonas[2] : (esCliente) ? tipoDePersonas[0] : tipoDePersonas[1]
-    };
-
-    return {
-        type: types.personaSetPersonaActiva,
-        payload: newPersona
-    }
-};
 
 export const removerPersonaActiva = () => ({ type: types.personaRemoverPersonaActiva });
 

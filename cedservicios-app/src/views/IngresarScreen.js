@@ -12,20 +12,20 @@ export const IngresarScreen = () => {
   const dispatch = useDispatch();
   const { msgError, loading } = useSelector(state => state.ui);
   const { values: formValues, handleInputChange } = useForm({
-    nombreCuenta: 'prueba@gmail.com',
+    nombreUsuario: 'gmontiel',
     clave: '123456'
   })
-  const { nombreCuenta, clave } = formValues;
+  const { nombreUsuario, clave } = formValues;
 
   const handleLogin = (e) => {
     e.preventDefault();
     if (isFormValid()) {
-      dispatch(iniciarIngresarUsuario(nombreCuenta, clave));
+      dispatch(iniciarIngresarUsuario(nombreUsuario, clave));
     }
   }
 
   const isFormValid = () => {
-    if (!nombreCuenta) {
+    if (!nombreUsuario) {
       dispatch(setError('Debe de ingresar el nombre de la cuenta.'));
       return false;
     }
@@ -53,14 +53,13 @@ export const IngresarScreen = () => {
               <form onSubmit={handleLogin} className="p-4 p-md-5 border rounded-3 bg-light">
                 <div className="form-floating mb-3">
                   <input
-                    type="nombreCuenta"
+                    type="nombreUsuario"
                     className="form-control"
-                    id="nombreCuenta"
-                    name="nombreCuenta"
-                    value={nombreCuenta}
-                    onChange={handleInputChange}
-                    placeholder="nombreCuenta.." />
-                  <label htmlFor="nombreCuenta">Nombre de cuenta</label>
+                    id="nombreUsuario"
+                    name="nombreUsuario"
+                    value={nombreUsuario}
+                    onChange={handleInputChange} />
+                  <label htmlFor="nombreUsuario">Nombre de usuario</label>
                 </div>
                 <div className="form-floating mb-3">
                   <input
@@ -91,7 +90,7 @@ export const IngresarScreen = () => {
                   <Link to="/auth/registrar" className="link">
                     Registrarse
                   </Link>
-                  <Link to="/auth/recuperar/nombreCuenta" className="link">
+                  <Link to="/auth/recuperar/nombreUsuario" className="link">
                     ¿Olvidó su usuario?
                   </Link>
                   <Link to="/auth/recuperar/clave" className="link">

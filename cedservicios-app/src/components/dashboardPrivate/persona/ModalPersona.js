@@ -50,7 +50,7 @@ const initPerson = {
 
 export const ModalPersona = () => {
 
-    const { showModal, typeModal } = useSelector(state => state.ui);
+    const { showModal, typeModal, loading } = useSelector(state => state.ui);
     const { personaActiva } = useSelector(state => state.persona);
     const { cuit } = useSelector(state => state.auth);
     const dispatch = useDispatch();
@@ -411,7 +411,7 @@ export const ModalPersona = () => {
                         &&
                         (
                             <>
-                                <Button type="submit" variant="primary" onClick={handleSubmit} >
+                                <Button type="submit" disabled={loading} variant="primary" onClick={handleSubmit} >
                                     Aceptar
                                 </Button>
                                 <Button type="button" variant="secondary" onClick={handleCloseModal}>

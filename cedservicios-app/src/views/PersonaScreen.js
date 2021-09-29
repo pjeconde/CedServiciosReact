@@ -33,9 +33,9 @@ const customStyles = {
 
 const columnaPersonas = [
     {
-        name: 'NumeroDocumento',
+        name: 'Nº Documento',
         selector: 'numeroDocumento',
-        center: true,
+        // center: true,
         style: {
             color: '#202124',
             fontSize: '14px',
@@ -43,58 +43,53 @@ const columnaPersonas = [
         }
     },
     {
-        name: 'TipoDocumento',
+        name: 'Tipo documento',
         selector: 'tipoDocumento',
         cell: row => row.tipoDocumento?.descripcion,
-        sortable: true
     },
     {
-        name: 'RazonSocial',
-        selector: 'razonSocial'
+        name: 'Razon social',
+        selector: 'razonSocial',
+        grow: 2
     },
     {
         name: 'Localidad',
         selector: 'domicilio.localidad'
     },
-    // {
-    //     name: 'C.P',
-    //     selector: 'codigoPostal'
-    // },
     {
-        name: 'NombreContacto',
+        name: 'Nombre',
         selector: 'contacto.nombre',
-        sortable: true,
-        grow: 2
+        grow: 1.5
     },
-    // {
-    //     name: 'Telefono',
-    //     selector: 'telefono'
-    // },
     {
         name: 'Email',
-        selector: 'contacto.email'
+        selector: 'contacto.email',
+        grow: 2
     },
     {
-
         name: 'Estado',
         selector: 'estado',
         cell: row => <BadgeStatus status={row.estado.id === 1} text={row.estado.descripcion} />,
-        center: true
+        center: true,
+        grow: .5
     },
     {
         name: 'Detalle',
         cell: row => <ButtonDetalle persona={row} />,
-        center: true
+        center: true,
+        grow: .5
     },
     {
         name: 'Modificar',
         cell: row => <ButtonActualizar persona={row} />,
-        center: true
+        center: true,
+        grow: .5
     },
     {
         name: 'Eliminar',
         cell: row => <ButtonEliminar persona={row} />,
-        center: true
+        center: true,
+        grow: .5
     }
 ];
 

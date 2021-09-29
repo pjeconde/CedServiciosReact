@@ -1,5 +1,5 @@
 export const tipoDePersonas = [
-    { value: 'Cliente', label: 'Cliente' },
-    { value: 'Proveedor', label: 'Proveedor' },
-    { value: 'Ambos', label: 'Ambos' },
+    { value: 0, label: 'Cliente' },
+    { value: 1, label: 'Proveedor' },
+    { value: 2, label: 'Ambos' },
 ];

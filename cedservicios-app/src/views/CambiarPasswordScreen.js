@@ -19,7 +19,7 @@ import {
 } from '../actions/auth';
 
 const initForm = {
-    nombreCuenta: '',
+    nombreUsuario: '',
     email: '',
     respuesta: '',
     password: '',
@@ -37,7 +37,7 @@ export const CambiarPasswordScreen = () => {
     const [password2, setPassword2] = useState('');
 
     const {
-        nombreCuenta,
+        nombreUsuario,
         email,
         respuesta,
         respuestaValida,
@@ -46,8 +46,8 @@ export const CambiarPasswordScreen = () => {
 
     const onSubmitPreguntaSeguridad = (e) => {
         e.preventDefault();
-        if (nombreCuenta && validator.isEmail(email)) {
-            dispatch(iniciarObtenerPreguntaSeguridad(nombreCuenta, email));
+        if (nombreUsuario && validator.isEmail(email)) {
+            dispatch(iniciarObtenerPreguntaSeguridad(nombreUsuario, email));
         }
     }
 
@@ -100,12 +100,12 @@ export const CambiarPasswordScreen = () => {
                 <Row>
                     <Col>
                         <Form.Control
-                            name="nombreCuenta"
+                            name="nombreUsuario"
                             type="text"
                             autoComplete="none"
-                            value={nombreCuenta}
+                            value={nombreUsuario}
                             onChange={handleInputChange}
-                            placeholder="Nombre de cuenta" />
+                            placeholder="Nombre de usuario" />
                     </Col>
                     <Col>
                         <Form.Control
@@ -197,7 +197,7 @@ export const CambiarPasswordScreen = () => {
                             disabled={!respuestaValida}
                             variant="dark"
                             type="submit" >
-                            Acceptar
+                            Aceptar
                         </Button>
                     </Col>
                     <Col>

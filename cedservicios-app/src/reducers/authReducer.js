@@ -12,11 +12,11 @@ const initialState = {
 const initialState = {
     comprobacion: true,
     nombreCompleto: null,
-    nombreCuenta: '',
+    nombreUsuario: '',
     email: null,
     cuit: null,
     formSeguridad: {
-        nombreCuenta: '',
+        nombreUsuario: '',
         email: '',
         respuesta: '',
         respuestaValida: false,
@@ -32,7 +32,7 @@ export const authReducer = (state = initialState, action) => {
                 ...state,
                 nombreCompleto: action.payload.nombreCompleto,
                 email: action.payload.email,
-                nombreCuenta: action.payload.nombreCuenta,
+                nombreUsuario: action.payload.nombreUsuario,
                 cuit: 20398724357,
                 comprobacion: false,
             };
