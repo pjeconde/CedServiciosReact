@@ -13,8 +13,7 @@ export const iniciarAgregarPersona = (persona) => {
             dispatch(startLoading());
             let personaConDto = getPersonaConDto(persona);
             const { cuit } = getState().auth;
-            console.log(`objeto agregar persona`, { ...personaConDto, cuit });
-            
+
             const resp = await fetchConToken('Persona', { ...personaConDto, cuit }, 'POST');
             const body = await resp.json();
 
@@ -129,8 +128,16 @@ export const iniciarObtenerPersonas = () => {
         try {
             dispatch(startLoading());
             const { paginaActual: numeroPagina, registrosPorPagina } = getState().grilla;
+            const { filtro } = getState().persona;
 
-            const resp = await fetchConToken(`Persona?${queryString.stringify({ numeroPagina, registrosPorPagina })}`);
+            const resp = await fetchConToken(`Persona?${queryString.stringify(
+                {
+                    numeroDocumento: filtro?.numeroDocumento,
+                    idEstado: filtro?.estado?.value,
+                    razonSocial: filtro?.razonSocial,
+                    numeroPagina,
+                    registrosPorPagina
+                })}`);
             const body = await resp.json();
 
             if (resp.status === 200) {

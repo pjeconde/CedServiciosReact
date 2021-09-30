@@ -23,7 +23,7 @@ const nameModal = 'modalPersona';
 
 const initPerson = {
     numeroDocumento: '',
-    tipoPersona: { value: 'Ambos', label: 'Ambos' },
+    tipoPersona: tipoDePersonas[2],
     tipoDocumento: { value: 80, label: 'CUIT' },
     provincia: { value: 1, label: 'Buenos Aires' },
     condicionIva: '',
@@ -42,7 +42,7 @@ const initPerson = {
     nombre: '',
     email: '',
     telefono: '',
-    gln: '',
+    gln: 0,
     codigoInterno: '',
     numeroIngresoBruto: '',
     fechaInicioActividades: moment().format("YYYY-MM-DD"),
@@ -103,6 +103,7 @@ export const ModalPersona = () => {
         }
         else {
             dispatch(iniciarAgregarPersona(formValues));
+            reset(initPerson);
         }
 
         handleCloseModal();

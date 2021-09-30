@@ -14,7 +14,7 @@ const typeModal = 'filtro';
 const initForm = {
     razonSocial: '',
     numeroDocumento: '',
-    estado: { value: 'Todos', label: 'Todos' }
+    estado: Estados[0]
 };
 
 export const ModalFiltro = () => {

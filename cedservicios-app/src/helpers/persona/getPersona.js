@@ -43,6 +43,7 @@ const getPersonaSinDto = (persona) => {
 
 const getPersonaConDto = (persona) => {
     try {
+
         let {
             numeroDocumento,
             tipoPersona,
@@ -83,6 +84,8 @@ const getPersonaConDto = (persona) => {
         };
         let contacto = { nombre, email, telefono, };
         let datosIdentificatorios = { gln, codigoInterno };
+        let esCliente = (tipoPersona.value === 2) ? true : (tipoPersona.value === 0) ? true : false;
+        let esProveedor = (tipoPersona.value === 2) ? true : (tipoPersona.value === 1) ? true : false;
 
         return {
             numeroDocumento,
@@ -97,8 +100,8 @@ const getPersonaConDto = (persona) => {
             numeroIngresoBruto,
             datosIdentificatorios,
             fechaInicioActividades,
-            esCliente: (tipoPersona.value === 2) ? true : tipoPersona.value === 0 ? true : false,
-            esProveedor: (tipoPersona.value === 2) ? true : tipoPersona.value === 1 ? true : false
+            esCliente,
+            esProveedor
         };
     }
     catch (error) {

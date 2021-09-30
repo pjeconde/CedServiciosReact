@@ -1,10 +1,10 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
 import DataTable from 'react-data-table-component';
 import { BadgeStatus } from '../components/ui/BadgeStatus';
 import { Expanded } from '../components/ui/Expanded';
-import { InputFilter } from '../components/ui/InputFilter';
+// import { InputFilter } from '../components/ui/InputFilter';
 import { ModalFiltro } from '../components/dashboardPrivate/persona/ModalFiltro';
 
 import { ButtonActualizar } from '../components/ui/personas/ButtonActualizar';
@@ -50,16 +50,19 @@ const columnaPersonas = [
     {
         name: 'Razon social',
         selector: 'razonSocial',
+        sortable: true,
         grow: 2
     },
     {
         name: 'Localidad',
-        selector: 'domicilio.localidad'
+        selector: 'domicilio.localidad',
+        sortable: true
     },
     {
-        name: 'Nombre',
+        name: 'Nombre contacto',
         selector: 'contacto.nombre',
-        grow: 1.5
+        grow: 1.5,
+        sortable: true
     },
     {
         name: 'Email',
@@ -99,19 +102,26 @@ export const PersonaScreen = () => {
     const { personas, filtro } = useSelector(state => state.persona);
     const { loading } = useSelector(state => state.ui);
     const { cuentaTotal } = useSelector(state => state.grilla);
-    const [filtrosAplicado, setFiltrosAplicado] = useState([]);
-    const [filterText, setFilterText] = useState('');
+    // const [filterText, setFilterText] = useState('');
 
-    const handleOnChangeFilterText = (value) => {
-        setFilterText(value);
-    }
+    // const handleOnChangeFilterText = (value) => {
+    //     setFilterText(value);
+    // }
 
     const handleEliminarFiltro = (f) => {
-        dispatch(removerFiltro(f));
+        let filtros = Object.entries(filtro).filter(([k, v], i) => !!v);
+
+        if (filtros.length === 1) {
+            handleEliminarFiltros();
+        }
+        else {
+            dispatch(removerFiltro(f));
+        }
     }
 
     const handleEliminarFiltros = () => {
         dispatch(removerLosFiltros());
+        dispatch(iniciarObtenerPersonas());
     }
 
     const handleCambiarPagina = (pagina) => {
@@ -126,14 +136,9 @@ export const PersonaScreen = () => {
 
     useEffect(() => {
         if (filtro) {
-            setFiltrosAplicado(Object.keys(filtro).map(
-                (i) => ({ key: i, value: filtro[i]?.value ? filtro[i].value : filtro[i] })
-            ));
+            dispatch(iniciarObtenerPersonas());
         }
-        else {
-            setFiltrosAplicado([]);
-        }
-    }, [filtro])
+    }, [filtro, dispatch])
 
     useEffect(() => {
         dispatch(iniciarObtenerPersonas());
@@ -165,10 +170,12 @@ export const PersonaScreen = () => {
                     <div className="card">
                         <div className="card-body">
                             {
-                                filtrosAplicado.length > 0 &&
+                                filtro &&
                                 (
                                     <FiltroAplicados
-                                        filtros={filtrosAplicado}
+                                        filtros={Object.keys(filtro).map(
+                                            (i) => ({ key: i, value: filtro[i]?.value ? filtro[i].label : filtro[i] })
+                                        )}
                                         eliminarFiltro={handleEliminarFiltro}
                                         eliminarFiltros={handleEliminarFiltros} />
                                 )
@@ -194,14 +201,14 @@ export const PersonaScreen = () => {
                                     responsive
                                     noHeader
                                     highlightOnHover
-                                    subHeader
-                                    subHeaderAlign="left"
-                                    subHeaderComponent={
-                                        <InputFilter
-                                            key={'busqueda-persona'}
-                                            id={'buscar-persona'}
-                                            onFilter={handleOnChangeFilterText}
-                                            filterText={filterText} />}
+                                    // subHeader
+                                    // subHeaderAlign="left"
+                                    // subHeaderComponent={
+                                    //     <InputFilter
+                                    //         key={'busqueda-persona'}
+                                    //         id={'buscar-persona'}
+                                    //         onFilter={handleOnChangeFilterText}
+                                    //         filterText={filterText} />}
                                     sortIcon={<i className="fas fa-chevron-down"></i>} />
                             </div>
                         </div>

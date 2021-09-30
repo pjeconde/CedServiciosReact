@@ -2,7 +2,7 @@ import React from 'react';
 import { Button } from 'react-bootstrap';
 
 export const FiltroAplicados = ({ filtros, eliminarFiltro, eliminarFiltros }) => {
-    
+
     return (
         <div className="filter__container">
             <span>Filtrado por:</span>

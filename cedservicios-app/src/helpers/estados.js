@@ -1,5 +1,5 @@
 export const Estados = [
-    { value: 'Todos', label: 'Todos' },
-    { value: 'Activo', label: 'Activo' },
-    { value: 'Inactivo', label: 'Inactivo' },
+    { value: 1, label: 'Vigente' },
+    { value: 2, label: 'Inactivo' },
+    { value: 3, label: 'Pendiente' },
 ];
