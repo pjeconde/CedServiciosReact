@@ -1,0 +1,29 @@
+.header__menu {
+    min-width: 1300px;
+}
+
+.header__wrapper {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    min-height: 2.75rem;
+}
+
+.header__title {
+    margin-right: 1rem;
+}
+
+.header__toolbar {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-end;
+    margin-left: -1rem;
+}
+
+.header__wrapper .header__toolbar .btn {
+    margin-right: .5rem;
+}
+
+.header__toolbar .btn i {
+    margin-right: 10px;
+}

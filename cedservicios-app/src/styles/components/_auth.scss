@@ -1,0 +1,26 @@
+.auth__section {
+    width: 100%;
+    background-image: url("../../images/parallax/factura.jpg");
+}
+
+.auth__enlaces {
+    display: flex;
+    font-size: 14px;
+    width: 100%;
+    justify-content: space-evenly;
+    flex-wrap: wrap;
+    align-items: center;
+}
+
+.auth__invalid {
+    width: 100%;
+    margin-top: .25rem;
+    font-size: .875em;
+    color: $colorInvalid;
+}
+
+.auth__info-img {
+    width: 100%;
+    object-fit: cover;
+    border-radius: 5px;
+}

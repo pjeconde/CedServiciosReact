@@ -1,223 +1,132 @@
 import Swal from 'sweetalert2';
-import { instance as axios } from '../config/config';
+import queryString from 'query-string';
+import { fetchSinToken } from '../config/fetch';
 import { types } from '../types/types';
-import { startLoading, finishLoading, setError } from './ui';
+import { startLoading, finishLoading, setError, removeError } from './ui';
 
 
-export const startLogin = (IdUsuario, clave) => {
-    return async (dispatch) => {
-        try {
-            dispatch(startLoading());
-            const resp = await axios.get('Usuario/Ingresar', {
-                params: {
-                    IdUsuario,
-                    clave
-                }
-            });
-            const { respuesta } = resp.data[0];
-
-            if (resp.status === 200 && respuesta.resultado.severidad === 0) {
-                dispatch(login({
-                    uid: new Date().getTime(),
-                    username: IdUsuario
-                }));
-            } else {
-                dispatch(setError(respuesta.resultado.descripcion));
-            }
-            dispatch(finishLoading());
-
-        } catch (error) {
-            dispatch(finishLoading());
-            Swal.fire({
-                icon: 'error',
-                title: 'Oops...',
-                text: 'Por favor contactese con el administrador'
-            });
-        }
-    }
-}
-
-export const startRegister = (formValues) => {
+export const iniciarIngresarUsuario = (nombreUsuario, clave) => {
     return async (dispatch) => {
         try {
             dispatch(startLoading());
 
-            const resp = await axios.post('Usuario/Registrar', { ...formValues });
-            const { respuesta } = resp.data[0];
-
-            if (resp.status === 200 && respuesta.resultado.severidad === 0) {
-                dispatch(login({
-                    id: formValues.id,
-                    username: formValues.name
-                }));
-            } else {
-                Swal.fire({
-                    icon: 'error',
-                    title: 'Oops...',
-                    text: respuesta.resultado.descripcion
-                });
-                dispatch(setError(respuesta.resultado.descripcion));
-            }
-            dispatch(finishLoading());
-
-        } catch (error) {
-            console.log(error);
-            dispatch(finishLoading());
-            Swal.fire({
-                icon: 'error',
-                title: 'Oops...',
-                text: 'Por favor contactese con el administrador'
-            });
-        }
-    }
-}
-
-export const startLogout = () => {
-    return async (dispatch) => {
-
-    }
-}
-
-const login = (user) => ({
-    type: types.authLogin,
-    payload: user
-});
-
-// const logout = () => ({
-//     type: types.authLogout
-// });
-
-export const startCheckUserIdById = (id) => {
-    return async (dispatch) => {
-        try {
-            dispatch(startLoading());
-            const resp = await axios.get('Usuario/ConsultarIdDisponible', {
-                params: {
-                    id
-                }
-            });
-            const { valor } = resp.data[0];
-
-            if (resp.status === 200 && valor) {
-                Swal.fire('Id Usuario', 'Id usuario disponible.', 'success');
-            } else {
-                Swal.fire({
-                    icon: 'error',
-                    title: 'Oops...',
-                    text: 'El Id Usuario no está disponible.'
-                });
-                dispatch(setError('El Id Usuario no está disponible'));
-            }
-            dispatch(finishLoading());
-
-        } catch (error) {
-            console.log(error);
-            dispatch(finishLoading());
-            Swal.fire({
-                icon: 'error',
-                title: 'Oops...',
-                text: 'Por favor contactese con el administrador'
-            });
-        }
-    }
-}
-
-export const startCheckUserIdByEmail = (email) => {
-    return async (dispatch) => {
-        try {
-            dispatch(startLoading());
-            const resp = await axios.get('Usuario/ConsultarIdUsuarioPorEmail', {
-                params: {
-                    email
-                }
-            });
-            const { respuesta } = resp.data[0];
-
-            if (resp.status === 200 && respuesta.resultado.severidad === 0) {
-                Swal.fire('Id Usuario', 'Id usuario recuperado exitosamente.', 'success');
-            } else {
-                Swal.fire({
-                    icon: 'error',
-                    title: 'Oops...',
-                    text: respuesta.resultado.descripcion
-                });
-                dispatch(setError(respuesta.resultado.descripcion));
-            }
-            dispatch(finishLoading());
-
-        } catch (error) {
-            console.log(error);
-            dispatch(finishLoading());
-            Swal.fire({
-                icon: 'error',
-                title: 'Oops...',
-                text: 'Por favor contactese con el administrador'
-            });
-        }
-    }
-}
-
-export const startCheckQuestion = (id, email) => {
-    return async (dispatch) => {
-        try {
-            dispatch(startLoading());
-            const resp = await axios.get('Usuario/ConsultarPreguntaDeSeguridad', {
-                params: {
-                    id,
-                    email
-                }
-            });
-            const { respuesta, valor } = resp.data[0];
-
-            if (resp.status === 200 && respuesta.resultado.severidad === 0) {
-                dispatch(setQuestion(valor));
-            } else {
-                Swal.fire({
-                    icon: 'error',
-                    title: 'Oops...',
-                    text: respuesta.resultado.descripcion
-                });
-                dispatch(setError(respuesta.resultado.descripcion));
-            }
-            dispatch(finishLoading());
-
-        } catch (error) {
-            console.log(error);
-            dispatch(finishLoading());
-            Swal.fire({
-                icon: 'error',
-                title: 'Oops...',
-                text: 'Por favor contactese con el administrador'
-            });
-        }
-    }
-}
-
-export const startCheckAnswer = (id, email, answer) => {
-    return async (dispatch, getState) => {
-        try {
-            dispatch(startLoading());
-
-            const { question: pregunta } = getState().auth;
-            const resp = await axios.get('Usuario/ValidarRespuestaPreguntaDeSeguridad', {
-                params: {
-                    id,
+            const resp = await fetchSinToken('Usuario/Ingresar', { nombreUsuario, clave }, 'POST');
+            const body = await resp.json();
+            
+            if (resp.status === 200) {
+                const {
+                    nombreUsuario,
+                    nombreCompleto,
                     email,
-                    pregunta,
-                    respuesta: answer
-                }
-            });
-            const { respuesta, valor } = resp.data[0];
+                    token,
+                    fechaExpiracion } = body;
 
-            if (resp.status === 200 && respuesta.resultado.severidad === 0) {
-                dispatch(setValidAnswer(valor));
+                localStorage.setItem('token', token);
+                localStorage.setItem('token-exp', fechaExpiracion);
+
+                dispatch(ingresarUsuario({
+                    nombreUsuario,
+                    nombreCompleto,
+                    email
+                }));
+            }
+            else {
+                dispatch(setError(body.errors[0].detail));
+            }
+            dispatch(finishLoading());
+
+        }
+        catch (error) {
+            dispatch(finishLoading());
+            Swal.fire({
+                icon: 'error',
+                title: 'Oops...',
+                text: 'Ocurrió un error inesperado.'
+            });
+        }
+    }
+}
+
+export const iniciarRegistroUsuario = (usuario) => {
+    return async (dispatch) => {
+        try {
+            dispatch(startLoading());
+
+            const resp = await fetchSinToken('Usuario', usuario, 'POST');
+            const body = await resp.json();
+            
+            if (resp.status === 200) {
+                const {
+                    nombreUsuario,
+                    nombreCompleto,
+                    email,
+                    token,
+                    fechaExpiracion } = body;
+
+                localStorage.setItem('token', token);
+                localStorage.setItem('token-exp', fechaExpiracion);
+
+                dispatch(ingresarUsuario({
+                    nombreUsuario,
+                    nombreCompleto,
+                    email
+                }));
+            }
+            else {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Oops...',
+                    text: body.errors[0].detail
+                });
+                dispatch(setError(body.errors[0].detail));
+            }
+            dispatch(finishLoading());
+
+        } catch (error) {
+            dispatch(finishLoading());
+            Swal.fire({
+                icon: 'error',
+                title: 'Oops...',
+                text: 'Ocurrió un error inesperado.'
+            });
+        }
+    }
+}
+
+export const iniciarSalirUsuario = () => {
+    return async (dispatch) => {
+        localStorage.clear();
+        dispatch(salirUsuario());
+    }
+}
+
+const ingresarUsuario = (usuario) => ({
+    type: types.authIngresarUsuario,
+    payload: usuario
+});
+
+const salirUsuario = () => ({
+    type: types.authSalirUsuario
+});
+
+export const iniciarValidarNombreUsuario = (nombreUsuario) => {
+    return async (dispatch) => {
+        try {
+            dispatch(startLoading());
+
+            const resp = await fetchSinToken(`Usuario/ValidarNombreUsuario?${queryString.stringify({ nombreUsuario })}`);
+            const body = await resp.json();
+
+            if (body) {
+                Swal.fire('Nombre Usuario', 'Nombre de usuario disponible.', 'success');
+                dispatch(removeError());
             } else {
                 Swal.fire({
                     icon: 'error',
                     title: 'Oops...',
-                    text: respuesta.resultado.descripcion
+                    text: 'El Nombre de usuario no está disponible.'
                 });
-                dispatch(setError(respuesta.resultado.descripcion));
+                dispatch(setError('El Nombre de usuario no está disponible.', 'nombreUsuario'));
             }
             dispatch(finishLoading());
 
@@ -227,48 +136,178 @@ export const startCheckAnswer = (id, email, answer) => {
             Swal.fire({
                 icon: 'error',
                 title: 'Oops...',
-                text: 'Por favor contactese con el administrador'
+                text: 'Ocurrió un error inesperado.'
             });
         }
     }
 }
 
-const setQuestion = (question) => ({
-    type: types.authSetQuestion,
-    payload: question
-});
+export const iniciarValidarIdUsuarioPorEmail = (email) => {
+    return async (dispatch) => {
+        try {
+            dispatch(startLoading());
 
-const setValidAnswer = (validAnswer) => ({
-    type: types.authSetValidAnswer,
-    payload: validAnswer
-});
+            // const resp = await axios.get('Usuario/ConsultarIdUsuarioPorEmail', {
+            //     params: {
+            //         email
+            //     }
+            // });
+            // const { respuesta } = resp.data[0];
 
-export const startChangePassword = (idUsuario, email, answer, password) => {
+            // if (resp.status === 200 && respuesta.resultado.severidad === 0) {
+            //     Swal.fire('Id Usuario', 'Id usuario recuperado exitosamente.', 'success');
+            // } else {
+            //     Swal.fire({
+            //         icon: 'error',
+            //         title: 'Oops...',
+            //         text: respuesta.resultado.descripcion
+            //     });
+            //     dispatch(setError(respuesta.resultado.descripcion));
+            // }
+            dispatch(finishLoading());
+
+        } catch (error) {
+            console.log(error);
+            dispatch(finishLoading());
+            Swal.fire({
+                icon: 'error',
+                title: 'Oops...',
+                text: 'Ocurrió un error inesperado.'
+            });
+        }
+    }
+}
+
+export const iniciarObtenerPreguntaSeguridad = (nombreUsuario, email) => {
     return async (dispatch, getState) => {
         try {
             dispatch(startLoading());
 
-            const { question: pregunta } = getState().auth;
+            const resp = await fetchSinToken(`Usuario/ObtenerPreguntaSeguridad?${queryString.stringify({ email, nombreUsuario })}`);
+            const body = await resp.json();
 
-            const resp = await axios.post('Usuario/CambiarClaveConPreguntaSeg', {
-                idUsuario,
-                email,
-                pregunta,
-                respuesta: answer,
-                claveNueva: password,
-                claveNuevaConfirmacion: password
-            });
-            const { respuesta, valor } = resp.data[0];
-
-            if (resp.status === 200 && valor) {
-                Swal.fire('Success', 'Cambio de contraseña exitoso.', 'success');
-            } else {
+            if (resp.status === 200) {
+                const { formSeguridad } = getState().auth;
+                dispatch(setFormSeguridad({
+                    ...formSeguridad,
+                    pregunta: body,
+                    nombreUsuario,
+                    email
+                }))
+            }
+            else {
                 Swal.fire({
                     icon: 'error',
                     title: 'Oops...',
-                    text: respuesta.resultado.descripcion
+                    text: body.errors[0].detail
                 });
-                dispatch(setError(respuesta.resultado.descripcion));
+                dispatch(setError(body.errors[0].detail));
+            }
+
+            dispatch(finishLoading());
+        }
+        catch (error) {
+            console.log(error);
+            dispatch(finishLoading());
+            Swal.fire({
+                icon: 'error',
+                title: 'Oops...',
+                text: 'Ocurrió un error inesperado.'
+            });
+        }
+    }
+}
+
+export const iniciarValidarRespuestaSeguridad = (respuesta) => {
+    return async (dispatch, getState) => {
+        try {
+            dispatch(startLoading());
+
+            const { formSeguridad } = getState().auth;
+            const { nombreUsuario, pregunta } = formSeguridad;
+
+            const resp = await fetchSinToken(`Usuario/ValidarRespuestaSeguridad?${queryString.stringify({
+                nombreUsuario,
+                pregunta,
+                respuesta
+            })}`);
+            const body = await resp.json();
+
+            if (resp.status === 200) {
+                dispatch(setFormSeguridad({
+                    ...formSeguridad,
+                    respuestaValida: body,
+                    respuesta
+                }));
+                if (!body)
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Oops...',
+                        text: 'La respuesta no es válida.'
+                    });
+            }
+            else {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Oops...',
+                    text: body.errors[0].detail
+                });
+                dispatch(setError(body.errors[0].detail));
+                dispatch(setFormSeguridad({
+                    ...formSeguridad,
+                    respuestaValida: false,
+                    respuesta
+                }));
+            }
+            dispatch(finishLoading());
+        }
+        catch (error) {
+            console.log(error);
+            dispatch(finishLoading());
+            Swal.fire({
+                icon: 'error',
+                title: 'Oops...',
+                text: 'Ocurrió un error inesperado.'
+            });
+        }
+    }
+}
+
+export const setFormSeguridad = (formSeguridad) => ({
+    type: types.authSetFormSeguridad,
+    payload: formSeguridad
+});
+
+export const removerFormSeguridad = () => ({
+    type: types.authRemoverFormSeguridad
+});
+
+export const iniciarCambiarContraseña = (password) => {
+    return async (dispatch, getState) => {
+        try {
+            dispatch(startLoading());
+
+            const { formSeguridad } = getState().auth;
+            const { nombreUsuario, respuesta } = formSeguridad;
+
+            const resp = await fetchSinToken(`Usuario/ActualizarClavePorNombreUsuario`, {
+                nombreUsuario,
+                respuesta,
+                nuevaClave: password
+            }, 'PUT');
+            const body = await resp.json();
+
+            if (resp.status === 200) {
+                Swal.fire('Success', 'Cambio de contraseña exitoso.', 'success');
+                dispatch(removerFormSeguridad());
+            }
+            else {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Oops...',
+                    text: body.errors[0].detail
+                });
+                dispatch(setError(body.errors[0].detail));
             }
             dispatch(finishLoading());
 
@@ -278,43 +317,30 @@ export const startChangePassword = (idUsuario, email, answer, password) => {
             Swal.fire({
                 icon: 'error',
                 title: 'Oops...',
-                text: 'Por favor contactese con el administrador'
+                text: 'Ocurrió un error inesperado.'
             });
         }
 
     }
 }
 
-export const startChecking = () => {
+export const iniciarComprobacion = () => {
     return (dispatch) => {
         const pepe = true;
         //Aca deberiamos renovar el token
         // localStorage.setItem('token', token);
         // localStorage.setItem('token-init-date', new Date().getTime());
+        dispatch(finalizarComprobacion());
 
         if (pepe)
-            dispatch(login({
-                uid: new Date().getTime(),
-                name: 'gmontiel'
+            dispatch(ingresarUsuario({
+                idUsuario: new Date().getTime(),
+                nombreUsuario: 'gmontiel'
             }));
         else
-            dispatch(checkingFinish());
+            dispatch(finalizarComprobacion());
     }
 }
 
-export const startRemoveQuestionAndAnswer = () => {
-    return (dispatch) => {
-        dispatch(removeQuestion());
-        dispatch(removeValidAnswer());
-    }
-}
+const finalizarComprobacion = () => ({ type: types.authFinalizarComprobacion });
 
-const checkingFinish = () => ({ type: types.authCheckingFinish });
-
-const removeQuestion = () => ({
-    type: types.authRemoveQuestion
-});
-
-const removeValidAnswer = () => ({
-    type: types.authRemoveValidAnswer
-});

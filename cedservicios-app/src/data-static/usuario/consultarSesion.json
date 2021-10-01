@@ -625,231 +625,44 @@
                 {
                     "nombre": "Persona",
                     "habilitada": true,
-                    "url": null,
-                    "menu": [
-                        {
-                            "nombre": "Alta",
-                            "habilitada": true,
-                            "url": "/personas/alta"
-                        },
-                        {
-                            "nombre": "Baja",
-                            "habilitada": true,
-                            "url": "/personas/baja"
-                        },
-                        {
-                            "nombre": "Modificación",
-                            "habilitada": true,
-                            "url": "/personas/modificacion"
-                        },
-                        {
-                            "nombre": "Consulta",
-                            "habilitada": true,
-                            "url": "/personas/consulta"
-                        }
-                    ]
+                    "url": "/Persona",
+                    "menu": []
                 },
                 {
                     "nombre": "Articulos",
                     "habilitada": true,
-                    "url": null,
+                    "url": "/Articulos",
                     "menu": [
-                        {
-                            "nombre": "Alta",
-                            "habilitada": true,
-                            "url": "/articulos/alta"
-                        },
-                        {
-                            "nombre": "Baja",
-                            "habilitada": true,
-                            "url": "/articulos/baja"
-                        },
-                        {
-                            "nombre": "Modificación",
-                            "habilitada": true,
-                            "url": "/articulos/modificacion"
-                        },
-                        {
-                            "nombre": "Consulta",
-                            "habilitada": true,
-                            "url": "/articulos/consulta"
-                        },
                         {
                             "nombre": "Lista de Precios",
                             "habilitada": true,
-                            "url": null,
-                            "menu": [
-                                {
-                                    "nombre": "Alta",
-                                    "habilitada": true,
-                                    "url": "/articulos/listaPrecios/alta"
-                                },
-                                {
-                                    "nombre": "Baja",
-                                    "habilitada": true,
-                                    "url": "/articulos/listaPrecios/baja"
-                                },
-                                {
-                                    "nombre": "Modificación",
-                                    "habilitada": true,
-                                    "url": "/articulos/listaPrecios/modificacion"
-                                },
-                                {
-                                    "nombre": "Clonado",
-                                    "habilitada": true,
-                                    "url": "/articulos/listaPrecios/clonado"
-                                },
-                                {
-                                    "nombre": "Remplazo",
-                                    "habilitada": true,
-                                    "url": "/articulos/listaPrecios/remplazo"
-                                },
-                                {
-                                    "nombre": "Consulta",
-                                    "habilitada": true,
-                                    "url": "/articulos/listaPrecios/consulta"
-                                }
-                            ]
+                            "url": "/Articulos/ListaPrecios",
+                            "menu": []
                         },
                         {
                             "nombre": "Precios",
                             "habilitada": true,
-                            "url": null,
-                            "menu": [
-                                {
-                                    "nombre": "Ingreso Manual",
-                                    "habilitada": false,
-                                    "url": "/articulos/precios/ingresoManual"
-                                },
-                                {
-                                    "nombre": "Ingreso de Excel",
-                                    "habilitada": true,
-                                    "url": "/articulos/precios/ingresoExcel"
-                                }
-                            ]
+                            "url": "/Articulos/Precios",
+                            "menu": []
                         }
                     ]
                 },
                 {
                     "nombre": "Comprobantes",
                     "habilitada": true,
-                    "url": null,
-                    "menu": [
-                        {
-                            "nombre": "Baja",
-                            "habilitada": true,
-                            "url": "/comprobantes/baja"
-                        },
-                        {
-                            "nombre": "Modificacion",
-                            "habilitada": true,
-                            "url": "/comprobantes/modificacion"
-                        },
-                        {
-                            "nombre": "Envio (AFIP/ITF)",
-                            "habilitada": true,
-                            "url": "/comprobantes/afipItf"
-                        },
-                        {
-                            "nombre": "Consulta",
-                            "habilitada": true,
-                            "url": "/comprobantes/consulta"
-                        },
-                        {
-                            "nombre": "Consulta PDFs",
-                            "habilitada": true,
-                            "url": "/comprobantes/consultaPDF"
-                        },
-                        {
-                            "nombre": "Otras Consultas",
-                            "habilitada": true,
-                            "url": null,
-                            "menu": [
-                                {
-                                    "nombre": "IVA Ventas",
-                                    "habilitada": true,
-                                    "url": "/comprobantes/ivaVentas"
-                                },
-                                {
-                                    "nombre": "IVA Compras",
-                                    "habilitada": true,
-                                    "url": "/comprobantes/ivaCompras"
-                                },
-                                {
-                                    "nombre": "Interfaz CITI Ventas/Compras",
-                                    "habilitada": true,
-                                    "url": "/comprobantes/interfazCiti"
-                                },
-                                {
-                                    "nombre": "Ventas por Articulo",
-                                    "habilitada": true,
-                                    "url": "/comprobantes/ventasArticulo"
-                                },
-                                {
-                                    "nombre": "ComprasArticulo",
-                                    "habilitada": true,
-                                    "url": "/comprobantes/comprasArticulo"
-                                },
-                                {
-                                    "nombre": "Stock por Articulo",
-                                    "habilitada": true,
-                                    "url": "/comprobantes/stockArticulo"
-                                },
-                                {
-                                    "nombre": "Online Interfacturas Comprobantes",
-                                    "habilitada": true,
-                                    "url": "/comprobantes/interfacturasComprobante"
-                                },
-                                {
-                                    "nombre": "Online AFIP",
-                                    "habilitada": true,
-                                    "url": "/comprobantes/onlineAfip"
-                                },
-                                {
-                                    "nombre": "Archivo XML",
-                                    "habilitada": true,
-                                    "url": "/comprobantes/archivoXml"
-                                },
-                                {
-                                    "nombre": "Terminos y Condiciones",
-                                    "habilitada": true,
-                                    "url": "/comprobantes/terminoCondiciones"
-                                }
-                            ]
-                        }
-                    ]
+                    "url": "/Comprobantes",
+                    "menu": []
                 },
                 {
                     "nombre": "Contratos",
                     "habilitada": true,
-                    "url": null,
-                    "menu": [
-                        {
-                            "nombre": "Alta",
-                            "habilitada": true,
-                            "url": "/contratos/alta"
-                        },
-                        {
-                            "nombre": "Baja",
-                            "habilitada": true,
-                            "url": "/contratos/baja"
-                        },
-                        {
-                            "nombre": "Modificación",
-                            "habilitada": true,
-                            "url": "/contratos/modificacion"
-                        },
-                        {
-                            "nombre": "Consulta",
-                            "habilitada": true,
-                            "url": "/contratos/consulta"
-                        }
-                    ]
+                    "url": "/Contratos",
+                    "menu": []
                 },
                 {
                     "nombre": "Facturacion",
                     "habilitada": true,
-                    "url": null,
+                    "url": "/Facturacion",
                     "menu": [
                         {
                             "nombre": "Comun / RG.2904 / BonoFiscal / Expo",
@@ -869,7 +682,7 @@
                         {
                             "nombre": "Registro de Facturas",
                             "habilitada": true,
-                            "url": null,
+                            "url": "/Facturacion/RegistroFacturas",
                             "menu": [
                                 {
                                     "nombre": "Venta Resguardo",
@@ -888,134 +701,44 @@
                 {
                     "nombre": "Admin",
                     "habilitada": true,
-                    "url": null,
+                    "url": "/Admin",
                     "menu": [
                         {
                             "nombre": "CUIT",
                             "habilitada": true,
-                            "url": null,
-                            "menu": [
-                                {
-                                    "nombre": "Alta",
-                                    "habilitada": true,
-                                    "url": "admin/cuit/alta"
-                                },
-                                {
-                                    "nombre": "Permiso Admin CUIT",
-                                    "habilitada": true,
-                                    "url": "/admin/cuit/permisoCuit"
-                                },
-                                {
-                                    "nombre": "Baja",
-                                    "habilitada": true,
-                                    "url": "/admin/cuit/baja"
-                                },
-                                {
-                                    "nombre": "Modificación",
-                                    "habilitada": true,
-                                    "url": "/admin/cuit/modificacion"
-                                },
-                                {
-                                    "nombre": "Cambio logotipo",
-                                    "habilitada": true,
-                                    "url": "/admin/cuit/logoTipo"
-                                },
-                                {
-                                    "nombre": "Consulta",
-                                    "habilitada": true,
-                                    "url": "/admin/cuit/consulta"
-                                }
-                            ]
+                            "url": "/Admin/Cuit",
+                            "menu": []
                         },
                         {
                             "nombre": "UNs",
                             "habilitada": true,
-                            "url": null,
-                            "menu": [
-                                {
-                                    "nombre": "Alta",
-                                    "habilitada": true,
-                                    "url": "/admin/uns/alta"
-                                },
-                                {
-                                    "nombre": "Permiso Admin UN",
-                                    "habilitada": true,
-                                    "url": "/admin/uns/permisoAdmin"
-                                },
-                                {
-                                    "nombre": "Permiso Operador UN",
-                                    "habilitada": true,
-                                    "url": "/admin/uns/permisoOperador"
-                                },
-                                {
-                                    "nombre": "Consulta",
-                                    "habilitada": true,
-                                    "url": "/admin/uns/consulta"
-                                }
-                            ]
+                            "url": "/Admin/UNs",
+                            "menu": []
                         },
                         {
                             "nombre": "Puntos de Venta",
                             "habilitada": true,
-                            "url": null,
-                            "menu": [
-                                {
-                                    "nombre": "Alta",
-                                    "habilitada": true,
-                                    "url": "/admin/puntosVenta/alta"
-                                },
-                                {
-                                    "nombre": "Baja",
-                                    "habilitada": true,
-                                    "url": "/admin/puntosVenta/baja"
-                                },
-                                {
-                                    "nombre": "Modificación",
-                                    "habilitada": true,
-                                    "url": "/admin/puntosVenta/modificacion"
-                                },
-                                {
-                                    "nombre": "Consulta",
-                                    "habilitada": true,
-                                    "url": "/admin/puntosVenta/consulta"
-                                }
-                            ]
+                            "url": "/Admin/PuntosVenta",
+                            "menu": []
                         },
                         {
                             "nombre": "Autorizaciones",
                             "habilitada": true,
-                            "url": null,
-                            "menu": [
-                                {
-                                    "nombre": "Autorizaciones pendientes",
-                                    "habilitada": true,
-                                    "url": "/admin/autorizaciones/pendientes"
-                                }
-                            ]
+                            "url": "/Admin/Autorizaciones",
+                            "menu": []
                         },
                         {
                             "nombre": "Usuarios",
                             "habilitada": true,
-                            "url": null,
-                            "menu": [
-                                {
-                                    "nombre": "Cambio de Contraseña",
-                                    "habilitada": true,
-                                    "url": "/admin/usuarios/cambioContraseña"
-                                },
-                                {
-                                    "nombre": "Modificacion de Configuracion",
-                                    "habilitada": true,
-                                    "url": "/admin/usuarios/modificarConfiguracion"
-                                }
-                            ]
+                            "url": "/Admin/Usuarios",
+                            "menu": []
                         }
                     ]
                 },
                 {
                     "nombre": "Admin-Site",
                     "habilitada": true,
-                    "url": null,
+                    "url": "/AdminSite",
                     "menu": [
                         {
                             "nombre": "Comprobantes",
@@ -1075,26 +798,15 @@
                         {
                             "nombre": "Busqueda Laboral",
                             "habilitada": true,
-                            "url": null,
-                            "menu": [
-                                {
-                                    "nombre": "Explorador",
-                                    "habilitada": true,
-                                    "url": "/adminSite/laboral/explorador"
-                                },
-                                {
-                                    "nombre": "Archivos CVs",
-                                    "habilitada": true,
-                                    "url": "/adminSite/laboral/cvs"
-                                }
-                            ]
+                            "url": "/AdminSite/BusquedaLaboral",
+                            "menu": []
                         }
                     ]
                 },
                 {
                     "nombre": "Ayuda",
                     "habilitada": true,
-                    "url": null,
+                    "url": "/Ayuda",
                     "menu": [
                         {
                             "nombre": "Manual",

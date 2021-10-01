@@ -2,19 +2,22 @@ import React from 'react';
 import { Route, Switch, Redirect } from 'react-router-dom';
 import { Menu } from '../components/dashboardPrivate/Menu';
 import { AltaCuitScreen } from '../views/AltaCuitScreen';
+import { PersonaScreen } from '../views/PersonaScreen';
 
 export const DashboardPrivate = () => {
     return (
-        <>
+        <div>
             <Menu />
 
-            <main style={{ height: '1200px' }}>
+            <main className="bg-light">
                 <Switch>
-                    <Route path="/admin/cuit/alta" component={AltaCuitScreen} />
+                    <Route exact path="/persona" component={PersonaScreen} />
+                    
+                    <Route path="/admin/cuit" component={AltaCuitScreen} />
 
-                    <Redirect to="/admin/cuit/alta" />
+                    <Redirect to="/persona" />
                 </Switch>
             </main>
-        </>
+        </div>
     )
 }

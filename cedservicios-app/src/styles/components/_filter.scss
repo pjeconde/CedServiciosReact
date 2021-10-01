@@ -1,0 +1,46 @@
+.filter__container {
+    margin-bottom: 1.25rem;
+    margin-left: .25rem;
+}
+
+.filter__container ul {
+    display: inline-flex;
+    padding-left: 0;
+    list-style-type: none;
+    margin-bottom: 0;
+    margin-left: 10px;
+    flex-wrap: wrap;
+}
+
+.filter__container ul li {
+    margin-right: .75rem;
+    margin-top: .125rem;
+    margin-bottom: .125rem;
+}
+
+.filter__badge--dismissible {
+    background: #f2f3f4;
+    border: 1px solid #c0c4cb;
+    border-radius: .25rem;
+    padding: .125rem .5rem .125rem 0;
+}
+
+[type=button]:not(:disabled),
+[type=reset]:not(:disabled),
+[type=submit]:not(:disabled),
+button:not(:disabled) {
+    cursor: pointer;
+}
+
+.filter__badge--dismissible button {
+    background: none;
+    border: none;
+    font-weight: 700;
+    color: #6e7584;
+    transition: color .2s;
+}
+
+.filter__badge--dismissible button span {
+    font-size: 16px;
+    line-height: 100%;
+}

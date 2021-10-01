@@ -30,8 +30,8 @@ export const useForm = (initialState = {}) => {
     }
 
     const handleInputNumericChange = ({ target }) => {
-        let test = new RegExp('^\\d+$');
-        if (test.exec(target.value) || target.value === '')
+        const re = /^[0-9\b]+$/;
+        if (target.value === '' || (re.test(target.value)))
             setValues({
                 ...values,
                 [target.name]: target.value
@@ -44,7 +44,8 @@ export const useForm = (initialState = {}) => {
         handleDropdownChange,
         reset,
         handleInputCheck,
-        handleInputNumericChange
+        handleInputNumericChange,
+        setValues
     };
 
 }

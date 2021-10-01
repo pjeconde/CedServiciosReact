@@ -1,4 +1,5 @@
 export const provincias = [
+    { value: 0, label: 'Ninguno' },
     { value: 1, label: 'Buenos Aires' },
     { value: 2, label: 'Capital Federal' },
     { value: 3, label: 'Catamarca' },
@@ -26,6 +27,7 @@ export const provincias = [
 ];
 
 export const condIva = [
+    { value: 0, label: 'Ninguno' },
     { value: 1, label: 'IVA Responsable inscripto' },
     { value: 2, label: 'IVA Responsable no inscripto' },
     { value: 3, label: 'IVA no responsable' },
@@ -40,6 +42,7 @@ export const condIva = [
 ];
 
 export const condIngBrutos = [
+    { value: 0, label: 'Ninguno' },
     { value: 1, label: 'Contribuyente Local' },
     { value: 2, label: 'Contribuyente Multilateral' },
     { value: 3, label: 'Exento' },

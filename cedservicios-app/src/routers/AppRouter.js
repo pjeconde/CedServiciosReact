@@ -10,39 +10,37 @@ import { DashboardPublic } from './DashboardPublic';
 import { DashboardPrivate } from './DashboardPrivate';
 import { PrivateRoute } from './PrivateRoute';
 import { PublicRoute } from './PublicRoute';
-import { startChecking } from '../actions/auth';
+import { iniciarComprobacion } from '../actions/auth';
 import { Loading } from '../components/ui/Loading';
 
 export const AppRouter = () => {
 
-    const { checking, uid } = useSelector(state => state.auth);
+    const { comprobacion, nombreUsuario } = useSelector(state => state.auth);
     const dispatch = useDispatch();
 
     useEffect(() => {
-        dispatch(startChecking());
+        dispatch(iniciarComprobacion());
     }, [dispatch])
 
-    if (checking) {
+    if (comprobacion) {
         return <Loading />
     }
 
     return (
         <Router>
-            <div>
-                <Switch>
-                    <PublicRoute
-                        path="/auth"
-                        isAuthenticated={!!uid}
-                        component={DashboardPublic} />
+            <Switch>
+                <PublicRoute
+                    path="/auth"
+                    isAuthenticated={!!nombreUsuario}
+                    component={DashboardPublic} />
 
-                    <PrivateRoute
-                        path="/"
-                        isAuthenticated={!!uid}
-                        component={DashboardPrivate} />
+                <PrivateRoute
+                    path="/"
+                    isAuthenticated={!!nombreUsuario}
+                    component={DashboardPrivate} />
 
-                    <Redirect to="/auth/login" />
-                </Switch>
-            </div>
+                <Redirect to="/auth/login" />
+            </Switch>
         </Router>
     )
 }
