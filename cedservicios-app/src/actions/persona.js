@@ -60,21 +60,40 @@ const setPersonaActiva = (persona) => ({
 
 export const removerPersonaActiva = () => ({ type: types.personaRemoverPersonaActiva });
 
-export const iniciarActualizarPersona = (person) => {
+export const iniciarActualizarPersona = (persona) => {
 
-    return (dispatch) => {
-
+    return async (dispatch) => {
         try {
+            dispatch(startLoading());
 
-            //Conectar con la api(PersonaController/Actualizar)
-            dispatch(actualizarPersona(person));
+            const personaDto = getPersonaConDto(persona);
+            let dtoSinRelaciones = { ...personaDto };
+            delete dtoSinRelaciones.condicionIva;
+            delete dtoSinRelaciones.tipoDocumento;
+            delete dtoSinRelaciones.condicionIngresoBruto;
+            delete dtoSinRelaciones.provincia;
+            delete dtoSinRelaciones.estado;
+            delete dtoSinRelaciones.tipoPersona;
 
+            const resp = await fetchConToken('Persona', { id: persona.id, ...dtoSinRelaciones }, 'PUT');
+            const body = await resp.json();
+            console.log(body);
+
+            if (body) {
+                dispatch(finishLoading());
+                dispatch(actualizarPersona({ id: persona.id, ...personaDto }));
+                dispatch(iniciarObtenerPersonas());
+                Swal.fire('Success', 'Persona actualizada con exito.', 'success');
+            }
+            else {
+                Swal.fire('Error', 'No se pudo actualizar la persona.', 'error');
+            }
         } catch (error) {
+            dispatch(finishLoading());
             console.error(error);
+            Swal.fire({ icon: 'error', title: 'Oops...', text: 'Ocurrió un error inesperado.' });
         }
-
     }
-
 }
 
 const actualizarPersona = (persona) => ({

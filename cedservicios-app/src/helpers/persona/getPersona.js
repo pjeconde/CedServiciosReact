@@ -68,7 +68,8 @@ const getPersonaConDto = (persona) => {
             gln,
             codigoInterno,
             numeroIngresoBruto,
-            fechaInicioActividades
+            fechaInicioActividades,
+            estado
         } = persona;
 
         let domicilio = {
@@ -95,6 +96,11 @@ const getPersonaConDto = (persona) => {
             idProvincia: provincia.value,
             idCondicionIva: condicionIva.value,
             idCondicionIngresoBruto: condicionIngresoBruto.value,
+            tipoDocumento: { id: tipoDocumento.value, descripcion: tipoDocumento.label },
+            condicionIva: { id: condicionIva.value, descripcion: condicionIva.label },
+            condicionIngresoBruto: { id: condicionIngresoBruto.value, descripcion: condicionIngresoBruto.label },
+            provincia: { id: provincia.value, descripcion: provincia.label },
+            estado: { id: estado.value, descripcion: estado.label },
             domicilio,
             contacto,
             numeroIngresoBruto,
