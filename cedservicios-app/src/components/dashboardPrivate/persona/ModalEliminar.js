@@ -5,29 +5,30 @@ import { closeModal } from '../../../actions/ui';
 import { iniciarEliminarPersona, removerPersonaActiva } from '../../../actions/persona';
 
 const nameModal = 'modalEliminarPersona';
+const initPersona = {
+    descripcion: '',
+    tipoPersona: '',
+    tipoDocumento: '',
+    numeroDocumento: '',
+    razonSocial: '',
+    nombre: ''
+};
 
 export const ModalEliminar = () => {
 
     const { showModal } = useSelector(state => state.ui);
     const { personaActiva } = useSelector(state => state.persona);
     const { cuit } = useSelector(state => state.auth);
-    const [formValues, setFormValues] = useState({
-        idPersona: '',
-        tipoPersona: '',
-        tipoDocumento: '',
-        numeroDocumento: '',
-        razonSocial: '',
-        nombreContacto: ''
-    })
+    const [formValues, setFormValues] = useState(initPersona);
     const dispatch = useDispatch();
 
     const {
-        idPersona,
+        descripcion,
         tipoPersona,
         tipoDocumento,
         numeroDocumento,
         razonSocial,
-        nombreContacto
+        nombre
     } = formValues;
 
     const handleCloseModal = () => {
@@ -44,7 +45,6 @@ export const ModalEliminar = () => {
         if (personaActiva) {
             setFormValues(personaActiva);
         }
-
     }, [personaActiva])
 
     return (
@@ -93,11 +93,11 @@ export const ModalEliminar = () => {
                         />
                     </div>
                     <div className="col-sm-12 col-md-6 col-lg-4">
-                        <Form.Label>Id persona</Form.Label>
+                        <Form.Label>Descripcion</Form.Label>
                         <Form.Control
                             type="text"
-                            name="idPersona"
-                            value={idPersona}
+                            name="descripcion"
+                            value={descripcion}
                             readOnly
                         />
                     </div>
@@ -110,11 +110,11 @@ export const ModalEliminar = () => {
                             readOnly />
                     </div>
                     <div className="col-sm-12 col-md-12 col-lg-6">
-                        <Form.Label htmlFor="nombreContacto">Nombre de Contacto</Form.Label>
+                        <Form.Label htmlFor="nombre">Nombre de Contacto</Form.Label>
                         <Form.Control
                             type="text"
-                            name="nombreContacto"
-                            value={nombreContacto}
+                            name="nombre"
+                            value={nombre}
                             readOnly />
                     </div>
                 </div>

@@ -19,26 +19,18 @@ export const iniciarAgregarPersona = (persona) => {
 
             if (resp.status === 200) {
                 dispatch(finishLoading());
+                dispatch(iniciarObtenerPersonas());
                 Swal.fire('Success', 'Persona agregada con exito.', 'success');
-                iniciarObtenerPersonas();
             }
             else {
-                Swal.fire({
-                    icon: 'error',
-                    title: 'Oops...',
-                    text: body.errors[0].detail
-                });
+                Swal.fire({ icon: 'error', title: 'Oops...', text: body.errors[0].detail });
                 dispatch(setError(body.errors[0].detail));
             }
 
         } catch (error) {
             dispatch(finishLoading());
             console.error(error);
-            Swal.fire({
-                icon: 'error',
-                title: 'Oops...',
-                text: 'Ocurrió un error inesperado.'
-            });
+            Swal.fire({ icon: 'error', title: 'Oops...', text: 'Ocurrió un error inesperado.' });
         }
     }
 }
@@ -56,11 +48,7 @@ export const iniciarSetPersonaActiva = (persona) => {
         }
         catch (error) {
             console.error(error);
-            Swal.fire({
-                icon: 'error',
-                title: 'Oops...',
-                text: 'Ocurrió un error inesperado.'
-            });
+            Swal.fire({ icon: 'error', title: 'Oops...', text: 'Ocurrió un error inesperado.' });
         }
     }
 }
@@ -95,17 +83,32 @@ const actualizarPersona = (persona) => ({
 })
 
 export const iniciarEliminarPersona = () => {
-
-    return (dispatch) => {
+    return async (dispatch, getState) => {
         try {
+            dispatch(startLoading());
+            let { personaActiva } = getState().persona;
+            let id = personaActiva.id;
 
-            //Conectar con la api
-            dispatch(eliminarPersona());
+            const resp = await fetchConToken(`Persona/${id}`, null, 'DELETE');
+            const body = await resp.json();
+
+            if (body) {
+                dispatch(finishLoading());
+                dispatch(eliminarPersona());
+                dispatch(iniciarObtenerPersonas());
+                Swal.fire('Success', 'Persona de baja con exito.', 'success');
+            }
+            else {
+                Swal.fire('Error', 'No se pudo eliminar la persona.', 'error');
+            }
+
+            dispatch(finishLoading());
 
         } catch (error) {
+            dispatch(finishLoading());
             console.error(error);
+            Swal.fire({ icon: 'error', title: 'Oops...', text: 'Ocurrió un error inesperado.' });
         }
-
     }
 }
 
@@ -153,11 +156,7 @@ export const iniciarObtenerPersonas = () => {
         }
         catch (error) {
             console.error(error);
-            Swal.fire({
-                icon: 'error',
-                title: 'Oops...',
-                text: 'Ocurrió un error inesperado.'
-            });
+            Swal.fire({ icon: 'error', title: 'Oops...', text: 'Ocurrió un error inesperado.' });
             dispatch(finishLoading());
         }
     }

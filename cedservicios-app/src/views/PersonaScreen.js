@@ -35,7 +35,6 @@ const columnaPersonas = [
     {
         name: 'Nº Documento',
         selector: 'numeroDocumento',
-        // center: true,
         style: {
             color: '#202124',
             fontSize: '14px',
