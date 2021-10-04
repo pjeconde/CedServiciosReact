@@ -11,7 +11,7 @@ const initPersona = {
     tipoDocumento: '',
     numeroDocumento: '',
     razonSocial: '',
-    nombre: ''
+    nombreContacto: ''
 };
 
 export const ModalEliminar = () => {
@@ -28,7 +28,7 @@ export const ModalEliminar = () => {
         tipoDocumento,
         numeroDocumento,
         razonSocial,
-        nombre
+        nombreContacto
     } = formValues;
 
     const handleCloseModal = () => {
@@ -110,11 +110,11 @@ export const ModalEliminar = () => {
                             readOnly />
                     </div>
                     <div className="col-sm-12 col-md-12 col-lg-6">
-                        <Form.Label htmlFor="nombre">Nombre de Contacto</Form.Label>
+                        <Form.Label htmlFor="nombreContacto">Nombre de Contacto</Form.Label>
                         <Form.Control
                             type="text"
-                            name="nombre"
-                            value={nombre}
+                            name="nombreContacto"
+                            value={nombreContacto}
                             readOnly />
                     </div>
                 </div>

@@ -12,7 +12,7 @@ export const iniciarIngresarUsuario = (nombreUsuario, clave) => {
 
             const resp = await fetchSinToken('Usuario/Ingresar', { nombreUsuario, clave }, 'POST');
             const body = await resp.json();
-            
+
             if (resp.status === 200) {
                 const {
                     nombreUsuario,
@@ -38,11 +38,7 @@ export const iniciarIngresarUsuario = (nombreUsuario, clave) => {
         }
         catch (error) {
             dispatch(finishLoading());
-            Swal.fire({
-                icon: 'error',
-                title: 'Oops...',
-                text: 'Ocurrió un error inesperado.'
-            });
+            Swal.fire({ icon: 'error', title: 'Oops...', text: 'Ocurrió un error inesperado.' });
         }
     }
 }
@@ -54,7 +50,7 @@ export const iniciarRegistroUsuario = (usuario) => {
 
             const resp = await fetchSinToken('Usuario', usuario, 'POST');
             const body = await resp.json();
-            
+
             if (resp.status === 200) {
                 const {
                     nombreUsuario,
@@ -84,11 +80,7 @@ export const iniciarRegistroUsuario = (usuario) => {
 
         } catch (error) {
             dispatch(finishLoading());
-            Swal.fire({
-                icon: 'error',
-                title: 'Oops...',
-                text: 'Ocurrió un error inesperado.'
-            });
+            Swal.fire({ icon: 'error', title: 'Oops...', text: 'Ocurrió un error inesperado.' });
         }
     }
 }
@@ -133,11 +125,7 @@ export const iniciarValidarNombreUsuario = (nombreUsuario) => {
         } catch (error) {
             console.log(error);
             dispatch(finishLoading());
-            Swal.fire({
-                icon: 'error',
-                title: 'Oops...',
-                text: 'Ocurrió un error inesperado.'
-            });
+            Swal.fire({ icon: 'error', title: 'Oops...', text: 'Ocurrió un error inesperado.' });
         }
     }
 }
@@ -209,11 +197,7 @@ export const iniciarObtenerPreguntaSeguridad = (nombreUsuario, email) => {
         catch (error) {
             console.log(error);
             dispatch(finishLoading());
-            Swal.fire({
-                icon: 'error',
-                title: 'Oops...',
-                text: 'Ocurrió un error inesperado.'
-            });
+            Swal.fire({ icon: 'error', title: 'Oops...', text: 'Ocurrió un error inesperado.' });
         }
     }
 }
@@ -240,11 +224,7 @@ export const iniciarValidarRespuestaSeguridad = (respuesta) => {
                     respuesta
                 }));
                 if (!body)
-                    Swal.fire({
-                        icon: 'error',
-                        title: 'Oops...',
-                        text: 'La respuesta no es válida.'
-                    });
+                    Swal.fire({ icon: 'error', title: 'Oops...', text: 'La respuesta no es válida.' });
             }
             else {
                 Swal.fire({
@@ -264,11 +244,7 @@ export const iniciarValidarRespuestaSeguridad = (respuesta) => {
         catch (error) {
             console.log(error);
             dispatch(finishLoading());
-            Swal.fire({
-                icon: 'error',
-                title: 'Oops...',
-                text: 'Ocurrió un error inesperado.'
-            });
+            Swal.fire({ icon: 'error', title: 'Oops...', text: 'Ocurrió un error inesperado.' });
         }
     }
 }
@@ -314,11 +290,7 @@ export const iniciarCambiarContraseña = (password) => {
         } catch (error) {
             console.log(error);
             dispatch(finishLoading());
-            Swal.fire({
-                icon: 'error',
-                title: 'Oops...',
-                text: 'Ocurrió un error inesperado.'
-            });
+            Swal.fire({ icon: 'error', title: 'Oops...', text: 'Ocurrió un error inesperado.' });
         }
 
     }

@@ -39,9 +39,9 @@ const initPerson = {
     codigoPostal: '',
     descripcion: '',
     razonSocial: '',
-    nombre: '',
-    email: '',
-    telefono: '',
+    nombreContacto: '',
+    emailContacto: '',
+    telefonoContacto: '',
     gln: 0,
     codigoInterno: '',
     numeroIngresoBruto: '',
@@ -84,9 +84,9 @@ export const ModalPersona = () => {
         manzana,
         localidad,
         codigoPostal,
-        nombre,
-        email,
-        telefono,
+        nombreContacto,
+        emailContacto,
+        telefonoContacto,
         gln,
         codigoInterno } = formValues;
 
@@ -209,35 +209,35 @@ export const ModalPersona = () => {
                                     onChange={handleInputChange} />
                             </div>
                             <div className="col-sm-12 col-md-12 col-lg-6">
-                                <Form.Label htmlFor="nombre">Nombre de Contacto</Form.Label>
+                                <Form.Label htmlFor="nombreContacto">Nombre de Contacto</Form.Label>
                                 <Form.Control
                                     type="text"
-                                    name="nombre"
-                                    disabled={!camposHabilitados["nombre"]}
+                                    name="nombreContacto"
+                                    disabled={!camposHabilitados["nombreContacto"]}
                                     required
-                                    value={nombre || ''}
+                                    value={nombreContacto || ''}
                                     onChange={handleInputChange} />
                             </div>
                             <div className="col-sm-12 col-md-12 col-lg-6">
                                 <Form.Label htmlFor="telefono">Telefono</Form.Label>
                                 <Form.Control
                                     type="text"
-                                    name="telefono"
-                                    disabled={!camposHabilitados["telefono"]}
+                                    name="telefonoContacto"
+                                    disabled={!camposHabilitados["telefonoContacto"]}
                                     required
                                     autoComplete="none"
-                                    value={telefono || ''}
+                                    value={telefonoContacto || ''}
                                     onChange={handleInputNumericChange} />
                             </div>
                             <div className="col-sm-12 col-md-12 col-lg-6">
-                                <Form.Label htmlFor="email">Email</Form.Label>
+                                <Form.Label htmlFor="emailContacto">Email</Form.Label>
                                 <Form.Control
                                     type="email"
-                                    name="email"
-                                    disabled={!camposHabilitados["email"]}
+                                    name="emailContacto"
+                                    disabled={!camposHabilitados["emailContacto"]}
                                     required
                                     autoComplete="none"
-                                    value={email || ''}
+                                    value={emailContacto || ''}
                                     onChange={handleInputChange} />
                             </div>
                             <div className="col-sm-12 col-md-12 col-lg-6">
