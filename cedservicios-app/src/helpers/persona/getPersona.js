@@ -1,8 +1,8 @@
 import moment from "moment";
 import { tipoDePersonas } from "../tipoPersona";
 
-
-const getPersonaSinDto = (persona) => {
+// Transforma los combobox de persona en el objeto {value, label}
+const parsearComboboxPersona = (persona) => {
     try {
         let personaSinDto = { ...persona };
 
@@ -13,21 +13,12 @@ const getPersonaSinDto = (persona) => {
             fechaInicioActividades,
             esCliente,
             esProveedor,
-            domicilio,
-            contacto,
-            datosIdentificatorios
         } = persona;
 
-        delete personaSinDto.domicilio;
-        delete personaSinDto.contacto;
-        delete personaSinDto.datosIdentificatorios;
         delete personaSinDto.fechaInicioActividades;
 
         return {
             ...personaSinDto,
-            ...domicilio,
-            ...contacto,
-            ...datosIdentificatorios,
             tipoDocumento: { value: tipoDocumento.id, label: tipoDocumento.descripcion },
             condicionIva: { value: condicionIva.id, label: condicionIva.descripcion },
             condicionIngresoBruto: { value: condicionIngresoBruto.id, label: condicionIngresoBruto.descripcion },
@@ -41,81 +32,62 @@ const getPersonaSinDto = (persona) => {
     }
 }
 
-const getPersonaConDto = (persona) => {
+// Transforma el formulario de persona a personaDto
+const parsearAPersonaDto = (persona) => {
     try {
-
         let {
-            numeroDocumento,
-            tipoPersona,
             tipoDocumento,
-            provincia,
             condicionIva,
             condicionIngresoBruto,
-            calle,
-            numero,
-            piso,
-            departamento,
-            sector,
-            torre,
-            manzana,
-            localidad,
-            codigoPostal,
-            descripcion,
-            razonSocial,
-            nombre,
-            email,
-            telefono,
-            gln,
-            codigoInterno,
-            numeroIngresoBruto,
-            fechaInicioActividades,
-            estado
+            provincia,
+            tipoPersona
         } = persona;
 
-        let domicilio = {
-            calle,
-            numero,
-            piso,
-            departamento,
-            sector,
-            torre,
-            manzana,
-            localidad,
-            codigoPostal
-        };
-        let contacto = { nombre, email, telefono, };
-        let datosIdentificatorios = { gln, codigoInterno };
         let esCliente = (tipoPersona.value === 2) ? true : (tipoPersona.value === 0) ? true : false;
         let esProveedor = (tipoPersona.value === 2) ? true : (tipoPersona.value === 1) ? true : false;
 
         return {
-            numeroDocumento,
-            descripcion,
-            razonSocial,
-            idTipoDocumento: tipoDocumento.value,
-            idProvincia: provincia.value,
+            ...persona,
+            esCliente,
+            esProveedor,
             idCondicionIva: condicionIva.value,
+            idTipoDocumento: tipoDocumento.value,
             idCondicionIngresoBruto: condicionIngresoBruto.value,
+            idProvincia: provincia.value
+        }
+
+    } catch (error) {
+        throw error;
+    }
+}
+
+const parsearAGrillaPersonaDto = (persona) => {
+    try {
+        let { tipoDocumento,
+            condicionIva,
+            condicionIngresoBruto,
+            provincia,
+            estado,
+            tipoPersona,
+        } = persona;
+
+        return {
+            ...persona,
             tipoDocumento: { id: tipoDocumento.value, descripcion: tipoDocumento.label },
             condicionIva: { id: condicionIva.value, descripcion: condicionIva.label },
             condicionIngresoBruto: { id: condicionIngresoBruto.value, descripcion: condicionIngresoBruto.label },
             provincia: { id: provincia.value, descripcion: provincia.label },
+            tipoPersona: { id: tipoPersona.value, descripcion: tipoPersona.label },
             estado: { id: estado.value, descripcion: estado.label },
-            domicilio,
-            contacto,
-            numeroIngresoBruto,
-            datosIdentificatorios,
-            fechaInicioActividades,
-            esCliente,
-            esProveedor
-        };
-    }
-    catch (error) {
+        }
+
+    } catch (error) {
         throw error;
     }
 }
 
 export {
-    getPersonaSinDto,
-    getPersonaConDto
+    parsearComboboxPersona,
+    parsearAPersonaDto,
+    parsearAGrillaPersonaDto
 };

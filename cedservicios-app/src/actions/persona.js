@@ -1,7 +1,7 @@
 import queryString from 'query-string';
 import Swal from 'sweetalert2';
 import { fetchConToken } from "../config/fetch";
-import { getPersonaConDto, getPersonaSinDto } from '../helpers/persona/getPersona';
+import { parsearAGrillaPersonaDto, parsearAPersonaDto, parsearComboboxPersona } from '../helpers/persona/getPersona';
 import { types } from "../types/types";
 import { setDatosGrilla } from './grilla';
 import { finishLoading, setError, startLoading } from "./ui";
@@ -11,10 +11,11 @@ export const iniciarAgregarPersona = (persona) => {
     return async (dispatch, getState) => {
         try {
             dispatch(startLoading());
-            let personaConDto = getPersonaConDto(persona);
+
+            let personaDto = parsearAPersonaDto(persona);
             const { cuit } = getState().auth;
 
-            const resp = await fetchConToken('Persona', { ...personaConDto, cuit }, 'POST');
+            const resp = await fetchConToken('Persona', { ...personaDto, cuit }, 'POST');
             const body = await resp.json();
 
             if (resp.status === 200) {
@@ -43,7 +44,7 @@ export const iniciarAgregarPersona = (persona) => {
 export const iniciarSetPersonaActiva = (persona) => {
     return (dispatch) => {
         try {
-            let personaSinDto = getPersonaSinDto(persona);
+            let personaSinDto = parsearComboboxPersona(persona);
             dispatch(setPersonaActiva(personaSinDto));
         }
         catch (error) {
@@ -65,23 +66,15 @@ export const iniciarActualizarPersona = (persona) => {
     return async (dispatch) => {
         try {
             dispatch(startLoading());
+            const personaDto = parsearAPersonaDto(persona);
 
-            const personaDto = getPersonaConDto(persona);
-            let dtoSinRelaciones = { ...personaDto };
-            delete dtoSinRelaciones.condicionIva;
-            delete dtoSinRelaciones.tipoDocumento;
-            delete dtoSinRelaciones.condicionIngresoBruto;
-            delete dtoSinRelaciones.provincia;
-            delete dtoSinRelaciones.estado;
-            delete dtoSinRelaciones.tipoPersona;
-
-            const resp = await fetchConToken('Persona', { id: persona.id, ...dtoSinRelaciones }, 'PUT');
+            const resp = await fetchConToken('Persona', personaDto, 'PUT');
             const body = await resp.json();
-            console.log(body);
 
             if (body) {
                 dispatch(finishLoading());
-                dispatch(actualizarPersona({ id: persona.id, ...personaDto }));
+                let grillaPersonaDto = parsearAGrillaPersonaDto(persona);
+                dispatch(actualizarPersona(grillaPersonaDto));
                 dispatch(iniciarObtenerPersonas());
                 Swal.fire('Success', 'Persona actualizada con exito.', 'success');
             }

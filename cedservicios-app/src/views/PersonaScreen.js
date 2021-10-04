@@ -54,18 +54,18 @@ const columnaPersonas = [
     },
     {
         name: 'Localidad',
-        selector: 'domicilio.localidad',
+        selector: 'localidad',
         sortable: true
     },
     {
         name: 'Nombre contacto',
-        selector: 'contacto.nombre',
+        selector: 'nombreContacto',
         grow: 1.5,
         sortable: true
     },
     {
         name: 'Email',
-        selector: 'contacto.email',
+        selector: 'emailContacto',
         grow: 2
     },
     {
