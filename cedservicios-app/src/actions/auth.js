@@ -19,7 +19,7 @@ export const iniciarIngresarUsuario = (nombreUsuario, clave) => {
                     nombreCompleto,
                     email,
                     token,
-                    fechaExpiracion } = body;
+                    fechaExpiracion } = body.datos;
 
                 localStorage.setItem('token', token);
                 localStorage.setItem('token-exp', fechaExpiracion);
@@ -57,7 +57,7 @@ export const iniciarRegistroUsuario = (usuario) => {
                     nombreCompleto,
                     email,
                     token,
-                    fechaExpiracion } = body;
+                    fechaExpiracion } = body.datos;
 
                 localStorage.setItem('token', token);
                 localStorage.setItem('token-exp', fechaExpiracion);
@@ -109,7 +109,7 @@ export const iniciarValidarNombreUsuario = (nombreUsuario) => {
             const resp = await fetchSinToken(`Usuario/ValidarNombreUsuario?${queryString.stringify({ nombreUsuario })}`);
             const body = await resp.json();
 
-            if (body) {
+            if (body.datos) {
                 Swal.fire('Nombre Usuario', 'Nombre de usuario disponible.', 'success');
                 dispatch(removeError());
             } else {
@@ -178,7 +178,7 @@ export const iniciarObtenerPreguntaSeguridad = (nombreUsuario, email) => {
                 const { formSeguridad } = getState().auth;
                 dispatch(setFormSeguridad({
                     ...formSeguridad,
-                    pregunta: body,
+                    pregunta: body.datos,
                     nombreUsuario,
                     email
                 }))
@@ -220,24 +220,16 @@ export const iniciarValidarRespuestaSeguridad = (respuesta) => {
             if (resp.status === 200) {
                 dispatch(setFormSeguridad({
                     ...formSeguridad,
-                    respuestaValida: body,
+                    respuestaValida: body.datos,
                     respuesta
                 }));
                 if (!body)
                     Swal.fire({ icon: 'error', title: 'Oops...', text: 'La respuesta no es válida.' });
             }
             else {
-                Swal.fire({
-                    icon: 'error',
-                    title: 'Oops...',
-                    text: body.errors[0].detail
-                });
+                Swal.fire({ icon: 'error', title: 'Oops...', text: body.errors[0].detail });
                 dispatch(setError(body.errors[0].detail));
-                dispatch(setFormSeguridad({
-                    ...formSeguridad,
-                    respuestaValida: false,
-                    respuesta
-                }));
+                dispatch(setFormSeguridad({ ...formSeguridad, respuestaValida: false, respuesta }));
             }
             dispatch(finishLoading());
         }

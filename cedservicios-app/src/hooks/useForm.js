@@ -3,15 +3,21 @@ import { useState } from 'react';
 export const useForm = (initialState = {}) => {
 
     const [values, setValues] = useState(initialState);
+    const [errors, setErrors] = useState({});
 
     const reset = (newFormState = initialState) => {
         setValues(newFormState);
+        setErrors({});
     }
 
     const handleInputChange = ({ target }) => {
         setValues({
             ...values,
             [target.name]: target.value
+        });
+        setErrors({
+            ...errors,
+            [target.name]: ''
         });
     }
 
@@ -31,15 +37,22 @@ export const useForm = (initialState = {}) => {
 
     const handleInputNumericChange = ({ target }) => {
         const re = /^[0-9\b]+$/;
-        if (target.value === '' || (re.test(target.value)))
+        if (target.value === '' || (re.test(target.value))) {
             setValues({
                 ...values,
                 [target.name]: target.value
             });
+            setErrors({
+                ...errors,
+                [target.name]: ''
+            });
+        }
     }
 
     return {
         values,
+        errors,
+        setErrors,
         handleInputChange,
         handleDropdownChange,
         reset,
