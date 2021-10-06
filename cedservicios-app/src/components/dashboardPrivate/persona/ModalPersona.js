@@ -17,6 +17,7 @@ import { tipoDocumentos } from '../../../helpers/tipoDocumento';
 import { condIngBrutos, condIva, provincias } from '../../../helpers/admin';
 import { useForm } from '../../../hooks/useForm';
 import { getCamposHabilitados } from '../../../helpers/persona/getCamposHabilitados';
+import { camelCase } from '../../../helpers/camelCase';
 
 
 const nameModal = 'modalPersona';
@@ -25,9 +26,9 @@ const initPerson = {
     numeroDocumento: '',
     tipoPersona: tipoDePersonas[2],
     tipoDocumento: { value: 80, label: 'CUIT' },
-    provincia: { value: 1, label: 'Buenos Aires' },
-    condicionIva: '',
-    condicionIngresoBruto: '',
+    provincia: provincias[1],
+    condicionIva: condIva[0],
+    condicionIngresoBruto: condIngBrutos[0],
     calle: '',
     numero: '',
     piso: '',
@@ -37,7 +38,7 @@ const initPerson = {
     manzana: '',
     localidad: '',
     codigoPostal: '',
-    descripcion: '',
+    identificador: '',
     razonSocial: '',
     nombreContacto: '',
     emailContacto: '',
@@ -50,7 +51,7 @@ const initPerson = {
 
 export const ModalPersona = () => {
 
-    const { showModal, typeModal, loading } = useSelector(state => state.ui);
+    const { showModal, typeModal, loading, errores } = useSelector(state => state.ui);
     const { personaActiva } = useSelector(state => state.persona);
     const { cuit } = useSelector(state => state.auth);
     const dispatch = useDispatch();
@@ -59,6 +60,8 @@ export const ModalPersona = () => {
 
     const {
         values: formValues,
+        errors,
+        setErrors,
         handleDropdownChange,
         handleInputNumericChange,
         handleInputChange,
@@ -68,7 +71,7 @@ export const ModalPersona = () => {
     const { tipoPersona,
         tipoDocumento,
         numeroDocumento,
-        descripcion,
+        identificador,
         razonSocial,
         numeroIngresoBruto,
         fechaInicioActividades,
@@ -93,6 +96,7 @@ export const ModalPersona = () => {
     const handleCloseModal = () => {
         dispatch(closeModal());
         dispatch(removerPersonaActiva());
+        reset(initPerson);
     }
 
     const handleSubmit = (e) => {
@@ -103,23 +107,28 @@ export const ModalPersona = () => {
         }
         else {
             dispatch(iniciarAgregarPersona(formValues));
-            reset(initPerson);
+            // handleCloseModal();
         }
 
-        handleCloseModal();
     }
 
     useEffect(() => {
-
         if (personaActiva) {
             reset(personaActiva);
         }
         else {
             reset(initPerson);
         }
-
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [personaActiva])
+
+    useEffect(() => {
+        if (errores) {
+            let err = {};
+            Object.keys(errores).map((key) => err[camelCase(key)] = errores[key][0]);
+            setErrors(err);
+        }
+    }, [errores, setErrors])
 
     return (
         <div>
@@ -148,7 +157,7 @@ export const ModalPersona = () => {
                     </Modal.Title>
                 </Modal.Header>
                 <Modal.Body >
-                    <form onSubmit={handleSubmit}>
+                    <Form noValidate onSubmit={handleSubmit}>
                         <div className="row g-3">
                             <InputGroup className="mb-3">
                                 <InputGroup.Text>Perteneciente al cuit</InputGroup.Text>
@@ -168,6 +177,7 @@ export const ModalPersona = () => {
                                 <Form.Label>Tipo documento</Form.Label>
                                 <Select
                                     name="tipoDocumento"
+                                    required
                                     isDisabled={!camposHabilitados["tipoDocumento"]}
                                     options={tipoDocumentos}
                                     classNamePrefix="react-select"
@@ -175,70 +185,109 @@ export const ModalPersona = () => {
                                     onChange={handleDropdownChange} />
                             </div>
                             <div className="col-sm-6 col-md-6 col-lg-4">
-                                <Form.Label>Numero documento</Form.Label>
-                                <Form.Control
-                                    type="text"
-                                    name="numeroDocumento"
-                                    disabled={!camposHabilitados["numeroDocumento"]}
-                                    autoComplete="off"
-                                    maxLength="11"
-                                    value={numeroDocumento}
-                                    onChange={handleInputNumericChange}
-                                />
+                                <Form.Group controlId="control-1">
+                                    <Form.Label>Numero documento</Form.Label>
+                                    <Form.Control
+                                        type="text"
+                                        name="numeroDocumento"
+                                        required
+                                        isInvalid={!!errors?.numeroDocumento}
+                                        disabled={!camposHabilitados["numeroDocumento"]}
+                                        autoComplete="off"
+                                        maxLength="11"
+                                        value={numeroDocumento}
+                                        onChange={handleInputNumericChange}
+                                    />
+                                    <Form.Control.Feedback type="invalid">
+                                        {errors.numeroDocumento}
+                                    </Form.Control.Feedback>
+                                </Form.Group>
                             </div>
                             <div className="col-sm-12 col-md-6 col-lg-4">
-                                <Form.Label>Descripcion</Form.Label>
-                                <Form.Control
-                                    type="text"
-                                    name="descripcion"
-                                    disabled={!camposHabilitados["descripcion"]}
-                                    autoComplete="off"
-                                    maxLength="50"
-                                    value={descripcion}
-                                    onChange={handleInputChange}
-                                />
+                                <Form.Group>
+                                    <Form.Label>Identificador</Form.Label>
+                                    <Form.Control
+                                        type="text"
+                                        name="identificador"
+                                        required
+                                        isInvalid={!!errors?.identificador}
+                                        disabled={!camposHabilitados["identificador"]}
+                                        autoComplete="off"
+                                        maxLength="50"
+                                        value={identificador}
+                                        onChange={handleInputChange}
+                                    />
+                                    <Form.Control.Feedback type="invalid">
+                                        {errors.identificador}
+                                    </Form.Control.Feedback>
+                                </Form.Group>
                             </div>
                             <div className="col-sm-12 col-md-12 col-lg-8">
-                                <Form.Label htmlFor="razonSocial">Razón social</Form.Label>
-                                <Form.Control
-                                    type="text"
-                                    name="razonSocial"
-                                    disabled={!camposHabilitados["razonSocial"]}
-                                    autoComplete="off"
-                                    value={razonSocial}
-                                    onChange={handleInputChange} />
+                                <Form.Group>
+                                    <Form.Label htmlFor="razonSocial">Razón social</Form.Label>
+                                    <Form.Control
+                                        type="text"
+                                        name="razonSocial"
+                                        required
+                                        isInvalid={!!errors?.razonSocial}
+                                        disabled={!camposHabilitados["razonSocial"]}
+                                        autoComplete="off"
+                                        value={razonSocial}
+                                        onChange={handleInputChange} />
+                                    <Form.Control.Feedback type="invalid">
+                                        {errors.razonSocial}
+                                    </Form.Control.Feedback>
+                                </Form.Group>
                             </div>
                             <div className="col-sm-12 col-md-12 col-lg-6">
-                                <Form.Label htmlFor="nombreContacto">Nombre de Contacto</Form.Label>
-                                <Form.Control
-                                    type="text"
-                                    name="nombreContacto"
-                                    disabled={!camposHabilitados["nombreContacto"]}
-                                    required
-                                    value={nombreContacto || ''}
-                                    onChange={handleInputChange} />
+                                <Form.Group>
+                                    <Form.Label htmlFor="nombreContacto">Nombre de Contacto</Form.Label>
+                                    <Form.Control
+                                        type="text"
+                                        name="nombreContacto"
+                                        disabled={!camposHabilitados["nombreContacto"]}
+                                        required
+                                        isInvalid={!!errors?.nombreContacto}
+                                        value={nombreContacto || ''}
+                                        onChange={handleInputChange} />
+                                    <Form.Control.Feedback type="invalid">
+                                        {errors.nombreContacto}
+                                    </Form.Control.Feedback>
+                                </Form.Group>
                             </div>
                             <div className="col-sm-12 col-md-12 col-lg-6">
-                                <Form.Label htmlFor="telefono">Telefono</Form.Label>
-                                <Form.Control
-                                    type="text"
-                                    name="telefonoContacto"
-                                    disabled={!camposHabilitados["telefonoContacto"]}
-                                    required
-                                    autoComplete="none"
-                                    value={telefonoContacto || ''}
-                                    onChange={handleInputNumericChange} />
+                                <Form.Group>
+                                    <Form.Label htmlFor="telefono">Telefono</Form.Label>
+                                    <Form.Control
+                                        type="text"
+                                        name="telefonoContacto"
+                                        disabled={!camposHabilitados["telefonoContacto"]}
+                                        required
+                                        isInvalid={!!errors?.telefonoContacto}
+                                        autoComplete="none"
+                                        value={telefonoContacto || ''}
+                                        onChange={handleInputNumericChange} />
+                                    <Form.Control.Feedback type="invalid">
+                                        {errors.telefonoContacto}
+                                    </Form.Control.Feedback>
+                                </Form.Group>
                             </div>
                             <div className="col-sm-12 col-md-12 col-lg-6">
-                                <Form.Label htmlFor="emailContacto">Email</Form.Label>
-                                <Form.Control
-                                    type="email"
-                                    name="emailContacto"
-                                    disabled={!camposHabilitados["emailContacto"]}
-                                    required
-                                    autoComplete="none"
-                                    value={emailContacto || ''}
-                                    onChange={handleInputChange} />
+                                <Form.Group>
+                                    <Form.Label htmlFor="emailContacto">Email</Form.Label>
+                                    <Form.Control
+                                        type="email"
+                                        name="emailContacto"
+                                        disabled={!camposHabilitados["emailContacto"]}
+                                        required
+                                        isInvalid={!!errors?.emailContacto}
+                                        autoComplete="none"
+                                        value={emailContacto || ''}
+                                        onChange={handleInputChange} />
+                                    <Form.Control.Feedback type="invalid">
+                                        {errors.emailContacto}
+                                    </Form.Control.Feedback>
+                                </Form.Group>
                             </div>
                             <div className="col-sm-12 col-md-12 col-lg-6">
                                 <Form.Label htmlFor="provincia">Provincia</Form.Label>
@@ -252,96 +301,150 @@ export const ModalPersona = () => {
                                     classNamePrefix="react-select" />
                             </div>
                             <div className="col-sm-12 col-md-12 col-lg-6">
-                                <Form.Label htmlFor="localidad">Localidad</Form.Label>
-                                <Form.Control
-                                    type="text"
-                                    name="localidad"
-                                    disabled={!camposHabilitados["localidad"]}
-                                    required
-                                    value={localidad || ''}
-                                    onChange={handleInputChange} />
+                                <Form.Group>
+                                    <Form.Label htmlFor="localidad">Localidad</Form.Label>
+                                    <Form.Control
+                                        type="text"
+                                        name="localidad"
+                                        disabled={!camposHabilitados["localidad"]}
+                                        required
+                                        isInvalid={!!errors?.localidad}
+                                        value={localidad || ''}
+                                        onChange={handleInputChange} />
+                                    <Form.Control.Feedback type="invalid">
+                                        {errors.localidad}
+                                    </Form.Control.Feedback>
+                                </Form.Group>
                             </div>
                             <div className="col-sm-12 col-md-4 col-lg-3">
-                                <Form.Label htmlFor="codigoPostal">Código Postal</Form.Label>
-                                <Form.Control
-                                    type="text"
-                                    name="codigoPostal"
-                                    disabled={!camposHabilitados["codigoPostal"]}
-                                    required
-                                    value={codigoPostal || ''}
-                                    onChange={handleInputChange}
-                                    maxLength="6" />
+                                <Form.Group>
+                                    <Form.Label htmlFor="codigoPostal">Código Postal</Form.Label>
+                                    <Form.Control
+                                        type="text"
+                                        name="codigoPostal"
+                                        disabled={!camposHabilitados["codigoPostal"]}
+                                        required
+                                        isInvalid={!!errors?.codigoPostal}
+                                        value={codigoPostal || ''}
+                                        onChange={handleInputChange}
+                                        maxLength="6" />
+                                    <Form.Control.Feedback type="invalid">
+                                        {errors.codigoPostal}
+                                    </Form.Control.Feedback>
+                                </Form.Group>
                             </div>
                             <div className="col-sm-12 col-md-8 col-lg-6">
-                                <Form.Label htmlFor="calle">Calle</Form.Label>
-                                <Form.Control
-                                    type="text"
-                                    name="calle"
-                                    disabled={!camposHabilitados["calle"]}
-                                    required
-                                    value={calle || ''}
-                                    onChange={handleInputChange} />
+                                <Form.Group>
+                                    <Form.Label htmlFor="calle">Calle</Form.Label>
+                                    <Form.Control
+                                        type="text"
+                                        name="calle"
+                                        disabled={!camposHabilitados["calle"]}
+                                        required
+                                        isInvalid={!!errors?.calle}
+                                        value={calle || ''}
+                                        onChange={handleInputChange} />
+                                    <Form.Control.Feedback type="invalid">
+                                        {errors.calle}
+                                    </Form.Control.Feedback>
+                                </Form.Group>
                             </div>
                             <div className="col-sm-6 col-md-4 col-lg-4">
-                                <Form.Label htmlFor="numero">Numero</Form.Label>
-                                <Form.Control
-                                    type="text"
-                                    name="numero"
-                                    disabled={!camposHabilitados["numero"]}
-                                    autoComplete="off"
-                                    required
-                                    value={numero || ''}
-                                    onChange={handleInputNumericChange} />
+                                <Form.Group>
+                                    <Form.Label htmlFor="numero">Numero</Form.Label>
+                                    <Form.Control
+                                        type="text"
+                                        name="numero"
+                                        disabled={!camposHabilitados["numero"]}
+                                        autoComplete="off"
+                                        required
+                                        isInvalid={!!errors?.numero}
+                                        value={numero || ''}
+                                        onChange={handleInputNumericChange} />
+                                    <Form.Control.Feedback type="invalid">
+                                        {errors.numero}
+                                    </Form.Control.Feedback>
+                                </Form.Group>
                             </div>
                             <div className="col-sm-6 col-md-4 col-lg-4">
-                                <Form.Label htmlFor="piso">Piso</Form.Label>
-                                <Form.Control
-                                    type="text"
-                                    autoComplete="off"
-                                    name="piso"
-                                    disabled={!camposHabilitados["piso"]}
-                                    value={piso || ''}
-                                    onChange={handleInputNumericChange} />
+                                <Form.Group>
+                                    <Form.Label htmlFor="piso">Piso</Form.Label>
+                                    <Form.Control
+                                        type="text"
+                                        autoComplete="off"
+                                        name="piso"
+                                        isInvalid={!!errors?.piso}
+                                        disabled={!camposHabilitados["piso"]}
+                                        value={piso || ''}
+                                        onChange={handleInputNumericChange} />
+                                    <Form.Control.Feedback type="invalid">
+                                        {errors.piso}
+                                    </Form.Control.Feedback>
+                                </Form.Group>
                             </div>
                             <div className="col-sm-6 col-md-4 col-lg-4">
-                                <Form.Label htmlFor="departamento">Departamento.</Form.Label>
-                                <Form.Control
-                                    type="text"
-                                    autoComplete="off"
-                                    name="departamento"
-                                    disabled={!camposHabilitados["departamento"]}
-                                    value={departamento || ''}
-                                    onChange={handleInputChange} />
+                                <Form.Group>
+                                    <Form.Label htmlFor="departamento">Departamento.</Form.Label>
+                                    <Form.Control
+                                        type="text"
+                                        autoComplete="off"
+                                        name="departamento"
+                                        isInvalid={!!errors?.departamento}
+                                        disabled={!camposHabilitados["departamento"]}
+                                        value={departamento || ''}
+                                        onChange={handleInputChange} />
+                                    <Form.Control.Feedback type="invalid">
+                                        {errors.departamento}
+                                    </Form.Control.Feedback>
+                                </Form.Group>
                             </div>
                             <div className="col-sm-6 col-md-4 col-lg-4">
-                                <Form.Label htmlFor="sector">Sector</Form.Label>
-                                <Form.Control
-                                    type="text"
-                                    autoComplete="off"
-                                    name="sector"
-                                    disabled={!camposHabilitados["sector"]}
-                                    value={sector || ''}
-                                    onChange={handleInputChange} />
+                                <Form.Group>
+                                    <Form.Label htmlFor="sector">Sector</Form.Label>
+                                    <Form.Control
+                                        type="text"
+                                        autoComplete="off"
+                                        name="sector"
+                                        isInvalid={!!errors?.sector}
+                                        disabled={!camposHabilitados["sector"]}
+                                        value={sector || ''}
+                                        onChange={handleInputChange} />
+                                    <Form.Control.Feedback type="invalid">
+                                        {errors.sector}
+                                    </Form.Control.Feedback>
+                                </Form.Group>
                             </div>
                             <div className="col-sm-6 col-md-4 col-lg-4">
-                                <Form.Label htmlFor="torre">Torre</Form.Label>
-                                <Form.Control
-                                    type="text"
-                                    autoComplete="off"
-                                    name="torre"
-                                    disabled={!camposHabilitados["torre"]}
-                                    value={torre || ''}
-                                    onChange={handleInputChange} />
+                                <Form.Group>
+                                    <Form.Label htmlFor="torre">Torre</Form.Label>
+                                    <Form.Control
+                                        type="text"
+                                        autoComplete="off"
+                                        name="torre"
+                                        isInvalid={!!errors?.torre}
+                                        disabled={!camposHabilitados["torre"]}
+                                        value={torre || ''}
+                                        onChange={handleInputChange} />
+                                    <Form.Control.Feedback type="invalid">
+                                        {errors.torre}
+                                    </Form.Control.Feedback>
+                                </Form.Group>
                             </div>
                             <div className="col-sm-6 col-md-4 col-lg-4">
-                                <Form.Label htmlFor="manzana">Manzana</Form.Label>
-                                <Form.Control
-                                    type="text"
-                                    autoComplete="off"
-                                    name="manzana"
-                                    disabled={!camposHabilitados["manzana"]}
-                                    value={manzana || ''}
-                                    onChange={handleInputChange} />
+                                <Form.Group>
+                                    <Form.Label htmlFor="manzana">Manzana</Form.Label>
+                                    <Form.Control
+                                        type="text"
+                                        autoComplete="off"
+                                        name="manzana"
+                                        isInvalid={!!errors?.manzana}
+                                        disabled={!camposHabilitados["manzana"]}
+                                        value={manzana || ''}
+                                        onChange={handleInputChange} />
+                                    <Form.Control.Feedback type="invalid">
+                                        {errors.manzana}
+                                    </Form.Control.Feedback>
+                                </Form.Group>
                             </div>
                             <div className="col-sm-12 col-md-6 col-lg-5">
                                 <Form.Label htmlFor="condIva">Cond. IVA</Form.Label>
@@ -366,45 +469,69 @@ export const ModalPersona = () => {
                                     classNamePrefix="react-select" />
                             </div>
                             <div className="col-sm-6 col-md-4 col-lg-2">
-                                <Form.Label htmlFor="numeroIngresoBruto">Ing. Brutos</Form.Label>
-                                <Form.Control
-                                    type="text"
-                                    name="numeroIngresoBruto"
-                                    disabled={!camposHabilitados["numeroIngresoBruto"]}
-                                    value={numeroIngresoBruto}
-                                    onChange={handleInputChange} />
+                                <Form.Group>
+                                    <Form.Label htmlFor="numeroIngresoBruto">Ing. Brutos</Form.Label>
+                                    <Form.Control
+                                        type="text"
+                                        name="numeroIngresoBruto"
+                                        isInvalid={!!errors?.numeroIngresoBruto}
+                                        disabled={!camposHabilitados["numeroIngresoBruto"]}
+                                        value={numeroIngresoBruto}
+                                        onChange={handleInputChange} />
+                                    <Form.Control.Feedback type="invalid">
+                                        {errors.numeroIngresoBruto}
+                                    </Form.Control.Feedback>
+                                </Form.Group>
                             </div>
                             <div className="col-sm-12 col-md-8 col-lg-6">
-                                <Form.Label htmlFor="fechaInicioActividades">Fecha inicio de actividades</Form.Label>
-                                <Form.Control
-                                    type="date"
-                                    name="fechaInicioActividades"
-                                    disabled={!camposHabilitados["fechaInicioActividades"]}
-                                    value={fechaInicioActividades}
-                                    onChange={handleInputChange} />
+                                <Form.Group>
+                                    <Form.Label htmlFor="fechaInicioActividades">Fecha inicio de actividades</Form.Label>
+                                    <Form.Control
+                                        type="date"
+                                        name="fechaInicioActividades"
+                                        isInvalid={!!errors?.fechaInicioActividades}
+                                        disabled={!camposHabilitados["fechaInicioActividades"]}
+                                        value={fechaInicioActividades}
+                                        onChange={handleInputChange} />
+                                    <Form.Control.Feedback type="invalid">
+                                        {errors.fechaInicioActividades}
+                                    </Form.Control.Feedback>
+                                </Form.Group>
                             </div>
                             <div className="col-sm-12 col-md-6 col-lg-3">
-                                <Form.Label htmlFor="gln">GLN</Form.Label>
-                                <Form.Control
-                                    type="text"
-                                    name="gln"
-                                    disabled={!camposHabilitados["gln"]}
-                                    maxLength="13"
-                                    value={gln || ''}
-                                    onChange={handleInputChange} />
+                                <Form.Group>
+                                    <Form.Label htmlFor="gln">GLN</Form.Label>
+                                    <Form.Control
+                                        type="text"
+                                        name="gln"
+                                        isInvalid={!!errors?.gln}
+                                        disabled={!camposHabilitados["gln"]}
+                                        maxLength="13"
+                                        value={gln || ''}
+                                        onChange={handleInputChange} />
+                                    <Form.Control.Feedback type="invalid">
+                                        {errors.gln}
+                                    </Form.Control.Feedback>
+                                </Form.Group>
                             </div>
                             <div className="col-sm-12 col-md-6 col-lg-3">
-                                <Form.Label htmlFor="codigoInterno">Codigo interno</Form.Label>
-                                <Form.Control
-                                    type="text"
-                                    name="codigoInterno"
-                                    disabled={!camposHabilitados["codigoInterno"]}
-                                    maxLength="20"
-                                    value={codigoInterno || ''}
-                                    onChange={handleInputChange} />
+                                <Form.Group>
+                                    <Form.Label htmlFor="codigoInterno">Codigo interno</Form.Label>
+                                    <Form.Control
+                                        type="text"
+                                        name="codigoInterno"
+                                        isInvalid={!!errors?.codigoInterno}
+                                        disabled={!camposHabilitados["codigoInterno"]}
+                                        maxLength="20"
+                                        value={codigoInterno || ''}
+                                        onChange={handleInputChange} />
+                                    <Form.Control.Feedback type="invalid">
+                                        {errors.codigoInterno}
+                                    </Form.Control.Feedback>
+                                </Form.Group>
                             </div>
                         </div>
-                    </form>
+                    </Form>
                 </Modal.Body>
                 <Modal.Footer>
                     {

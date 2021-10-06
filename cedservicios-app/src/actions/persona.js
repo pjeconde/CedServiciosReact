@@ -17,15 +17,16 @@ export const iniciarAgregarPersona = (persona) => {
 
             const resp = await fetchConToken('Persona', { ...personaDto, cuit }, 'POST');
             const body = await resp.json();
-
+            
             if (resp.status === 200) {
                 dispatch(finishLoading());
                 dispatch(iniciarObtenerPersonas());
                 Swal.fire('Success', 'Persona agregada con exito.', 'success');
             }
             else {
-                Swal.fire({ icon: 'error', title: 'Oops...', text: body.errors[0].detail });
-                dispatch(setError(body.errors[0].detail));
+                // Swal.fire({ icon: 'error', title: 'Oops...', text: body.errors[0].detail });
+                dispatch(setError(body.errors));
+                dispatch(finishLoading());
             }
 
         } catch (error) {
@@ -71,7 +72,7 @@ export const iniciarActualizarPersona = (persona) => {
             const resp = await fetchConToken('Persona', personaDto, 'PUT');
             const body = await resp.json();
 
-            if (body) {
+            if (body.datos) {
                 dispatch(finishLoading());
                 let grillaPersonaDto = parsearAGrillaPersonaDto(persona);
                 dispatch(actualizarPersona(grillaPersonaDto));
@@ -104,7 +105,7 @@ export const iniciarEliminarPersona = () => {
             const resp = await fetchConToken(`Persona/${id}`, null, 'DELETE');
             const body = await resp.json();
 
-            if (body) {
+            if (body.datos) {
                 dispatch(finishLoading());
                 dispatch(eliminarPersona());
                 dispatch(iniciarObtenerPersonas());

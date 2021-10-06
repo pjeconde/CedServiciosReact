@@ -6,7 +6,7 @@ import { iniciarEliminarPersona, removerPersonaActiva } from '../../../actions/p
 
 const nameModal = 'modalEliminarPersona';
 const initPersona = {
-    descripcion: '',
+    identificador: '',
     tipoPersona: '',
     tipoDocumento: '',
     numeroDocumento: '',
@@ -23,7 +23,7 @@ export const ModalEliminar = () => {
     const dispatch = useDispatch();
 
     const {
-        descripcion,
+        identificador,
         tipoPersona,
         tipoDocumento,
         numeroDocumento,
@@ -93,11 +93,11 @@ export const ModalEliminar = () => {
                         />
                     </div>
                     <div className="col-sm-12 col-md-6 col-lg-4">
-                        <Form.Label>Descripcion</Form.Label>
+                        <Form.Label>Identificador</Form.Label>
                         <Form.Control
                             type="text"
-                            name="descripcion"
-                            value={descripcion}
+                            name="identificador"
+                            value={identificador}
                             readOnly
                         />
                     </div>

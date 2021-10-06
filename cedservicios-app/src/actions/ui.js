@@ -1,11 +1,8 @@
 import { types } from '../types/types';
 
-export const setError = (msgError, label) => ({
+export const setError = (error) => ({
     type: types.uiSetError,
-    payload: {
-        msgError,
-        label
-    }
+    payload: error
 });
 
 export const removeError = () => ({
