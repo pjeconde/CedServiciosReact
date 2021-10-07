@@ -194,7 +194,6 @@ export const ModalPersona = () => {
                                         isInvalid={!!errors?.numeroDocumento}
                                         disabled={!camposHabilitados["numeroDocumento"]}
                                         autoComplete="off"
-                                        maxLength="11"
                                         value={numeroDocumento}
                                         onChange={handleInputNumericChange}
                                     />

@@ -17,16 +17,19 @@ export const iniciarAgregarPersona = (persona) => {
 
             const resp = await fetchConToken('Persona', { ...personaDto, cuit }, 'POST');
             const body = await resp.json();
-            
+
             if (resp.status === 200) {
                 dispatch(finishLoading());
                 dispatch(iniciarObtenerPersonas());
                 Swal.fire('Success', 'Persona agregada con exito.', 'success');
             }
-            else {
-                // Swal.fire({ icon: 'error', title: 'Oops...', text: body.errors[0].detail });
+            else if (body.errors) {
+
                 dispatch(setError(body.errors));
                 dispatch(finishLoading());
+            }
+            else if (body.exception) {
+                Swal.fire({ icon: 'error', title: 'Oops...', text: body.exception[0].detail });
             }
 
         } catch (error) {
