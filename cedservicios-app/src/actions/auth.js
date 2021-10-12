@@ -30,8 +30,11 @@ export const iniciarIngresarUsuario = (nombreUsuario, clave) => {
                     email
                 }));
             }
-            else {
-                dispatch(setError(body.errors[0].detail));
+            else if (body.errors) {
+                dispatch(setError(body.errors));
+            }
+            else if (body.exception) {
+                Swal.fire({ icon: 'error', title: 'Oops...', text: body.exception[0].detail });
             }
             dispatch(finishLoading());
 
@@ -68,13 +71,11 @@ export const iniciarRegistroUsuario = (usuario) => {
                     email
                 }));
             }
-            else {
-                Swal.fire({
-                    icon: 'error',
-                    title: 'Oops...',
-                    text: body.errors[0].detail
-                });
-                dispatch(setError(body.errors[0].detail));
+            else if (body.errors) {
+                dispatch(setError(body.errors));
+            }
+            else if (body.exception) {
+                Swal.fire({ icon: 'error', title: 'Oops...', text: body.exception[0].detail });
             }
             dispatch(finishLoading());
 
@@ -109,18 +110,26 @@ export const iniciarValidarNombreUsuario = (nombreUsuario) => {
             const resp = await fetchSinToken(`Usuario/ValidarNombreUsuario?${queryString.stringify({ nombreUsuario })}`);
             const body = await resp.json();
 
-            if (body.datos) {
-                Swal.fire('Nombre Usuario', 'Nombre de usuario disponible.', 'success');
-                dispatch(removeError());
-            } else {
-                Swal.fire({
-                    icon: 'error',
-                    title: 'Oops...',
-                    text: 'El Nombre de usuario no está disponible.'
-                });
-                dispatch(setError('El Nombre de usuario no está disponible.', 'nombreUsuario'));
+            if (resp.status === 200) {
+                if (body.datos) {
+                    Swal.fire('Nombre Usuario', 'Nombre de usuario disponible.', 'success');
+                    dispatch(removeError());
+                } else {
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Oops...',
+                        text: 'El Nombre de usuario no está disponible.'
+                    });
+                    dispatch(setError({ nombreUsuario: 'El Nombre de usuario no está disponible.' }));
+                }
+                dispatch(finishLoading());
             }
-            dispatch(finishLoading());
+            else if (body.errors) {
+                dispatch(setError(body.errors));
+            }
+            else if (body.exception) {
+                Swal.fire({ icon: 'error', title: 'Oops...', text: body.exception[0].detail });
+            }
 
         } catch (error) {
             console.log(error);
@@ -299,7 +308,7 @@ export const iniciarComprobacion = () => {
         if (pepe)
             dispatch(ingresarUsuario({
                 idUsuario: new Date().getTime(),
-                nombreUsuario: 'gmontiel'
+                nombreUsuario: ''
             }));
         else
             dispatch(finalizarComprobacion());

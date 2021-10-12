@@ -24,7 +24,6 @@ export const iniciarAgregarPersona = (persona) => {
                 Swal.fire('Success', 'Persona agregada con exito.', 'success');
             }
             else if (body.errors) {
-
                 dispatch(setError(body.errors));
                 dispatch(finishLoading());
             }
@@ -76,14 +75,18 @@ export const iniciarActualizarPersona = (persona) => {
             const body = await resp.json();
 
             if (body.datos) {
-                dispatch(finishLoading());
                 let grillaPersonaDto = parsearAGrillaPersonaDto(persona);
+                dispatch(finishLoading());
                 dispatch(actualizarPersona(grillaPersonaDto));
                 dispatch(iniciarObtenerPersonas());
                 Swal.fire('Success', 'Persona actualizada con exito.', 'success');
             }
-            else {
-                Swal.fire('Error', 'No se pudo actualizar la persona.', 'error');
+            else if (body.errors) {
+                dispatch(setError(body.errors));
+                dispatch(finishLoading());
+            }
+            else if (body.exception) {
+                Swal.fire({ icon: 'error', title: 'Oops...', text: body.exception[0].detail });
             }
         } catch (error) {
             dispatch(finishLoading());

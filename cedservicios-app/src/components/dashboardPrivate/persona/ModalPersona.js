@@ -10,7 +10,7 @@ import {
     InputGroup
 } from 'react-bootstrap';
 
-import { closeModal } from '../../../actions/ui';
+import { closeModal, removeError } from '../../../actions/ui';
 import { removerPersonaActiva, iniciarAgregarPersona, iniciarActualizarPersona } from '../../../actions/persona';
 import { tipoDePersonas } from '../../../helpers/tipoPersona';
 import { tipoDocumentos } from '../../../helpers/tipoDocumento';
@@ -96,6 +96,7 @@ export const ModalPersona = () => {
     const handleCloseModal = () => {
         dispatch(closeModal());
         dispatch(removerPersonaActiva());
+        dispatch(removeError());
         reset(initPerson);
     }
 
@@ -129,6 +130,13 @@ export const ModalPersona = () => {
             setErrors(err);
         }
     }, [errores, setErrors])
+
+    useEffect(() => {
+        return () => {
+            // console.log('Componente desmontado');
+            dispatch(removeError());
+        }
+    }, [dispatch])
 
     return (
         <div>

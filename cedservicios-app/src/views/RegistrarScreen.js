@@ -1,39 +1,41 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import validator from 'validator';
-import Swal from 'sweetalert2';
 import {
     Form,
     Col,
     Row,
-    Button
+    Button,
 } from 'react-bootstrap';
 import { textoTerminoYCondiciones } from '../helpers/terminoYCondiciones';
 
 import { useForm } from '../hooks/useForm';
 import { iniciarValidarNombreUsuario, iniciarRegistroUsuario } from '../actions/auth';
-import { removeError, setError } from '../actions/ui';
+import { removeError } from '../actions/ui';
+import { camelCase } from '../helpers/camelCase';
 
 
 export const RegistrarScreen = () => {
 
     const history = useHistory();
     const dispatch = useDispatch();
-    const { loading, msgError, label } = useSelector(state => state.ui);
-    const [validated, setValidated] = useState(false);
+    const { loading, errores } = useSelector(state => state.ui);
 
-    const { values: formValues, handleInputChange } = useForm({
-        nombreUsuario: '',
-        telefono: '',
-        email: '',
-        nombre: '',
-        apellido: '',
-        clave: '',
-        clave2: '',
-        pregunta: '',
-        respuesta: '',
-    });
+    const {
+        values: formValues,
+        handleInputChange,
+        errors: formErrors,
+        setErrors } = useForm({
+            nombreUsuario: '',
+            telefono: '',
+            email: '',
+            nombre: '',
+            apellido: '',
+            clave: '',
+            clave2: '',
+            pregunta: '',
+            respuesta: '',
+        });
 
     const {
         nombreUsuario,
@@ -49,258 +51,182 @@ export const RegistrarScreen = () => {
 
     const handleRegister = (e) => {
         e.preventDefault();
-        if (isFormValid()) {
-            dispatch(iniciarRegistroUsuario({
-                nombreUsuario,
-                nombre,
-                apellido,
-                clave,
-                telefono,
-                email,
-                pregunta,
-                respuesta
-            }));
-            setValidated(true);
-        }
-        setValidated(false);
+        dispatch(iniciarRegistroUsuario({
+            nombreUsuario,
+            nombre,
+            apellido,
+            clave,
+            telefono,
+            email,
+            pregunta,
+            respuesta
+        }));
     }
 
-    const handleValidarNombreUsuario = () => {
-        if (nombreUsuario) {
-            dispatch(iniciarValidarNombreUsuario(nombreUsuario));
-        }
-    }
+    const handleValidarNombreUsuario = () => dispatch(iniciarValidarNombreUsuario(nombreUsuario));
 
-    const handleCancel = () => {
-        history.replace('/auth/login');
-    }
-
-    const isFormValid = () => {
-        if (!nombreUsuario) {
-            dispatch(setError('Nombre de usuario no válido.', 'nombreUsuario'));
-            return false;
-        }
-        else if (nombreUsuario === label) {
-            dispatch(setError('Nombre de usuario no disponible.', 'nombreUsuario'));
-            return false;
-        }
-        else if (!nombre) {
-            dispatch(setError('El nombre no es válido.', 'nombre'));
-            return false;
-        }
-        else if (!apellido) {
-            dispatch(setError('El apellido no es válido.', 'apellido'));
-            return false;
-        }
-        else if (!validator.isEmail(email)) {
-            dispatch(setError('El email no es válido.', 'email'));
-            return false;
-        }
-        else if (!clave || clave !== clave2) {
-            dispatch(setError('La contraseña no es valida.', 'clave'));
-            return false;
-        }
-        else if (pregunta.trim().length < 7) {
-            dispatch(setError('Pregunta no válida.', 'pregunta'));
-            return false;
-        }
-        else if (respuesta.trim().length < 4) {
-            dispatch(setError('Respuesta no válida.', 'respuesta'));
-            return false;
-        }
-        dispatch(removeError());
-        return true;
-    }
+    const handleCancel = () => history.replace('/auth/login');
 
     useEffect(() => {
-        if (msgError) {
-            Swal.fire({
-                icon: 'error',
-                title: 'Error',
-                text: msgError
-            });
+        if (errores) {
+            let err = {};
+            Object.keys(errores).map((key) => err[camelCase(key)] = errores[key][0]);
+            setErrors(err);
         }
-    }, [msgError])
+    }, [errores, setErrors])
+
+    useEffect(() => {
+        return () => {
+            // console.log('Componente desmontado');
+            dispatch(removeError());
+        }
+    }, [dispatch])
 
     return (
-        <div className="container" >
-            <Form
-                noValidate
-                onSubmit={handleRegister}
-                validated={validated} >
-                <Row style={{ margin: '5px' }}>
-                    <Col sm={2}>
-                        <Form.Label>
-                            Nombre
-                        </Form.Label>
-                    </Col>
-                    <Col sm={4}>
+        <div className="contenedor" style={{ maxWidth: '800px' }}>
+            <h4 className="mt-3 text-center">Crear Usuario</h4>
+            <p className="divider-text">
+                <span className="bg-light"></span>
+            </p>
+            <Form onSubmit={handleRegister}>
+                <Form.Group className="mb-3" controlId="formNombre">
+                    <label>Nombre/s</label>
+                    <Form.Control
+                        type="text"
+                        name="nombre"
+                        placeholder="Nombres"
+                        isInvalid={!!formErrors?.nombre}
+                        value={nombre}
+                        onChange={handleInputChange} />
+                    <Form.Control.Feedback type="invalid">
+                        {formErrors.nombre}
+                    </Form.Control.Feedback>
+                </Form.Group>
+                <Form.Group className="mb-3" controlId="formApellido">
+                    <label>Apellido</label>
+                    <Form.Control
+                        type="text"
+                        name="apellido"
+                        placeholder="Apellido"
+                        isInvalid={!!formErrors?.apellido}
+                        value={apellido}
+                        onChange={handleInputChange} />
+                    <Form.Control.Feedback type="invalid">
+                        {formErrors.apellido}
+                    </Form.Control.Feedback>
+                </Form.Group>
+                <Form.Group className="mb-3" controlId="formTelefono">
+                    <label>Telefono</label>
+                    <Form.Control
+                        type="number"
+                        name="telefono"
+                        placeholder="Telefono"
+                        autoComplete="none"
+                        isInvalid={!!formErrors?.telefono}
+                        value={telefono}
+                        onChange={handleInputChange} />
+                    <Form.Control.Feedback type="invalid">
+                        {formErrors.telefono}
+                    </Form.Control.Feedback>
+                </Form.Group>
+                <Form.Group className="mb-3" controlId="formEmail">
+                    <label>Email</label>
+                    <Form.Group>
                         <Form.Control
-                            name="nombre"
                             type="text"
-                            autoComplete="none"
-                            required
-                            isInvalid={label === 'nombre'}
-                            value={nombre}
+                            name="email"
+                            value={email}
+                            isInvalid={!!formErrors?.email}
+                            placeholder="Email"
                             onChange={handleInputChange} />
-                    </Col>
-                </Row>
-                <Row style={{ margin: '5px' }}>
-                    <Col sm={2}>
-                        <Form.Label>Apellido</Form.Label>
-                    </Col>
-                    <Col sm={4}>
-                        <Form.Control
-                            name="apellido"
-                            type="text"
-                            autoComplete="none"
-                            required
-                            isInvalid={label === 'apellido'}
-                            value={apellido}
-                            onChange={handleInputChange} />
-                    </Col>
-                </Row>
-                <Row style={{ margin: '5px' }}>
-                    <Col sm={2}>
-                        <Form.Label>Telefono</Form.Label>
-                    </Col>
-                    <Col sm={4}>
-                        <Form.Control
-                            name="telefono"
-                            type="number"
-                            autoComplete="none"
-                            required
-                            isInvalid={label === 'telefono'}
-                            value={telefono}
-                            onChange={handleInputChange} />
-                    </Col>
-                </Row>
-                <Row style={{ margin: '5px' }}>
-                    <Col sm={2}>
-                        <Form.Label>Email</Form.Label>
-                    </Col>
-                    <Col sm={4}>
-                        <Form.Group>
+                        <Form.Text className="text-muted fw-bold">(Importante: la confirmación de la cuenta se hace vía mail, a esta dirección)</Form.Text>
+                        <Form.Control.Feedback type="invalid">
+                            {formErrors.email}
+                        </Form.Control.Feedback>
+                    </Form.Group>
+                </Form.Group>
+                <Row>
+                    <Col>
+                        <Form.Group className="mb-3" controlId="formNombreUsuario">
+                            <label>Nombre Usuario</label>
                             <Form.Control
-                                name="email"
                                 type="text"
-                                value={email}
-                                required
-                                isInvalid={label === 'email'}
+                                name="nombreUsuario"
+                                placeholder="Nombre Usuario"
+                                isInvalid={!!formErrors?.nombreUsuario}
+                                value={nombreUsuario}
                                 onChange={handleInputChange} />
-                            <Form.Text className="text-muted">(Muy importante: la confirmación de la Cuenta se hace, vía mail, a esta dirección)</Form.Text>
+                            <Form.Control.Feedback type="invalid">
+                                {formErrors.nombreUsuario}
+                            </Form.Control.Feedback>
                         </Form.Group>
                     </Col>
-                </Row>
-                <Row style={{ margin: '5px' }}>
-                    <Col sm={2}>
-                        <Form.Label>Nombre Usuario</Form.Label>
-                    </Col>
-                    <Col sm={4}>
-                        <Form.Control
-                            name="nombreUsuario"
-                            type="text"
-                            autoComplete="none"
-                            required
-                            isInvalid={label === 'nombreUsuario'}
-                            value={nombreUsuario}
-                            onChange={handleInputChange} />
-                    </Col>
-                    <Col sm={3}>
-                        <Button
-                            style={{ marginTop: '0' }}
-                            variant="secondary"
-                            onClick={handleValidarNombreUsuario}
-                        >
+                    <Col className="d-flex justify-content-start align-items-center">
+                        <Button variant="secondary" onClick={handleValidarNombreUsuario}>
                             ¿Nombre de usuario disponible?
                         </Button>
                     </Col>
                 </Row>
-                <Row style={{ margin: '5px' }}>
-                    <Col sm={2}>
-                        <Form.Label>Contraseña</Form.Label>
-                    </Col>
-                    <Col sm={4}>
-                        <Form.Control
-                            name="clave"
-                            type="password"
-                            autoComplete="none"
-                            required
-                            isInvalid={label === 'clave'}
-                            value={clave}
-                            onChange={handleInputChange} />
-                    </Col>
-                </Row>
-                <Row style={{ margin: '5px' }}>
-                    <Col sm={2}>
-                        <Form.Label>Confirmar Contraseña</Form.Label>
-                    </Col>
-                    <Col sm={4}>
-                        <Form.Control
-                            name="clave2"
-                            type="password"
-                            autoComplete="none"
-                            required
-                            isInvalid={label === 'clave'}
-                            value={clave2}
-                            onChange={handleInputChange} />
-                    </Col>
-                </Row>
-                <Row style={{ margin: '5px' }}>
-                    <Col sm={2}>
-                        <Form.Label>Pregunta de seguridad</Form.Label>
-                    </Col>
-                    <Col sm={4}>
-                        <Form.Control
-                            name="pregunta"
-                            type="text"
-                            autoComplete="none"
-                            required
-                            isInvalid={label === 'pregunta'}
-                            value={pregunta}
-                            onChange={handleInputChange} />
-                    </Col>
-                </Row>
-                <Row style={{ margin: '5px' }}>
-                    <Col sm={2}>
-                        <Form.Label>Repuesta</Form.Label>
-                    </Col>
-                    <Col sm={4}>
-                        <Form.Control
-                            name="respuesta"
-                            type="text"
-                            autoComplete="none"
-                            required
-                            isInvalid={label === 'respuesta'}
-                            value={respuesta}
-                            onChange={handleInputChange} />
-                    </Col>
-                </Row>
-                <Row style={{ margin: '5px' }}>
-                    <Col sm={2}>
-                        <Form.Label>Términos y Condiciones de Servicio</Form.Label>
-                    </Col>
-                    <Col sm={4}>
-                        <Form.Control
-                            style={{ height: '150px', fontSize: 'XX-Small', width: '360px' }}
-                            as="textarea"
-                            name="politics"
-                            autoComplete="none"
-                            readOnly
-                            defaultValue={textoTerminoYCondiciones} />
-                    </Col>
-                </Row>
-                {
-                    msgError && (
-                        <Row>
-                            <Col sm={2}>
-                                <Form.Control.Feedback>{msgError}</Form.Control.Feedback>
-                            </Col>
-                        </Row>
-                    )
-                }
-                <Row aria-colspan={2} style={{ marginLeft: '50px', alignItems: 'center' }}>
-                    <Col sm={2}>
+                <Form.Group className="mb-3" controlId="formClave">
+                    <label>Contraseña</label>
+                    <Form.Control
+                        type="password"
+                        name="clave"
+                        isInvalid={!!formErrors?.clave}
+                        value={clave}
+                        onChange={handleInputChange} />
+                    <Form.Control.Feedback type="invalid">
+                        {formErrors.clave}
+                    </Form.Control.Feedback>
+                </Form.Group>
+                <Form.Group className="mb-3" controlId="formClave2">
+                    <label>Confirmar Contraseña</label>
+                    <Form.Control
+                        type="password"
+                        name="clave2"
+                        isInvalid={!!formErrors?.clave2}
+                        value={clave2}
+                        onChange={handleInputChange} />
+                    <Form.Control.Feedback type="invalid">
+                        {formErrors.clave2}
+                    </Form.Control.Feedback>
+                </Form.Group>
+                <Form.Group className="mb-3" controlId="formPregunta">
+                    <label>Pregunta de seguridad</label>
+                    <Form.Control
+                        type="text"
+                        name="pregunta"
+                        isInvalid={!!formErrors?.pregunta}
+                        value={pregunta}
+                        onChange={handleInputChange} />
+                    <Form.Control.Feedback type="invalid">
+                        {formErrors.pregunta}
+                    </Form.Control.Feedback>
+                </Form.Group>
+                <Form.Group className="mb-3" controlId="formRespuesta">
+                    <label>Respuesta</label>
+                    <Form.Control
+                        type="text"
+                        name="respuesta"
+                        isInvalid={!!formErrors?.respuesta}
+                        value={respuesta}
+                        onChange={handleInputChange} />
+                    <Form.Control.Feedback type="invalid">
+                        {formErrors.respuesta}
+                    </Form.Control.Feedback>
+                </Form.Group>
+                <Form.Group className="mb-3" controlId="formTerminosYcondiciones">
+                    <label>Términos y Condiciones de Servicio</label>
+                    <Form.Control
+                        style={{ height: '150px', fontSize: 'XX-Small' }}
+                        as="textarea"
+                        name="politicas"
+                        autoComplete="none"
+                        readOnly
+                        defaultValue={textoTerminoYCondiciones} />
+                </Form.Group>
+                <div>
+                    <div className="w-50 m-auto d-flex justify-content-evenly my-4">
                         <Button
                             variant="secondary"
                             type="submit"
@@ -308,16 +234,14 @@ export const RegistrarScreen = () => {
                             disabled={loading} >
                             {(loading) ? 'Loading..' : 'Crear Cuenta'}
                         </Button>
-                    </Col>
-                    <Col sm={2}>
                         <Button
                             onClick={handleCancel}
                             variant="secondary"
                             size="lg" >
                             Cancelar
                         </Button>
-                    </Col>
-                </Row>
+                    </div>
+                </div>
             </Form>
         </div>
     )
