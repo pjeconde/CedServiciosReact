@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import {
-    Container,
     Form,
     Row,
     Col,
@@ -46,6 +45,14 @@ export const CambiarPasswordScreen = () => {
 
     const onSubmitPreguntaSeguridad = (e) => {
         e.preventDefault();
+        if (!nombreUsuario) {
+            Swal.fire('Error', 'El campo nombre de usuario no debe estar vacío.', 'error');
+            return false;
+        }
+        if (!validator.isEmail(email)) {
+            Swal.fire('Error', 'El campo email no debe estar vacío.', 'error');
+            return false;
+        }
         if (nombreUsuario && validator.isEmail(email)) {
             dispatch(iniciarObtenerPreguntaSeguridad(nombreUsuario, email));
         }
@@ -53,8 +60,12 @@ export const CambiarPasswordScreen = () => {
 
     const onSubmitRespuestaSeguridad = (e) => {
         e.preventDefault();
-        if (respuesta.length > 4) {
+        if (respuesta) {
             dispatch(iniciarValidarRespuestaSeguridad(respuesta));
+        }
+        else {
+            Swal.fire('Error', 'El campo respuesta no debe estar vacío.', 'error');
+            return false;
         }
     }
 
@@ -85,132 +96,132 @@ export const CambiarPasswordScreen = () => {
     }, [formSeguridad])
 
     return (
-        <Container>
-            <h1>¿OLVIDÓ LA CONTRASEÑA DE SU CUENTA?</h1>
-            <br />
-            <span>Para establecer una nueva Contraseña para su cuenta eFact, siga las siguientes instrucciones: </span>
-            <br />
-            <br />
-            <Form onSubmit={onSubmitPreguntaSeguridad}>
-                <Row>
-                    <span >1) Ingrese Nombre de cuenta e Email
-                        (luego haga clic en el botón 'Solicitar Pregunta de seguridad').
-                    </span>
-                </Row>
-                <Row>
-                    <Col>
-                        <Form.Control
-                            name="nombreUsuario"
-                            type="text"
-                            autoComplete="none"
-                            value={nombreUsuario}
-                            onChange={handleInputChange}
-                            placeholder="Nombre de usuario" />
-                    </Col>
-                    <Col>
-                        <Form.Control
-                            type="email"
-                            name="email"
-                            value={email}
-                            onChange={handleInputChange}
-                            placeholder="Email" />
-                    </Col>
-                </Row>
-                <Button
-                    disabled={loading}
-                    variant="dark"
-                    type="submit" >
-                    {loading ? 'Loading..' : 'Solicitar Pregunta de Seguridad'}
-                </Button>
-            </Form>
-            <br />
-            <Form onSubmit={onSubmitRespuestaSeguridad}>
-                <Row>
-                    <span >2) Responda la Pregunta de Seguridad
-                        (luego haga clic en el botón 'Solicitar nuevo ingreso de Contraseña')
-                    </span>
-                    <Col>
-                        <span>
-                            <strong>
-                                {
-                                    (pregunta) && `¿${pregunta}?`
-                                }
-                            </strong>
-                        </span>
-                    </Col>
-                </Row>
+        <section>
+            <div className="contenedor" style={{ maxWidth: '800px' }}>
+                <h1>¿OLVIDÓ LA CONTRASEÑA DE SU CUENTA?</h1>
                 <br />
-                <Row>
-                    <Col>
-                        <Form.Label htmlFor="respuesta">
-                            <strong>Respuesta</strong>
-                        </Form.Label>
-                        <Form.Control
-                            id="respuesta"
-                            type="text"
-                            name="respuesta"
-                            value={respuesta}
-                            onChange={handleInputChange}
-                            placeholder="Respuesta" />
-                    </Col>
-                </Row>
-                <Button
-                    disabled={!pregunta}
-                    variant="dark"
-                    type="submit" >
-                    Solicitar nuevo ingreso de Contraseña
-                </Button>
-            </Form>
-            <br />
-            <Form onSubmit={onSubmitCambiarClave}>
-                <Row>
-                    <Col>
-                        <span >
-                            3) Ingrese, y confirme, su nueva Contraseña
-                            (luego haga click en el botón 'Aceptar').
-                        </span>
-                    </Col>
-                </Row>
+                <h5>Para establecer una nueva Contraseña para su cuenta eFact, siga las siguientes instrucciones: </h5>
                 <br />
-                <Row>
-                    <Col>
-                        <Form.Control
-                            type="password"
-                            name="password"
-                            value={password}
-                            onChange={(e) => setPassword(e.target.value)}
-                            placeholder="Contraseña Nueva" />
-                    </Col>
-                    <Col>
-                        <Form.Control
-                            type="password"
-                            name="password2"
-                            value={password2}
-                            onChange={(e) => setPassword2(e.target.value)}
-                            placeholder="Confirmar contraseña" />
-                    </Col>
-                </Row>
-                <Row>
-                    <Col></Col>
-                    <Col>
-                        <Button
-                            disabled={!respuestaValida}
-                            variant="dark"
-                            type="submit" >
-                            Aceptar
-                        </Button>
-                    </Col>
-                    <Col>
-                        <Button
-                            variant="dark"
-                            onClick={handleCancel} >
-                            Cancelar
-                        </Button>
-                    </Col>
-                    <Col></Col>
-                </Row>
-            </Form>
-        </Container>
-
+                <Form onSubmit={onSubmitPreguntaSeguridad}>
+                    <Row>
+                        <h6 className="mb-3">
+                            1) Ingrese Nombre de cuenta e Email
+                            (luego haga clic en el botón 'Solicitar Pregunta de seguridad').
+                        </h6>
+                        <Col>
+                            <Form.Control
+                                name="nombreUsuario"
+                                type="text"
+                                autoComplete="none"
+                                value={nombreUsuario}
+                                onChange={handleInputChange}
+                                placeholder="Nombre de usuario" />
+                        </Col>
+                        <Col className="mb-3">
+                            <Form.Control
+                                type="email"
+                                name="email"
+                                value={email}
+                                onChange={handleInputChange}
+                                placeholder="Email" />
+                        </Col>
+                        <div className="d-flex justify-content-center">
+                            <Button
+                                className="w-50"
+                                disabled={loading}
+                                variant="dark"
+                                type="submit" >
+                                {loading ? 'Loading..' : 'Solicitar Pregunta de Seguridad'}
+                            </Button>
+                        </div>
+                    </Row>
+                </Form>
+                <Form className="mt-4" onSubmit={onSubmitRespuestaSeguridad}>
+                    <Row>
+                        <h6 className="mb-3">
+                            2) Responda la Pregunta de Seguridad
+                            (luego haga clic en el botón 'Solicitar nuevo ingreso de Contraseña')
+                        </h6>
+                        <Col>
+                            <span>
+                                <strong>
+                                    {
+                                        (pregunta) && `¿${pregunta}?`
+                                    }
+                                </strong>
+                            </span>
+                        </Col>
+                    </Row>
+                    <Row>
+                        <Form.Group className="mb-3" controlId="formRespuesta">
+                            <label>Respuesta</label>
+                            <Form.Control
+                                id="respuesta"
+                                type="text"
+                                name="respuesta"
+                                value={respuesta}
+                                onChange={handleInputChange}
+                                placeholder="Respuesta" />
+                        </Form.Group>
+                        <div className="d-flex justify-content-center">
+                            <Button
+                                className="w-50"
+                                disabled={!pregunta}
+                                variant="dark"
+                                type="submit" >
+                                Solicitar nuevo ingreso de Contraseña
+                            </Button>
+                        </div>
+                    </Row>
+                </Form>
+                <br />
+                <Form onSubmit={onSubmitCambiarClave}>
+                    <Row>
+                        <Col>
+                            <span >
+                                3) Ingrese, y confirme, su nueva Contraseña
+                                (luego haga click en el botón 'Aceptar').
+                            </span>
+                        </Col>
+                    </Row>
+                    <br />
+                    <Row>
+                        <Col>
+                            <Form.Control
+                                type="password"
+                                name="password"
+                                value={password}
+                                onChange={(e) => setPassword(e.target.value)}
+                                placeholder="Contraseña Nueva" />
+                        </Col>
+                        <Col>
+                            <Form.Control
+                                type="password"
+                                name="password2"
+                                value={password2}
+                                onChange={(e) => setPassword2(e.target.value)}
+                                placeholder="Confirmar contraseña" />
+                        </Col>
+                    </Row>
+                    <div>
+                        <div className="w-50 m-auto d-flex justify-content-evenly my-4">
+                            <Button
+                                disabled={!respuestaValida}
+                                variant="dark"
+                                size="lg"
+                                type="submit" >
+                                Aceptar
+                            </Button>
+                            <Button
+                                onClick={handleCancel}
+                                variant="dark"
+                                size="lg" >
+                                Cancelar
+                            </Button>
+                        </div>
+                    </div>
+                </Form>
+            </div>
+        </section>
     )
 }
