@@ -12,6 +12,8 @@ export const types = {
     uiFinishLoading: '[ui] Finish loading',
     uiShowModal: '[ui] Show modal',
     uiCloseModal: '[ui] Close modal',
+    uiSetRedirect: '[ui] Set redirect',
+    uiRemoveRedirect: '[ui] Remove redirect',
 
     personaAgregarPersona: '[persona] Persona nueva agregada',
     personaSetPersonaActiva: '[persona] Set persona activa',

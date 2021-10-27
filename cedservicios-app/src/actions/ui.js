@@ -29,3 +29,10 @@ export const closeModal = () => ({
     type: types.uiCloseModal,
     payload: ''
 });
+
+export const setRedirect = (redirect) => ({
+    type: types.uiSetRedirect,
+    payload: redirect
+})
+
+export const removeRedirect = () => ({ type: types.uiRemoveRedirect });

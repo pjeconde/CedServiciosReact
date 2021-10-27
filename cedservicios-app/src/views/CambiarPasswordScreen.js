@@ -156,7 +156,6 @@ export const CambiarPasswordScreen = () => {
                         <Form.Group className="mb-3" controlId="formRespuesta">
                             <label>Respuesta</label>
                             <Form.Control
-                                id="respuesta"
                                 type="text"
                                 name="respuesta"
                                 value={respuesta}

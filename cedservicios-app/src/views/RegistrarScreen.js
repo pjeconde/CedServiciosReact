@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { useHistory } from 'react-router-dom';
+import { useHistory, Redirect } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import {
     Form,
@@ -11,7 +11,7 @@ import { textoTerminoYCondiciones } from '../helpers/terminoYCondiciones';
 
 import { useForm } from '../hooks/useForm';
 import { iniciarValidarNombreUsuario, iniciarRegistroUsuario } from '../actions/auth';
-import { removeError } from '../actions/ui';
+import { removeError, removeRedirect } from '../actions/ui';
 import { camelCase } from '../helpers/camelCase';
 
 
@@ -19,7 +19,7 @@ export const RegistrarScreen = () => {
 
     const history = useHistory();
     const dispatch = useDispatch();
-    const { loading, errores } = useSelector(state => state.ui);
+    const { loading, errores, redirect } = useSelector(state => state.ui);
 
     const {
         values: formValues,
@@ -32,7 +32,7 @@ export const RegistrarScreen = () => {
             nombre: '',
             apellido: '',
             clave: '',
-            confirmarClaver: '',
+            confirmarClave: '',
             pregunta: '',
             respuesta: '',
         });
@@ -44,7 +44,7 @@ export const RegistrarScreen = () => {
         telefono,
         email,
         clave,
-        confirmarClaver,
+        confirmarClave,
         pregunta,
         respuesta
     } = formValues;
@@ -53,9 +53,9 @@ export const RegistrarScreen = () => {
         e.preventDefault();
         dispatch(iniciarRegistroUsuario({
             nombreUsuario,
-            nombre,
-            apellido,
+            nombreCompleto: `${nombre} ${apellido}`,
             clave,
+            confirmarClave,
             telefono,
             email,
             pregunta,
@@ -77,10 +77,14 @@ export const RegistrarScreen = () => {
 
     useEffect(() => {
         return () => {
-            // console.log('Componente desmontado');
             dispatch(removeError());
+            dispatch(removeRedirect());
         }
     }, [dispatch])
+
+    if (redirect) {
+        return <Redirect to={redirect} />
+    }
 
     return (
         <section>
@@ -184,12 +188,12 @@ export const RegistrarScreen = () => {
                         <label>Confirmar Clave</label>
                         <Form.Control
                             type="password"
-                            name="confirmarClaver"
-                            isInvalid={!!formErrors?.confirmarClaver}
-                            value={confirmarClaver}
+                            name="confirmarClave"
+                            isInvalid={!!formErrors?.confirmarClave}
+                            value={confirmarClave}
                             onChange={handleInputChange} />
                         <Form.Control.Feedback type="invalid">
-                            {formErrors.confirmarClaver}
+                            {formErrors.confirmarClave}
                         </Form.Control.Feedback>
                     </Form.Group>
                     <Form.Group className="mb-3" controlId="formPregunta">

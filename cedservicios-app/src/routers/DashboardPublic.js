@@ -17,7 +17,7 @@ export const DashboardPublic = () => {
 
                 <Switch>
                     <Route exact path="/auth" component={HomeScreen} />
-                    <Route exact path="/auth/ingresar" component={IngresarScreen} />
+                    <Route path="/auth/ingresar/:codigo1?/:codigo2?" component={IngresarScreen} />
                     <Route exact path="/auth/registrar" component={RegistrarScreen} />
                     <Route exact path="/auth/recuperar/nombreUsuario" component={RecuperarNombreUsuarioScreen} />
                     <Route exact path="/auth/recuperar/clave" component={CambiarPasswordScreen} />

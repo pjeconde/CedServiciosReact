@@ -1,18 +1,19 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { Link } from 'react-router-dom';
+import { Link, useParams, Redirect } from 'react-router-dom';
 import { Form } from 'react-bootstrap';
 import { useForm } from '../hooks/useForm';
-import { iniciarIngresarUsuario } from '../actions/auth';
+import { iniciarIngresarUsuario, iniciarVerificacionEmail } from '../actions/auth';
 import { Informacion } from '../components/dashboardPublic/Informacion';
 import { RegimeGeneral } from '../components/dashboardPublic/RegimeGeneral';
 import { camelCase } from '../helpers/camelCase';
-import { removeError } from '../actions/ui';
+import { removeError, removeRedirect } from '../actions/ui';
 
 export const IngresarScreen = () => {
 
   const dispatch = useDispatch();
-  const { errores, loading } = useSelector(state => state.ui);
+  const { codigo1, codigo2 } = useParams();
+  const { errores, loading, redirect } = useSelector(state => state.ui);
   const {
     values: formValues,
     handleInputChange,
@@ -30,8 +31,8 @@ export const IngresarScreen = () => {
 
   useEffect(() => {
     return () => {
-      // console.log('Componente desmontado');
       dispatch(removeError());
+      dispatch(removeRedirect());
     }
   }, [dispatch])
 
@@ -42,6 +43,17 @@ export const IngresarScreen = () => {
       setErrors(err);
     }
   }, [errores, setErrors])
+
+  useEffect(() => {
+    if (codigo1) {
+      let encriptacion = `${codigo1}${(codigo2) ? `/${codigo2}` : ''}`;
+      dispatch(iniciarVerificacionEmail(encriptacion));
+    }
+  }, [codigo1, codigo2, dispatch])
+
+  if (redirect) {
+    return <Redirect to={redirect} />
+  }
 
   return (
     <div>

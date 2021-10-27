@@ -2,7 +2,7 @@ import Swal from 'sweetalert2';
 import queryString from 'query-string';
 import { fetchSinToken } from '../config/fetch';
 import { types } from '../types/types';
-import { startLoading, finishLoading, setError, removeError } from './ui';
+import { startLoading, finishLoading, setError, removeError, setRedirect } from './ui';
 
 
 export const iniciarIngresarUsuario = (nombreUsuario, clave) => {
@@ -55,21 +55,8 @@ export const iniciarRegistroUsuario = (usuario) => {
             const body = await resp.json();
 
             if (resp.status === 200) {
-                const {
-                    nombreUsuario,
-                    nombreCompleto,
-                    email,
-                    token,
-                    fechaExpiracion } = body.datos;
-
-                localStorage.setItem('token', token);
-                localStorage.setItem('token-exp', fechaExpiracion);
-
-                dispatch(ingresarUsuario({
-                    nombreUsuario,
-                    nombreCompleto,
-                    email
-                }));
+                Swal.fire({ icon: 'success', title: 'Usuario', text: 'Usuario creado exitosamente.' });
+                dispatch(setRedirect('/auth/ingresar'));
             }
             else if (body.errors) {
                 dispatch(setError(body.errors));
@@ -317,3 +304,29 @@ export const iniciarComprobacion = () => {
 
 const finalizarComprobacion = () => ({ type: types.authFinalizarComprobacion });
 
+export const iniciarVerificacionEmail = (encriptacion) => {
+    return async (dispatch) => {
+        try {
+            dispatch(startLoading());
+            
+            const resp = await fetchSinToken(`Usuario/ValidarVerificacionMailUsuario?autenticacion=${encriptacion}`);
+            const body = await resp.json();
+
+            if (resp.status === 200) {
+                Swal.fire({ icon: 'success', title: 'Verificacion de email', text: 'Verificacion de email exitosa.' });
+                dispatch(setRedirect('/auth/ingresar'));
+            }
+            else if (body.errors) {
+                dispatch(setError(body.errors));
+            }
+            else if (body.exception) {
+                Swal.fire({ icon: 'error', title: 'Oops...', text: body.exception[0].detail });
+            }
+
+        } catch (error) {
+            dispatch(finishLoading());
+            Swal.fire({ icon: 'error', title: 'Oops...', text: 'Ocurrió un error inesperado.' });
+            dispatch(setRedirect('/auth/ingresar'));
+        }
+    }
+}

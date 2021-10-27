@@ -42,6 +42,16 @@ export const uiReducer = (state = initialState, action) => {
                 showModal: action.payload,
                 typeModal: null
             };
+        case types.uiSetRedirect:
+            return {
+                ...state,
+                redirect: action.payload
+            };
+        case types.uiRemoveRedirect:
+            return {
+                ...state,
+                redirect: null
+            };
         default:
             return state;
     }

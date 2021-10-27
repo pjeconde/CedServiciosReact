@@ -50,7 +50,6 @@ export const Menu = () => {
                     <NavLink
                         to="/auth/ingresar"
                         className="nav-item nav-link link-secondary t-up"
-                        exact
                         activeClassName="active">
                         ingresar
                     </NavLink>
