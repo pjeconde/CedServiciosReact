@@ -308,8 +308,8 @@ export const iniciarVerificacionEmail = (encriptacion) => {
     return async (dispatch) => {
         try {
             dispatch(startLoading());
-            
-            const resp = await fetchSinToken(`Usuario/ValidarVerificacionMailUsuario?autenticacion=${encriptacion}`);
+
+            const resp = await fetchSinToken(`Usuario/ValidarVerificacionMailUsuario?${queryString.stringify({ encriptacion })}`);
             const body = await resp.json();
 
             if (resp.status === 200) {
@@ -321,12 +321,40 @@ export const iniciarVerificacionEmail = (encriptacion) => {
             }
             else if (body.exception) {
                 Swal.fire({ icon: 'error', title: 'Oops...', text: body.exception[0].detail });
+                dispatch(setError(body.exception[0].detail));
             }
 
+            dispatch(finishLoading());
         } catch (error) {
             dispatch(finishLoading());
             Swal.fire({ icon: 'error', title: 'Oops...', text: 'Ocurrió un error inesperado.' });
-            dispatch(setRedirect('/auth/ingresar'));
+            dispatch(setError('Ocurrio un error inesperado.'));
+        }
+    }
+}
+
+export const iniciarReenviarEmail = (nombreUsuario) => {
+    return async (dispatch) => {
+        try {
+            dispatch(startLoading());
+
+            const resp = await fetchSinToken(`Usuario/ReenviarVerificacionMailUsuario?${queryString.stringify({ nombreUsuario })}`);
+            const body = await resp.json();
+
+            if (resp.status === 200) {
+                Swal.fire({ icon: 'success', title: 'Reenviar email', text: 'Email enviado correctamente.' });
+            }
+            else if (body.errors) {
+                dispatch(setError(body.errors));
+            }
+            else if (body.exception) {
+                Swal.fire({ icon: 'error', title: 'Oops...', text: body.exception[0].detail });
+                dispatch(setError(body.exception[0].detail));
+            }
+            dispatch(finishLoading());
+        } catch (error) {
+            dispatch(finishLoading());
+            Swal.fire({ icon: 'error', title: 'Oops...', text: 'Ocurrió un error inesperado.' });
         }
     }
 }
