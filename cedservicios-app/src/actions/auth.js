@@ -295,7 +295,7 @@ export const iniciarComprobacion = () => {
         if (pepe)
             dispatch(ingresarUsuario({
                 idUsuario: new Date().getTime(),
-                nombreUsuario: ''
+                nombreUsuario: 'gmontiel'
             }));
         else
             dispatch(finalizarComprobacion());

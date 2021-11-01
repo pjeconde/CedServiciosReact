@@ -1,7 +1,8 @@
 import React from 'react';
 import { Route, Switch, Redirect } from 'react-router-dom';
 import { Menu } from '../components/dashboardPrivate/Menu';
-import { AltaCuitScreen } from '../views/AltaCuitScreen';
+// import { AltaCuitScreen } from '../views/AltaCuitScreen';
+import { CuitScreen } from '../views/CuitScreen';
 import { PersonaScreen } from '../views/PersonaScreen';
 
 export const DashboardPrivate = () => {
@@ -12,8 +13,8 @@ export const DashboardPrivate = () => {
             <main className="bg-light">
                 <Switch>
                     <Route exact path="/persona" component={PersonaScreen} />
-                    
-                    <Route path="/admin/cuit" component={AltaCuitScreen} />
+                    <Route exact path="/admin/cuit" component={CuitScreen} />
+                    {/* <Route path="/admin/cuit" component={AltaCuitScreen} /> */}
 
                     <Redirect to="/persona" />
                 </Switch>

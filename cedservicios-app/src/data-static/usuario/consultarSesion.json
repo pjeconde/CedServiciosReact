@@ -706,7 +706,7 @@
                         {
                             "nombre": "CUIT",
                             "habilitada": true,
-                            "url": "/Admin/Cuit",
+                            "url": "/admin/cuit",
                             "menu": []
                         },
                         {

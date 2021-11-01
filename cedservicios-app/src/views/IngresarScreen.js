@@ -20,7 +20,7 @@ export const IngresarScreen = () => {
     errors: formErrors,
     setErrors } = useForm({
       nombreUsuario: 'gmontiel',
-      clave: '123456'
+      clave: 'asdasd'
     });
   const { nombreUsuario, clave } = formValues;
 

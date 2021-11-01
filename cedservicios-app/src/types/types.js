@@ -17,7 +17,7 @@ export const types = {
 
     personaAgregarPersona: '[persona] Persona nueva agregada',
     personaSetPersonaActiva: '[persona] Set persona activa',
-    personaRemoverPersonaActiva: '[persona] Remover persona activa',
+    personaRemoverPersonaActiva: '[persona] Persona activa removida',
     personaActualizarPersona: '[persona] Persona actualizada',
     personaEliminarPersona: '[persona] Persona eliminada',
     personaCargarPersonas: '[persona] Personas cargada',
@@ -27,6 +27,12 @@ export const types = {
 
     grillaSetPaginaActual: '[grilla] Set pagina actual',
     grillaSetRegistrosPorPagina: '[grilla] Set registros por pagina',
-    grillaSetDatosGrilla: '[grilla] Set datos grilla'
+    grillaSetDatosGrilla: '[grilla] Set datos grilla',
 
+    cuitCargarCuits: '[cuit] Cuits cargados',
+    cuitSetCuitActivo: '[cuit] Set cuit activo',
+    cuitRemoverCuitActivo: '[cuit] Cuit activo removido',
+    cuitAgregarCuit: '[cuit] Cuit nuevo agregado',
+    cuitActualizarCuit: '[cuit] Cuit actualizado',
+    cuitEliminarCuit: '[cuit] Cuit eliminado',
 };
