@@ -1,31 +1,18 @@
-import React, { useEffect, useMemo } from 'react';
+import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import moment from 'moment';
 
 import Select from 'react-select';
-import {
-    Modal,
-    Button,
-    Form,
-    InputGroup
-} from 'react-bootstrap';
+import { Modal, Button, Form } from 'react-bootstrap';
 
-import { closeModal, removeError } from '../../../actions/ui';
-import { removerPersonaActiva, iniciarAgregarPersona, iniciarActualizarPersona } from '../../../actions/persona';
-import { tipoDePersonas } from '../../../helpers/tipoPersona';
-import { tipoDocumentos } from '../../../helpers/tipoDocumento';
-import { condIngBrutos, condIva, provincias } from '../../../helpers/admin';
 import { useForm } from '../../../hooks/useForm';
-import { getCamposHabilitados } from '../../../helpers/persona/getCamposHabilitados';
+import { provincias, condIva, condIngBrutos } from '../../../helpers/admin';
+import { closeModal, removeError } from '../../../actions/ui';
+import { removerCuitActivo } from '../../../actions/cuit';
 import { camelCase } from '../../../helpers/camelCase';
 
-
-const nameModal = 'modalPersona';
-
-const initPerson = {
-    numeroDocumento: '',
-    tipoPersona: tipoDePersonas[2],
-    tipoDocumento: { value: 80, label: 'CUIT' },
+const initCuit = {
+    cuit: '',
     provincia: provincias[1],
     condicionIva: condIva[0],
     condicionIngresoBruto: condIngBrutos[0],
@@ -38,7 +25,6 @@ const initPerson = {
     manzana: '',
     localidad: '',
     codigoPostal: '',
-    identificador: '',
     razonSocial: '',
     nombreContacto: '',
     emailContacto: '',
@@ -47,16 +33,19 @@ const initPerson = {
     codigoInterno: '',
     numeroIngresoBruto: '',
     fechaInicioActividades: moment().format("YYYY-MM-DD"),
+    facturaElectronica: false,
+    interfacturas: false,
+    afip: false,
+    certificadoPropio: false,
+    numeroCertificado: ''
 };
+const nameModal = 'modalCuit';
 
-export const ModalPersona = () => {
+export const ModalCuit = () => {
 
     const { showModal, typeModal, loading, errores } = useSelector(state => state.ui);
-    const { personaActiva } = useSelector(state => state.persona);
-    const { cuit } = useSelector(state => state.auth);
+    const { cuitActivo } = useSelector(state => state.cuit);
     const dispatch = useDispatch();
-
-    const camposHabilitados = useMemo(() => getCamposHabilitados(typeModal), [typeModal]);
 
     const {
         values: formValues,
@@ -65,18 +54,13 @@ export const ModalPersona = () => {
         handleDropdownChange,
         handleInputNumericChange,
         handleInputChange,
-        reset
-    } = useForm(initPerson);
+        handleInputCheck,
+        reset } = useForm(initCuit);
 
-    const { tipoPersona,
-        tipoDocumento,
-        numeroDocumento,
-        identificador,
-        razonSocial,
-        numeroIngresoBruto,
-        fechaInicioActividades,
-        condicionIva,
+    const {
+        cuit,
         provincia,
+        condicionIva,
         condicionIngresoBruto,
         calle,
         numero,
@@ -87,39 +71,48 @@ export const ModalPersona = () => {
         manzana,
         localidad,
         codigoPostal,
+        razonSocial,
         nombreContacto,
         emailContacto,
         telefonoContacto,
         gln,
-        codigoInterno } = formValues;
+        codigoInterno,
+        numeroIngresoBruto,
+        fechaInicioActividades,
+        facturaElectronica,
+        interfacturas,
+        afip,
+        certificadoPropio,
+        numeroCertificado
+    } = formValues;
 
     const handleCloseModal = () => {
         dispatch(closeModal());
-        dispatch(removerPersonaActiva());
+        dispatch(removerCuitActivo());
         dispatch(removeError());
-        reset(initPerson);
+        reset(initCuit);
     }
 
     const handleSubmit = (e) => {
         e.preventDefault();
 
-        if (personaActiva) {
-            dispatch(iniciarActualizarPersona(formValues));
+        if (cuitActivo) {
+            // dispatch(iniciarActualizarPersona(formValues));
         }
         else {
-            dispatch(iniciarAgregarPersona(formValues));
+            // dispatch(iniciarAgregarPersona(formValues));
         }
     }
 
     useEffect(() => {
-        if (personaActiva) {
-            reset(personaActiva);
+        if (cuitActivo) {
+            reset(cuitActivo);
         }
         else {
-            reset(initPerson);
+            reset(initCuit);
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [personaActiva])
+    }, [cuitActivo])
 
     useEffect(() => {
         if (errores) {
@@ -151,93 +144,51 @@ export const ModalPersona = () => {
                             {
                                 (typeModal === 'Agregar')
                                     ?
-                                    'Alta de Persona'
+                                    'Alta de Cuit'
                                     :
                                     (typeModal === 'Actualizar')
                                         ?
-                                        'Modificación de Persona'
+                                        'Modificación de Cuit'
                                         :
-                                        'Detalle de Persona'
+                                        'Detalle de Cuit'
                             }
                         </h5>
                     </Modal.Title>
                 </Modal.Header>
-                <Modal.Body >
-                    <Form noValidate onSubmit={handleSubmit}>
+                <Modal.Body>
+                    <Form noValidate>
                         <div className="row g-3">
-                            <InputGroup className="mb-3">
-                                <InputGroup.Text>Perteneciente al cuit</InputGroup.Text>
-                                <Form.Control value={cuit} readOnly />
-                            </InputGroup>
                             <div className="col-sm-6 col-md-6 col-lg-4">
-                                <Form.Label>Tipo de persona</Form.Label>
-                                <Select
-                                    name="tipoPersona"
-                                    isDisabled={!camposHabilitados["tipoPersona"]}
-                                    options={tipoDePersonas}
-                                    classNamePrefix="react-select"
-                                    value={tipoPersona}
-                                    onChange={handleDropdownChange} />
-                            </div>
-                            <div className="col-sm-6 col-md-6 col-lg-4">
-                                <Form.Label>Tipo documento</Form.Label>
-                                <Select
-                                    name="tipoDocumento"
-                                    required
-                                    isDisabled={!camposHabilitados["tipoDocumento"]}
-                                    options={tipoDocumentos}
-                                    classNamePrefix="react-select"
-                                    value={tipoDocumento}
-                                    onChange={handleDropdownChange} />
-                            </div>
-                            <div className="col-sm-6 col-md-6 col-lg-4">
-                                <Form.Group controlId="control-1">
-                                    <Form.Label>Numero documento</Form.Label>
+                                <Form.Group controlId="formCuit">
+                                    <Form.Label>Cuit</Form.Label>
                                     <Form.Control
                                         type="text"
-                                        name="numeroDocumento"
+                                        name="cuit"
                                         required
-                                        isInvalid={!!errors?.numeroDocumento}
-                                        disabled={!camposHabilitados["numeroDocumento"]}
+                                        isInvalid={!!errors?.cuit}
+                                        // disabled={!camposHabilitados["numeroDocumento"]}
+                                        minLength="11"
+                                        maxLength="11"
                                         autoComplete="off"
-                                        value={numeroDocumento}
+                                        value={cuit || ''}
                                         onChange={handleInputNumericChange}
                                     />
                                     <Form.Control.Feedback type="invalid">
-                                        {errors.numeroDocumento}
-                                    </Form.Control.Feedback>
-                                </Form.Group>
-                            </div>
-                            <div className="col-sm-12 col-md-6 col-lg-4">
-                                <Form.Group>
-                                    <Form.Label>Identificador</Form.Label>
-                                    <Form.Control
-                                        type="text"
-                                        name="identificador"
-                                        required
-                                        isInvalid={!!errors?.identificador}
-                                        disabled={!camposHabilitados["identificador"]}
-                                        autoComplete="off"
-                                        maxLength="50"
-                                        value={identificador}
-                                        onChange={handleInputChange}
-                                    />
-                                    <Form.Control.Feedback type="invalid">
-                                        {errors.identificador}
+                                        {errors.cuit}
                                     </Form.Control.Feedback>
                                 </Form.Group>
                             </div>
                             <div className="col-sm-12 col-md-12 col-lg-8">
-                                <Form.Group>
-                                    <Form.Label htmlFor="razonSocial">Razón social</Form.Label>
+                                <Form.Group controlId="formRazonSocial">
+                                    <Form.Label >Razón social</Form.Label>
                                     <Form.Control
                                         type="text"
                                         name="razonSocial"
                                         required
                                         isInvalid={!!errors?.razonSocial}
-                                        disabled={!camposHabilitados["razonSocial"]}
+                                        // disabled={!camposHabilitados["razonSocial"]}
                                         autoComplete="off"
-                                        value={razonSocial}
+                                        value={razonSocial || ''}
                                         onChange={handleInputChange} />
                                     <Form.Control.Feedback type="invalid">
                                         {errors.razonSocial}
@@ -245,60 +196,10 @@ export const ModalPersona = () => {
                                 </Form.Group>
                             </div>
                             <div className="col-sm-12 col-md-12 col-lg-6">
-                                <Form.Group>
-                                    <Form.Label htmlFor="nombreContacto">Nombre de Contacto</Form.Label>
-                                    <Form.Control
-                                        type="text"
-                                        name="nombreContacto"
-                                        disabled={!camposHabilitados["nombreContacto"]}
-                                        required
-                                        isInvalid={!!errors?.nombreContacto}
-                                        value={nombreContacto || ''}
-                                        onChange={handleInputChange} />
-                                    <Form.Control.Feedback type="invalid">
-                                        {errors.nombreContacto}
-                                    </Form.Control.Feedback>
-                                </Form.Group>
-                            </div>
-                            <div className="col-sm-12 col-md-12 col-lg-6">
-                                <Form.Group>
-                                    <Form.Label htmlFor="telefono">Telefono</Form.Label>
-                                    <Form.Control
-                                        type="text"
-                                        name="telefonoContacto"
-                                        disabled={!camposHabilitados["telefonoContacto"]}
-                                        required
-                                        isInvalid={!!errors?.telefonoContacto}
-                                        autoComplete="none"
-                                        value={telefonoContacto || ''}
-                                        onChange={handleInputNumericChange} />
-                                    <Form.Control.Feedback type="invalid">
-                                        {errors.telefonoContacto}
-                                    </Form.Control.Feedback>
-                                </Form.Group>
-                            </div>
-                            <div className="col-sm-12 col-md-12 col-lg-6">
-                                <Form.Group>
-                                    <Form.Label htmlFor="emailContacto">Email</Form.Label>
-                                    <Form.Control
-                                        type="email"
-                                        name="emailContacto"
-                                        disabled={!camposHabilitados["emailContacto"]}
-                                        required
-                                        isInvalid={!!errors?.emailContacto}
-                                        autoComplete="none"
-                                        value={emailContacto || ''}
-                                        onChange={handleInputChange} />
-                                    <Form.Control.Feedback type="invalid">
-                                        {errors.emailContacto}
-                                    </Form.Control.Feedback>
-                                </Form.Group>
-                            </div>
-                            <div className="col-sm-12 col-md-12 col-lg-6">
                                 <Form.Label htmlFor="provincia">Provincia</Form.Label>
                                 <Select
                                     name="provincia"
-                                    isDisabled={!camposHabilitados["provincia"]}
+                                    // isDisabled={!camposHabilitados["provincia"]}
                                     placeholder=""
                                     options={provincias}
                                     value={provincia}
@@ -306,12 +207,12 @@ export const ModalPersona = () => {
                                     classNamePrefix="react-select" />
                             </div>
                             <div className="col-sm-12 col-md-12 col-lg-6">
-                                <Form.Group>
-                                    <Form.Label htmlFor="localidad">Localidad</Form.Label>
+                                <Form.Group >
+                                    <Form.Label>Localidad</Form.Label>
                                     <Form.Control
                                         type="text"
                                         name="localidad"
-                                        disabled={!camposHabilitados["localidad"]}
+                                        // disabled={!camposHabilitados["localidad"]}
                                         required
                                         isInvalid={!!errors?.localidad}
                                         value={localidad || ''}
@@ -323,11 +224,11 @@ export const ModalPersona = () => {
                             </div>
                             <div className="col-sm-12 col-md-4 col-lg-3">
                                 <Form.Group>
-                                    <Form.Label htmlFor="codigoPostal">Código Postal</Form.Label>
+                                    <Form.Label>Código Postal</Form.Label>
                                     <Form.Control
                                         type="text"
                                         name="codigoPostal"
-                                        disabled={!camposHabilitados["codigoPostal"]}
+                                        // disabled={!camposHabilitados["codigoPostal"]}
                                         required
                                         isInvalid={!!errors?.codigoPostal}
                                         value={codigoPostal || ''}
@@ -340,11 +241,11 @@ export const ModalPersona = () => {
                             </div>
                             <div className="col-sm-12 col-md-8 col-lg-6">
                                 <Form.Group>
-                                    <Form.Label htmlFor="calle">Calle</Form.Label>
+                                    <Form.Label>Calle</Form.Label>
                                     <Form.Control
                                         type="text"
                                         name="calle"
-                                        disabled={!camposHabilitados["calle"]}
+                                        // disabled={!camposHabilitados["calle"]}
                                         required
                                         isInvalid={!!errors?.calle}
                                         value={calle || ''}
@@ -356,11 +257,11 @@ export const ModalPersona = () => {
                             </div>
                             <div className="col-sm-6 col-md-4 col-lg-4">
                                 <Form.Group>
-                                    <Form.Label htmlFor="numero">Numero</Form.Label>
+                                    <Form.Label>Numero</Form.Label>
                                     <Form.Control
                                         type="text"
                                         name="numero"
-                                        disabled={!camposHabilitados["numero"]}
+                                        // disabled={!camposHabilitados["numero"]}
                                         autoComplete="off"
                                         required
                                         isInvalid={!!errors?.numero}
@@ -379,7 +280,7 @@ export const ModalPersona = () => {
                                         autoComplete="off"
                                         name="piso"
                                         isInvalid={!!errors?.piso}
-                                        disabled={!camposHabilitados["piso"]}
+                                        // disabled={!camposHabilitados["piso"]}
                                         value={piso || ''}
                                         onChange={handleInputNumericChange} />
                                     <Form.Control.Feedback type="invalid">
@@ -395,7 +296,7 @@ export const ModalPersona = () => {
                                         autoComplete="off"
                                         name="departamento"
                                         isInvalid={!!errors?.departamento}
-                                        disabled={!camposHabilitados["departamento"]}
+                                        // disabled={!camposHabilitados["departamento"]}
                                         value={departamento || ''}
                                         onChange={handleInputChange} />
                                     <Form.Control.Feedback type="invalid">
@@ -411,7 +312,7 @@ export const ModalPersona = () => {
                                         autoComplete="off"
                                         name="sector"
                                         isInvalid={!!errors?.sector}
-                                        disabled={!camposHabilitados["sector"]}
+                                        // disabled={!camposHabilitados["sector"]}
                                         value={sector || ''}
                                         onChange={handleInputChange} />
                                     <Form.Control.Feedback type="invalid">
@@ -427,7 +328,7 @@ export const ModalPersona = () => {
                                         autoComplete="off"
                                         name="torre"
                                         isInvalid={!!errors?.torre}
-                                        disabled={!camposHabilitados["torre"]}
+                                        // disabled={!camposHabilitados["torre"]}
                                         value={torre || ''}
                                         onChange={handleInputChange} />
                                     <Form.Control.Feedback type="invalid">
@@ -443,7 +344,7 @@ export const ModalPersona = () => {
                                         autoComplete="off"
                                         name="manzana"
                                         isInvalid={!!errors?.manzana}
-                                        disabled={!camposHabilitados["manzana"]}
+                                        // disabled={!camposHabilitados["manzana"]}
                                         value={manzana || ''}
                                         onChange={handleInputChange} />
                                     <Form.Control.Feedback type="invalid">
@@ -455,7 +356,7 @@ export const ModalPersona = () => {
                                 <Form.Label htmlFor="condIva">Cond. IVA</Form.Label>
                                 <Select
                                     name="condicionIva"
-                                    isDisabled={!camposHabilitados["condicionIva"]}
+                                    // isDisabled={!camposHabilitados["condicionIva"]}
                                     placeholder=""
                                     options={condIva}
                                     value={condicionIva}
@@ -466,7 +367,7 @@ export const ModalPersona = () => {
                                 <Form.Label htmlFor="condicionIngresoBruto">Cond. Ing Brutos</Form.Label>
                                 <Select
                                     name="condicionIngresoBruto"
-                                    isDisabled={!camposHabilitados["condicionIngresoBruto"]}
+                                    // isDisabled={!camposHabilitados["condicionIngresoBruto"]}
                                     placeholder=""
                                     options={condIngBrutos}
                                     value={condicionIngresoBruto}
@@ -480,7 +381,7 @@ export const ModalPersona = () => {
                                         type="text"
                                         name="numeroIngresoBruto"
                                         isInvalid={!!errors?.numeroIngresoBruto}
-                                        disabled={!camposHabilitados["numeroIngresoBruto"]}
+                                        // disabled={!camposHabilitados["numeroIngresoBruto"]}
                                         value={numeroIngresoBruto}
                                         onChange={handleInputChange} />
                                     <Form.Control.Feedback type="invalid">
@@ -495,7 +396,7 @@ export const ModalPersona = () => {
                                         type="date"
                                         name="fechaInicioActividades"
                                         isInvalid={!!errors?.fechaInicioActividades}
-                                        disabled={!camposHabilitados["fechaInicioActividades"]}
+                                        // disabled={!camposHabilitados["fechaInicioActividades"]}
                                         value={fechaInicioActividades}
                                         onChange={handleInputChange} />
                                     <Form.Control.Feedback type="invalid">
@@ -505,12 +406,12 @@ export const ModalPersona = () => {
                             </div>
                             <div className="col-sm-12 col-md-6 col-lg-3">
                                 <Form.Group>
-                                    <Form.Label htmlFor="gln">GLN</Form.Label>
+                                    <Form.Label htmlFor="gln">Gln</Form.Label>
                                     <Form.Control
                                         type="text"
                                         name="gln"
                                         isInvalid={!!errors?.gln}
-                                        disabled={!camposHabilitados["gln"]}
+                                        // disabled={!camposHabilitados["gln"]}
                                         maxLength="13"
                                         value={gln || ''}
                                         onChange={handleInputChange} />
@@ -526,7 +427,7 @@ export const ModalPersona = () => {
                                         type="text"
                                         name="codigoInterno"
                                         isInvalid={!!errors?.codigoInterno}
-                                        disabled={!camposHabilitados["codigoInterno"]}
+                                        // disabled={!camposHabilitados["codigoInterno"]}
                                         maxLength="20"
                                         value={codigoInterno || ''}
                                         onChange={handleInputChange} />
@@ -534,6 +435,99 @@ export const ModalPersona = () => {
                                         {errors.codigoInterno}
                                     </Form.Control.Feedback>
                                 </Form.Group>
+                            </div>
+                            <div className="col-sm-12 col-md-12 col-lg-6">
+                                <Form.Group>
+                                    <Form.Label htmlFor="nombreContacto">Nombre de Contacto</Form.Label>
+                                    <Form.Control
+                                        type="text"
+                                        name="nombreContacto"
+                                        // disabled={!camposHabilitados["nombreContacto"]}
+                                        required
+                                        isInvalid={!!errors?.nombreContacto}
+                                        value={nombreContacto || ''}
+                                        onChange={handleInputChange} />
+                                    <Form.Control.Feedback type="invalid">
+                                        {errors.nombreContacto}
+                                    </Form.Control.Feedback>
+                                </Form.Group>
+                            </div>
+                            <div className="col-sm-12 col-md-12 col-lg-6">
+                                <Form.Group>
+                                    <Form.Label htmlFor="telefono">Telefono</Form.Label>
+                                    <Form.Control
+                                        type="text"
+                                        name="telefonoContacto"
+                                        // disabled={!camposHabilitados["telefonoContacto"]}
+                                        required
+                                        isInvalid={!!errors?.telefonoContacto}
+                                        autoComplete="none"
+                                        value={telefonoContacto || ''}
+                                        onChange={handleInputNumericChange} />
+                                    <Form.Control.Feedback type="invalid">
+                                        {errors.telefonoContacto}
+                                    </Form.Control.Feedback>
+                                </Form.Group>
+                            </div>
+                            <div className="col-sm-12 col-md-12 col-lg-6">
+                                <Form.Group>
+                                    <Form.Label htmlFor="emailContacto">Email</Form.Label>
+                                    <Form.Control
+                                        type="email"
+                                        name="emailContacto"
+                                        // disabled={!camposHabilitados["emailContacto"]}
+                                        required
+                                        isInvalid={!!errors?.emailContacto}
+                                        autoComplete="none"
+                                        value={emailContacto || ''}
+                                        onChange={handleInputChange} />
+                                    <Form.Control.Feedback type="invalid">
+                                        {errors.emailContacto}
+                                    </Form.Control.Feedback>
+                                </Form.Group>
+                            </div>
+                            <h6 className="my-4 fw-bold">Destinos de comprobantes (para servicio de factura electrónica)</h6>
+                            <div className="col-sm-4 col-md-6 col-lg-4">
+                                {/* <Form.Check
+                                    name="facturaElectronica"
+                                    label="Factura electrónica"
+                                    checked={facturaElectronica}
+                                    onChange={handleInputCheck} /> */}
+                            </div>
+                            <div className="col-sm-4 col-md-6 col-lg-4">
+                                {/* <Form.Check
+                                    name="interfacturas"
+                                    label="Interfacturas"
+                                    checked={interfacturas}
+                                    onChange={handleInputCheck} /> */}
+                            </div>
+                            <div className="col-sm-4 col-md-6 col-lg-4">
+                                {/* <Form.Check
+                                    name="afip"
+                                    label="AFIP"
+                                    checked={afip}
+                                    onChange={handleInputCheck} /> */}
+                            </div>
+                            <div className="col-sm-12 col-md-12 d-flex align-items-center flex-wrap">
+                                <div className="col-sm-6 col-md-6 col-lg-4">
+                                    {/* <Form.Check
+                                        name="certificadoPropio"
+                                        label="Certificado propio"
+                                        checked={certificadoPropio}
+                                        onChange={handleInputCheck} /> */}
+                                </div>
+                                <div className="col-sm-6 col-md-6 col-lg-8">
+                                    <Form.Group>
+                                        <Form.Label >Nro. Certificado</Form.Label>
+                                        <Form.Control
+                                            type="text"
+                                            name="numeroCertificado"
+                                            minLength="12"
+                                            maxLength="12"
+                                            value={numeroCertificado || ''}
+                                            onChange={handleInputChange} />
+                                    </Form.Group>
+                                </div>
                             </div>
                         </div>
                     </Form>

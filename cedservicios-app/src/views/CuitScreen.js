@@ -8,7 +8,13 @@ import { Expanded } from '../components/ui/Expanded';
 import { setPaginaActual, setRegistrosPorPagina } from '../actions/grilla';
 import { SortIcon } from '../components/ui/SortIcon';
 import { PaginationOptions } from '../components/ui/PaginationOptions';
-import { iniciarObtenerCuits } from '../actions/cuit';
+import { iniciarObtenerCuits, removerCuitActivo } from '../actions/cuit';
+import { ButtonDetalle } from '../components/ui/cuit/ButtonDetalle';
+import { ButtonActualizar } from '../components/ui/cuit/ButtonActualizar';
+import { ButtonEliminar } from '../components/ui/cuit/ButtonEliminar';
+import { ButtonAgregar } from '../components/ui/ButtonAgregar';
+import { openModal } from '../actions/ui';
+import { ModalCuit } from '../components/dashboardPrivate/cuit/ModalCuit';
 
 
 const customStyles = {
@@ -60,24 +66,24 @@ const columnaCuits = [
         center: true,
         grow: .5
     },
-    // {
-    //     name: 'Detalle',
-    //     cell: row => <ButtonDetalle persona={row} />,
-    //     center: true,
-    //     grow: .5
-    // },
-    // {
-    //     name: 'Modificar',
-    //     cell: row => <ButtonActualizar persona={row} />,
-    //     center: true,
-    //     grow: .5
-    // },
-    // {
-    //     name: 'Eliminar',
-    //     cell: row => <ButtonEliminar persona={row} />,
-    //     center: true,
-    //     grow: .5
-    // }
+    {
+        name: 'Detalle',
+        cell: row => <ButtonDetalle cuit={row} />,
+        center: true,
+        grow: .5
+    },
+    {
+        name: 'Modificar',
+        cell: row => <ButtonActualizar cuit={row} />,
+        center: true,
+        grow: .5
+    },
+    {
+        name: 'Eliminar',
+        cell: row => <ButtonEliminar cuit={row} />,
+        center: true,
+        grow: .5
+    }
 ];
 
 export const CuitScreen = () => {
@@ -113,6 +119,13 @@ export const CuitScreen = () => {
         dispatch(iniciarObtenerCuits());
     }
 
+    const handleOnClickAgregar = () => {
+        let nameModal = 'modalCuit';
+        let typeModal = 'Agregar';
+        dispatch(removerCuitActivo());
+        dispatch(openModal(nameModal, typeModal));
+    }
+
     // useEffect(() => {
     //     if (filtro) {
     //         dispatch(iniciarObtenerPersonas());
@@ -133,11 +146,11 @@ export const CuitScreen = () => {
                         </div>
                         <div className="header__toolbar">
 
-                            {/* <ButtonAgregar /> */}
+                            <ButtonAgregar handleOnClick={handleOnClickAgregar} />
 
                             {/* <ModalFiltro /> */}
 
-                            {/* <ModalPersona /> */}
+                            <ModalCuit />
 
                             {/* <ModalEliminar /> */}
                         </div>

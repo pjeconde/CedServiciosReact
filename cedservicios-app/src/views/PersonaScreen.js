@@ -8,15 +8,16 @@ import { ModalFiltro } from '../components/dashboardPrivate/persona/ModalFiltro'
 
 import { ButtonActualizar } from '../components/ui/personas/ButtonActualizar';
 import { ModalPersona } from '../components/dashboardPrivate/persona/ModalPersona';
-import { ButtonAgregar } from '../components/ui/personas/ButtonAgregar';
+import { ButtonAgregar } from '../components/ui/ButtonAgregar';
 import { ButtonDetalle } from '../components/ui/personas/ButtonDetalle';
 import { ButtonEliminar } from '../components/ui/personas/ButtonEliminar';
 import { ModalEliminar } from '../components/dashboardPrivate/persona/ModalEliminar';
 import { FiltroAplicados } from '../components/ui/FiltroAplicados';
-import { iniciarObtenerPersonas, removerFiltro, removerLosFiltros } from '../actions/persona';
+import { iniciarObtenerPersonas, removerFiltro, removerLosFiltros, removerPersonaActiva } from '../actions/persona';
 import { setPaginaActual, setRegistrosPorPagina } from '../actions/grilla';
 import { SortIcon } from '../components/ui/SortIcon';
 import { PaginationOptions } from '../components/ui/PaginationOptions';
+import { openModal } from '../actions/ui';
 
 
 const customStyles = {
@@ -99,7 +100,7 @@ export const PersonaScreen = () => {
     const { personas, filtro } = useSelector(state => state.persona);
     const { loading } = useSelector(state => state.ui);
     const { cuentaTotal } = useSelector(state => state.grilla);
-   
+
     const handleEliminarFiltro = (f) => {
         let filtros = Object.entries(filtro).filter(([k, v], i) => !!v);
 
@@ -126,6 +127,13 @@ export const PersonaScreen = () => {
         dispatch(iniciarObtenerPersonas());
     }
 
+    const handleOnClickAgregar = () => {
+        let nameModal = 'modalPersona';
+        let typeModal = 'Agregar';
+        dispatch(removerPersonaActiva());
+        dispatch(openModal(nameModal, typeModal));
+    }
+
     useEffect(() => {
         if (filtro) {
             dispatch(iniciarObtenerPersonas());
@@ -146,7 +154,7 @@ export const PersonaScreen = () => {
                         </div>
                         <div className="header__toolbar">
 
-                            <ButtonAgregar />
+                            <ButtonAgregar handleOnClick={handleOnClickAgregar} />
 
                             <ModalFiltro />
 
