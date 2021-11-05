@@ -6,17 +6,18 @@ import { BadgeStatus } from '../components/ui/BadgeStatus';
 import { Expanded } from '../components/ui/Expanded';
 import { ModalFiltro } from '../components/dashboardPrivate/persona/ModalFiltro';
 
-import { ButtonActualizar } from '../components/ui/personas/ButtonActualizar';
 import { ModalPersona } from '../components/dashboardPrivate/persona/ModalPersona';
-import { ButtonAgregar } from '../components/ui/personas/ButtonAgregar';
-import { ButtonDetalle } from '../components/ui/personas/ButtonDetalle';
-import { ButtonEliminar } from '../components/ui/personas/ButtonEliminar';
+import { ButtonActualizar } from '../components/ui/ButtonActualizar';
+import { ButtonDetalle } from '../components/ui/ButtonDetalle';
+import { ButtonEliminar } from '../components/ui/ButtonEliminar';
+import { ButtonAgregar } from '../components/ui/ButtonAgregar';
 import { ModalEliminar } from '../components/dashboardPrivate/persona/ModalEliminar';
 import { FiltroAplicados } from '../components/ui/FiltroAplicados';
-import { iniciarObtenerPersonas, removerFiltro, removerLosFiltros } from '../actions/persona';
+import { iniciarObtenerPersonas, iniciarSetPersonaActiva, removerFiltro, removerLosFiltros, removerPersonaActiva } from '../actions/persona';
 import { setPaginaActual, setRegistrosPorPagina } from '../actions/grilla';
 import { SortIcon } from '../components/ui/SortIcon';
 import { PaginationOptions } from '../components/ui/PaginationOptions';
+import { openModal } from '../actions/ui';
 
 
 const customStyles = {
@@ -29,69 +30,7 @@ const customStyles = {
     },
 }
 
-const columnaPersonas = [
-    {
-        name: 'Nº Documento',
-        selector: 'numeroDocumento',
-        style: {
-            color: '#202124',
-            fontSize: '14px',
-            fontWeight: 700,
-        }
-    },
-    {
-        name: 'Tipo documento',
-        selector: 'tipoDocumento',
-        cell: row => row.tipoDocumento?.descripcion,
-    },
-    {
-        name: 'Razon social',
-        selector: 'razonSocial',
-        sortable: true,
-        grow: 2
-    },
-    {
-        name: 'Localidad',
-        selector: 'localidad',
-        sortable: true
-    },
-    {
-        name: 'Nombre contacto',
-        selector: 'nombreContacto',
-        grow: 1.5,
-        sortable: true
-    },
-    {
-        name: 'Email',
-        selector: 'emailContacto',
-        grow: 2
-    },
-    {
-        name: 'Estado',
-        selector: 'estado',
-        cell: row => <BadgeStatus status={row.estado.id === 1} text={row.estado.descripcion} />,
-        center: true,
-        grow: .5
-    },
-    {
-        name: 'Detalle',
-        cell: row => <ButtonDetalle persona={row} />,
-        center: true,
-        grow: .5
-    },
-    {
-        name: 'Modificar',
-        cell: row => <ButtonActualizar persona={row} />,
-        center: true,
-        grow: .5
-    },
-    {
-        name: 'Eliminar',
-        cell: row => <ButtonEliminar persona={row} />,
-        center: true,
-        grow: .5
-    }
-];
+
 
 export const PersonaScreen = () => {
 
@@ -99,7 +38,71 @@ export const PersonaScreen = () => {
     const { personas, filtro } = useSelector(state => state.persona);
     const { loading } = useSelector(state => state.ui);
     const { cuentaTotal } = useSelector(state => state.grilla);
-   
+
+    const columnaPersonas = [
+        {
+            name: 'Nº Documento',
+            selector: 'numeroDocumento',
+            style: {
+                color: '#202124',
+                fontSize: '14px',
+                fontWeight: 700,
+            }
+        },
+        {
+            name: 'Tipo documento',
+            selector: 'tipoDocumento',
+            cell: row => row.tipoDocumento?.descripcion,
+        },
+        {
+            name: 'Razon social',
+            selector: 'razonSocial',
+            sortable: true,
+            grow: 2
+        },
+        {
+            name: 'Localidad',
+            selector: 'localidad',
+            sortable: true
+        },
+        {
+            name: 'Nombre contacto',
+            selector: 'nombreContacto',
+            grow: 1.5,
+            sortable: true
+        },
+        {
+            name: 'Email',
+            selector: 'emailContacto',
+            grow: 2
+        },
+        {
+            name: 'Estado',
+            selector: 'estado',
+            cell: row => <BadgeStatus status={row.estado.id === 1} text={row.estado.descripcion} />,
+            center: true,
+            grow: .5
+        },
+        {
+            name: 'Detalle',
+            cell: row => <ButtonDetalle row={row} handleOnClick={handleOnClickDetalle} />,
+            center: true,
+            grow: .5
+        },
+        {
+            name: 'Modificar',
+            cell: row => <ButtonActualizar row={row} handleOnClick={handleOnClickActualizar} />,
+            center: true,
+            grow: .5
+        },
+        {
+            name: 'Eliminar',
+            cell: row => <ButtonEliminar row={row} handleOnClick={handleOnClickEliminar} />,
+            center: true,
+            grow: .5
+        }
+    ];
+
     const handleEliminarFiltro = (f) => {
         let filtros = Object.entries(filtro).filter(([k, v], i) => !!v);
 
@@ -126,6 +129,34 @@ export const PersonaScreen = () => {
         dispatch(iniciarObtenerPersonas());
     }
 
+    const handleOnClickAgregar = () => {
+        let nameModal = 'modalPersona';
+        let typeModal = 'Agregar';
+        dispatch(removerPersonaActiva());
+        dispatch(openModal(nameModal, typeModal));
+    }
+
+    const handleOnClickDetalle = (persona) => {
+        let nameModal = 'modalPersona';
+        let typeModal = 'Detalle';
+        dispatch(iniciarSetPersonaActiva(persona));
+        dispatch(openModal(nameModal, typeModal));
+    }
+
+    const handleOnClickActualizar = (persona) => {
+        let nameModal = 'modalPersona';
+        let typeModal = 'Actualizar';
+        dispatch(iniciarSetPersonaActiva(persona));
+        dispatch(openModal(nameModal, typeModal));
+    }
+
+    const handleOnClickEliminar = (persona) => {
+        let nameModal = 'modalEliminarPersona';
+        let typeModal = 'Eliminar';
+        dispatch(iniciarSetPersonaActiva(persona));
+        dispatch(openModal(nameModal, typeModal));
+    }
+
     useEffect(() => {
         if (filtro) {
             dispatch(iniciarObtenerPersonas());
@@ -146,7 +177,7 @@ export const PersonaScreen = () => {
                         </div>
                         <div className="header__toolbar">
 
-                            <ButtonAgregar />
+                            <ButtonAgregar handleOnClick={handleOnClickAgregar} />
 
                             <ModalFiltro />
 
