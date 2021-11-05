@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useMemo } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import moment from 'moment';
 
@@ -6,9 +6,10 @@ import Select from 'react-select';
 import { Modal, Button, Form } from 'react-bootstrap';
 
 import { useForm } from '../../../hooks/useForm';
-import { provincias, condIva, condIngBrutos } from '../../../helpers/admin';
+import { provincias, condIva, condIngBrutos, recomendaciones } from '../../../helpers/admin';
+import { getCamposHabilitados } from '../../../helpers/cuit/getCamposHabilitados';
 import { closeModal, removeError } from '../../../actions/ui';
-import { removerCuitActivo } from '../../../actions/cuit';
+import { iniciarActualizarCuit, iniciarAgregarCuit, removerCuitActivo } from '../../../actions/cuit';
 import { camelCase } from '../../../helpers/camelCase';
 
 const initCuit = {
@@ -16,6 +17,7 @@ const initCuit = {
     provincia: provincias[1],
     condicionIva: condIva[0],
     condicionIngresoBruto: condIngBrutos[0],
+    medio: recomendaciones[0],
     calle: '',
     numero: '',
     piso: '',
@@ -46,6 +48,7 @@ export const ModalCuit = () => {
     const { showModal, typeModal, loading, errores } = useSelector(state => state.ui);
     const { cuitActivo } = useSelector(state => state.cuit);
     const dispatch = useDispatch();
+    const camposHabilitados = useMemo(() => getCamposHabilitados(typeModal), [typeModal]);
 
     const {
         values: formValues,
@@ -83,7 +86,8 @@ export const ModalCuit = () => {
         interfacturas,
         afip,
         certificadoPropio,
-        numeroCertificado
+        numeroCertificado,
+        medio
     } = formValues;
 
     const handleCloseModal = () => {
@@ -97,10 +101,10 @@ export const ModalCuit = () => {
         e.preventDefault();
 
         if (cuitActivo) {
-            // dispatch(iniciarActualizarPersona(formValues));
+            dispatch(iniciarActualizarCuit(formValues));
         }
         else {
-            // dispatch(iniciarAgregarPersona(formValues));
+            dispatch(iniciarAgregarCuit(formValues));
         }
     }
 
@@ -166,7 +170,7 @@ export const ModalCuit = () => {
                                         name="cuit"
                                         required
                                         isInvalid={!!errors?.cuit}
-                                        // disabled={!camposHabilitados["numeroDocumento"]}
+                                        disabled={!camposHabilitados["cuit"]}
                                         minLength="11"
                                         maxLength="11"
                                         autoComplete="off"
@@ -186,7 +190,7 @@ export const ModalCuit = () => {
                                         name="razonSocial"
                                         required
                                         isInvalid={!!errors?.razonSocial}
-                                        // disabled={!camposHabilitados["razonSocial"]}
+                                        disabled={!camposHabilitados["razonSocial"]}
                                         autoComplete="off"
                                         value={razonSocial || ''}
                                         onChange={handleInputChange} />
@@ -195,24 +199,24 @@ export const ModalCuit = () => {
                                     </Form.Control.Feedback>
                                 </Form.Group>
                             </div>
-                            <div className="col-sm-12 col-md-12 col-lg-6">
+                            <div className="col-sm-12 col-md-12 col-lg-4">
                                 <Form.Label htmlFor="provincia">Provincia</Form.Label>
                                 <Select
                                     name="provincia"
-                                    // isDisabled={!camposHabilitados["provincia"]}
+                                    isDisabled={!camposHabilitados["provincia"]}
                                     placeholder=""
                                     options={provincias}
                                     value={provincia}
                                     onChange={handleDropdownChange}
                                     classNamePrefix="react-select" />
                             </div>
-                            <div className="col-sm-12 col-md-12 col-lg-6">
+                            <div className="col-sm-12 col-md-12 col-lg-5">
                                 <Form.Group >
                                     <Form.Label>Localidad</Form.Label>
                                     <Form.Control
                                         type="text"
                                         name="localidad"
-                                        // disabled={!camposHabilitados["localidad"]}
+                                        disabled={!camposHabilitados["localidad"]}
                                         required
                                         isInvalid={!!errors?.localidad}
                                         value={localidad || ''}
@@ -228,7 +232,7 @@ export const ModalCuit = () => {
                                     <Form.Control
                                         type="text"
                                         name="codigoPostal"
-                                        // disabled={!camposHabilitados["codigoPostal"]}
+                                        disabled={!camposHabilitados["codigoPostal"]}
                                         required
                                         isInvalid={!!errors?.codigoPostal}
                                         value={codigoPostal || ''}
@@ -239,13 +243,13 @@ export const ModalCuit = () => {
                                     </Form.Control.Feedback>
                                 </Form.Group>
                             </div>
-                            <div className="col-sm-12 col-md-8 col-lg-6">
+                            <div className="col-sm-12 col-md-8 col-lg-8">
                                 <Form.Group>
                                     <Form.Label>Calle</Form.Label>
                                     <Form.Control
                                         type="text"
                                         name="calle"
-                                        // disabled={!camposHabilitados["calle"]}
+                                        disabled={!camposHabilitados["calle"]}
                                         required
                                         isInvalid={!!errors?.calle}
                                         value={calle || ''}
@@ -255,13 +259,13 @@ export const ModalCuit = () => {
                                     </Form.Control.Feedback>
                                 </Form.Group>
                             </div>
-                            <div className="col-sm-6 col-md-4 col-lg-4">
+                            <div className="col-sm-6 col-md-4 col-lg-2">
                                 <Form.Group>
                                     <Form.Label>Numero</Form.Label>
                                     <Form.Control
                                         type="text"
                                         name="numero"
-                                        // disabled={!camposHabilitados["numero"]}
+                                        disabled={!camposHabilitados["numero"]}
                                         autoComplete="off"
                                         required
                                         isInvalid={!!errors?.numero}
@@ -280,7 +284,7 @@ export const ModalCuit = () => {
                                         autoComplete="off"
                                         name="piso"
                                         isInvalid={!!errors?.piso}
-                                        // disabled={!camposHabilitados["piso"]}
+                                        disabled={!camposHabilitados["piso"]}
                                         value={piso || ''}
                                         onChange={handleInputNumericChange} />
                                     <Form.Control.Feedback type="invalid">
@@ -296,7 +300,7 @@ export const ModalCuit = () => {
                                         autoComplete="off"
                                         name="departamento"
                                         isInvalid={!!errors?.departamento}
-                                        // disabled={!camposHabilitados["departamento"]}
+                                        disabled={!camposHabilitados["departamento"]}
                                         value={departamento || ''}
                                         onChange={handleInputChange} />
                                     <Form.Control.Feedback type="invalid">
@@ -312,7 +316,7 @@ export const ModalCuit = () => {
                                         autoComplete="off"
                                         name="sector"
                                         isInvalid={!!errors?.sector}
-                                        // disabled={!camposHabilitados["sector"]}
+                                        disabled={!camposHabilitados["sector"]}
                                         value={sector || ''}
                                         onChange={handleInputChange} />
                                     <Form.Control.Feedback type="invalid">
@@ -328,7 +332,7 @@ export const ModalCuit = () => {
                                         autoComplete="off"
                                         name="torre"
                                         isInvalid={!!errors?.torre}
-                                        // disabled={!camposHabilitados["torre"]}
+                                        disabled={!camposHabilitados["torre"]}
                                         value={torre || ''}
                                         onChange={handleInputChange} />
                                     <Form.Control.Feedback type="invalid">
@@ -344,7 +348,7 @@ export const ModalCuit = () => {
                                         autoComplete="off"
                                         name="manzana"
                                         isInvalid={!!errors?.manzana}
-                                        // disabled={!camposHabilitados["manzana"]}
+                                        disabled={!camposHabilitados["manzana"]}
                                         value={manzana || ''}
                                         onChange={handleInputChange} />
                                     <Form.Control.Feedback type="invalid">
@@ -356,7 +360,7 @@ export const ModalCuit = () => {
                                 <Form.Label htmlFor="condIva">Cond. IVA</Form.Label>
                                 <Select
                                     name="condicionIva"
-                                    // isDisabled={!camposHabilitados["condicionIva"]}
+                                    isDisabled={!camposHabilitados["condicionIva"]}
                                     placeholder=""
                                     options={condIva}
                                     value={condicionIva}
@@ -367,7 +371,7 @@ export const ModalCuit = () => {
                                 <Form.Label htmlFor="condicionIngresoBruto">Cond. Ing Brutos</Form.Label>
                                 <Select
                                     name="condicionIngresoBruto"
-                                    // isDisabled={!camposHabilitados["condicionIngresoBruto"]}
+                                    isDisabled={!camposHabilitados["condicionIngresoBruto"]}
                                     placeholder=""
                                     options={condIngBrutos}
                                     value={condicionIngresoBruto}
@@ -381,7 +385,7 @@ export const ModalCuit = () => {
                                         type="text"
                                         name="numeroIngresoBruto"
                                         isInvalid={!!errors?.numeroIngresoBruto}
-                                        // disabled={!camposHabilitados["numeroIngresoBruto"]}
+                                        disabled={!camposHabilitados["numeroIngresoBruto"]}
                                         value={numeroIngresoBruto}
                                         onChange={handleInputChange} />
                                     <Form.Control.Feedback type="invalid">
@@ -396,7 +400,7 @@ export const ModalCuit = () => {
                                         type="date"
                                         name="fechaInicioActividades"
                                         isInvalid={!!errors?.fechaInicioActividades}
-                                        // disabled={!camposHabilitados["fechaInicioActividades"]}
+                                        disabled={!camposHabilitados["fechaInicioActividades"]}
                                         value={fechaInicioActividades}
                                         onChange={handleInputChange} />
                                     <Form.Control.Feedback type="invalid">
@@ -411,7 +415,7 @@ export const ModalCuit = () => {
                                         type="text"
                                         name="gln"
                                         isInvalid={!!errors?.gln}
-                                        // disabled={!camposHabilitados["gln"]}
+                                        disabled={!camposHabilitados["gln"]}
                                         maxLength="13"
                                         value={gln || ''}
                                         onChange={handleInputChange} />
@@ -427,7 +431,7 @@ export const ModalCuit = () => {
                                         type="text"
                                         name="codigoInterno"
                                         isInvalid={!!errors?.codigoInterno}
-                                        // disabled={!camposHabilitados["codigoInterno"]}
+                                        disabled={!camposHabilitados["codigoInterno"]}
                                         maxLength="20"
                                         value={codigoInterno || ''}
                                         onChange={handleInputChange} />
@@ -442,7 +446,7 @@ export const ModalCuit = () => {
                                     <Form.Control
                                         type="text"
                                         name="nombreContacto"
-                                        // disabled={!camposHabilitados["nombreContacto"]}
+                                        disabled={!camposHabilitados["nombreContacto"]}
                                         required
                                         isInvalid={!!errors?.nombreContacto}
                                         value={nombreContacto || ''}
@@ -458,7 +462,7 @@ export const ModalCuit = () => {
                                     <Form.Control
                                         type="text"
                                         name="telefonoContacto"
-                                        // disabled={!camposHabilitados["telefonoContacto"]}
+                                        disabled={!camposHabilitados["telefonoContacto"]}
                                         required
                                         isInvalid={!!errors?.telefonoContacto}
                                         autoComplete="none"
@@ -475,7 +479,7 @@ export const ModalCuit = () => {
                                     <Form.Control
                                         type="email"
                                         name="emailContacto"
-                                        // disabled={!camposHabilitados["emailContacto"]}
+                                        disabled={!camposHabilitados["emailContacto"]}
                                         required
                                         isInvalid={!!errors?.emailContacto}
                                         autoComplete="none"
@@ -486,35 +490,50 @@ export const ModalCuit = () => {
                                     </Form.Control.Feedback>
                                 </Form.Group>
                             </div>
+                            <div className="col-sm-12 col-md-6 col-lg-5">
+                                <Form.Label htmlFor="medio">¿Cómo nos conoció?</Form.Label>
+                                <Select
+                                    name="medio"
+                                    isDisabled={!camposHabilitados["medio"]}
+                                    placeholder=""
+                                    options={recomendaciones}
+                                    value={medio}
+                                    onChange={handleDropdownChange}
+                                    classNamePrefix="react-select" />
+                            </div>
                             <h6 className="my-4 fw-bold">Destinos de comprobantes (para servicio de factura electrónica)</h6>
                             <div className="col-sm-4 col-md-6 col-lg-4">
-                                {/* <Form.Check
+                                <Form.Check
                                     name="facturaElectronica"
+                                    disabled={!camposHabilitados["facturaElectronica"]}
                                     label="Factura electrónica"
-                                    checked={facturaElectronica}
-                                    onChange={handleInputCheck} /> */}
+                                    checked={facturaElectronica || ''}
+                                    onChange={handleInputCheck} />
                             </div>
                             <div className="col-sm-4 col-md-6 col-lg-4">
-                                {/* <Form.Check
+                                <Form.Check
                                     name="interfacturas"
+                                    disabled={!camposHabilitados["interfacturas"]}
                                     label="Interfacturas"
-                                    checked={interfacturas}
-                                    onChange={handleInputCheck} /> */}
+                                    checked={interfacturas || ''}
+                                    onChange={handleInputCheck} />
                             </div>
                             <div className="col-sm-4 col-md-6 col-lg-4">
-                                {/* <Form.Check
+                                <Form.Check
                                     name="afip"
+                                    disabled={!camposHabilitados["afip"]}
                                     label="AFIP"
-                                    checked={afip}
-                                    onChange={handleInputCheck} /> */}
+                                    checked={afip || ''}
+                                    onChange={handleInputCheck} />
                             </div>
                             <div className="col-sm-12 col-md-12 d-flex align-items-center flex-wrap">
                                 <div className="col-sm-6 col-md-6 col-lg-4">
-                                    {/* <Form.Check
+                                    <Form.Check
                                         name="certificadoPropio"
+                                        disabled={!camposHabilitados["certificadoPropio"]}
                                         label="Certificado propio"
-                                        checked={certificadoPropio}
-                                        onChange={handleInputCheck} /> */}
+                                        checked={certificadoPropio || ''}
+                                        onChange={handleInputCheck} />
                                 </div>
                                 <div className="col-sm-6 col-md-6 col-lg-8">
                                     <Form.Group>
@@ -522,6 +541,7 @@ export const ModalCuit = () => {
                                         <Form.Control
                                             type="text"
                                             name="numeroCertificado"
+                                            disabled={!camposHabilitados["numeroCertificado"]}
                                             minLength="12"
                                             maxLength="12"
                                             value={numeroCertificado || ''}

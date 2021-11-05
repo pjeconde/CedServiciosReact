@@ -65,7 +65,6 @@ const setPersonaActiva = (persona) => ({
 export const removerPersonaActiva = () => ({ type: types.personaRemoverPersonaActiva });
 
 export const iniciarActualizarPersona = (persona) => {
-
     return async (dispatch) => {
         try {
             dispatch(startLoading());

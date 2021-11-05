@@ -16,7 +16,7 @@ const initPersona = {
 
 export const ModalEliminar = () => {
 
-    const { showModal } = useSelector(state => state.ui);
+    const { showModal, loading } = useSelector(state => state.ui);
     const { personaActiva } = useSelector(state => state.persona);
     const { cuit } = useSelector(state => state.auth);
     const [formValues, setFormValues] = useState(initPersona);
@@ -123,6 +123,7 @@ export const ModalEliminar = () => {
                 <Button
                     className="w-25"
                     variant="danger"
+                    disabled={loading}
                     onClick={handleSubmit}
                     type="button" >Baja</Button>
                 <Button
