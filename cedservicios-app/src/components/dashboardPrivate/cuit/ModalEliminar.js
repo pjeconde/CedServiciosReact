@@ -9,7 +9,7 @@ const nameModal = 'modalEliminarCuit';
 export const ModalEliminar = () => {
 
     const dispatch = useDispatch();
-    const { showModal } = useSelector(state => state.ui);
+    const { showModal, loading } = useSelector(state => state.ui);
     const { cuitActivo } = useSelector(state => state.cuit);
     const [formValues, setFormValues] = useState({});
 
@@ -92,6 +92,7 @@ export const ModalEliminar = () => {
                 <Button
                     className="w-25"
                     variant="danger"
+                    disabled={loading}
                     onClick={handleSubmit}
                     type="button" >Baja</Button>
                 <Button

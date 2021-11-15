@@ -1,6 +1,6 @@
 import Swal from 'sweetalert2';
 import queryString from 'query-string';
-import { fetchSinToken } from '../config/fetch';
+import { fetchConToken, fetchSinToken } from '../config/fetch';
 import { types } from '../types/types';
 import { startLoading, finishLoading, setError, removeError, setRedirect } from './ui';
 
@@ -285,20 +285,40 @@ export const iniciarCambiarContraseña = (password) => {
 }
 
 export const iniciarComprobacion = () => {
-    return (dispatch) => {
-        const pepe = true;
-        //Aca deberiamos renovar el token
-        // localStorage.setItem('token', token);
-        // localStorage.setItem('token-init-date', new Date().getTime());
-        dispatch(finalizarComprobacion());
+    return async (dispatch) => {
+        try {
+            dispatch(startLoading());
 
-        if (pepe)
-            dispatch(ingresarUsuario({
-                idUsuario: new Date().getTime(),
-                nombreUsuario: 'pepe'
-            }));
-        else
+            const resp = await fetchConToken('Usuario/Revalidar');
+            const body = await resp.json();
+
+            if (resp.status === 200) {
+                const {
+                    nombreUsuario,
+                    nombreCompleto,
+                    email,
+                    token,
+                    fechaExpiracion } = body.datos;
+                localStorage.setItem('token', token);
+                localStorage.setItem('token-exp', fechaExpiracion);
+                dispatch(ingresarUsuario({
+                    nombreUsuario,
+                    nombreCompleto,
+                    email
+                }));
+            }
+            else {
+                dispatch(finalizarComprobacion());
+            }
+
+        } catch (error) {
+            dispatch(finishLoading());
             dispatch(finalizarComprobacion());
+            localStorage.removeItem('token');
+            // localStorage.removeItem('token-init-date');
+            // Swal.fire({ icon: 'error', title: 'Oops...', text: 'Ocurrió un error inesperado.' });
+            // dispatch(setError('Ocurrio un error inesperado.'));
+        }
     }
 }
 

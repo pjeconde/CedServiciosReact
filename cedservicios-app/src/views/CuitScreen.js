@@ -33,7 +33,6 @@ export const CuitScreen = () => {
     const { cuits } = useSelector(state => state.cuit);
     const { loading } = useSelector(state => state.ui);
     const { cuentaTotal } = useSelector(state => state.grilla);
-
     const columnaCuits = [
         {
             name: 'Cuit',

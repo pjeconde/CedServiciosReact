@@ -28,7 +28,7 @@ export const fetchConToken = (endpoint, data, method = 'GET') => {
         return fetch(url, {
             method,
             headers: {
-                'x-token': token
+                'Authorization': `Bearer ${token}`
             }
         });
     }
