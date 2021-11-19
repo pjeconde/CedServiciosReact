@@ -3,7 +3,6 @@ import { useDispatch, useSelector } from 'react-redux';
 
 import DataTable from 'react-data-table-component';
 import { BadgeStatus } from '../components/ui/BadgeStatus';
-import { Expanded } from '../components/ui/Expanded';
 import { setPaginaActual, setRegistrosPorPagina } from '../actions/grilla';
 import { SortIcon } from '../components/ui/SortIcon';
 import { PaginationOptions } from '../components/ui/PaginationOptions';
@@ -15,6 +14,7 @@ import { ButtonAgregar } from '../components/ui/ButtonAgregar';
 import { openModal } from '../actions/ui';
 import { ModalCuit } from '../components/dashboardPrivate/cuit/ModalCuit';
 import { ModalEliminar } from '../components/dashboardPrivate/cuit/ModalEliminar';
+import { GrillaUnidadNegocio } from '../components/dashboardPrivate/cuit/GrillaUnidadNegocio';
 
 
 const customStyles = {
@@ -171,7 +171,7 @@ export const CuitScreen = () => {
                                     onChangePage={handleCambiarPagina}
                                     onChangeRowsPerPage={handleFilasPorPagina}
                                     expandableRows={true}
-                                    expandableRowsComponent={<Expanded />}
+                                    expandableRowsComponent={<GrillaUnidadNegocio />}
                                     customStyles={customStyles}
                                     striped
                                     responsive

@@ -27,3 +27,14 @@
 .header__toolbar .btn i {
     margin-right: 10px;
 }
+
+.header__sub {
+    justify-content: flex-start;
+    padding-left: 40px;
+    align-items: baseline;
+}
+
+.header__wrapper .sub {
+    margin-top: 10px;
+    padding-left: 2.5rem;
+}
