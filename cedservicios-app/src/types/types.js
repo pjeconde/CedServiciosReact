@@ -35,4 +35,7 @@ export const types = {
     cuitAgregarCuit: '[cuit] Cuit nuevo agregado',
     cuitActualizarCuit: '[cuit] Cuit actualizado',
     cuitEliminarCuit: '[cuit] Cuit eliminado',
+    cuitSetUnidadNegocioActivo: '[cuit] Set unidad de negocio activo',
+    cuitRemoverUnidadNegocioActivo: '[cuit] Unidad de negocio activo removido',
+    cuitEliminarUnidadNegocio: '[cuit] Unidad de negocio eliminado',
 };

@@ -37,7 +37,7 @@ export const fetchConToken = (endpoint, data, method = 'GET') => {
             method,
             headers: {
                 'Content-type': 'application/json',
-                'x-token': token
+                'Authorization': `Bearer ${token}`
             },
             body: JSON.stringify(data)
         });

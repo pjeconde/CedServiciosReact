@@ -14,7 +14,8 @@ import { ButtonAgregar } from '../components/ui/ButtonAgregar';
 import { openModal } from '../actions/ui';
 import { ModalCuit } from '../components/dashboardPrivate/cuit/ModalCuit';
 import { ModalEliminar } from '../components/dashboardPrivate/cuit/ModalEliminar';
-import { GrillaUnidadNegocio } from '../components/dashboardPrivate/cuit/GrillaUnidadNegocio';
+import { GrillaUnidadNegocio } from '../components/dashboardPrivate/unidadNegocio/GrillaUnidadNegocio';
+import { existePermisoDeAdmin } from '../helpers/tipoPermisos';
 
 
 const customStyles = {
@@ -22,7 +23,7 @@ const customStyles = {
         style: {
             color: '#202124',
             fontSize: '15px',
-            fontWeight: 600,
+            fontWeight: 800,
         },
     },
 }
@@ -31,7 +32,6 @@ export const CuitScreen = () => {
 
     const dispatch = useDispatch();
     const { cuits } = useSelector(state => state.cuit);
-    const { loading } = useSelector(state => state.ui);
     const { cuentaTotal } = useSelector(state => state.grilla);
     const columnaCuits = [
         {
@@ -80,7 +80,10 @@ export const CuitScreen = () => {
         },
         {
             name: 'Modificar',
-            cell: row => <ButtonActualizar row={row} handleOnClick={handleOnClickActualizar} />,
+            cell: row => <ButtonActualizar
+                row={row}
+                handleOnClick={handleOnClickActualizar}
+                disabled={!existePermisoDeAdmin(row.tipoPermisos)} />,
             center: true,
             grow: .5
         },
@@ -162,7 +165,6 @@ export const CuitScreen = () => {
                                     keyField="id"
                                     columns={columnaCuits}
                                     data={cuits}
-                                    progressPending={loading}
                                     pagination
                                     paginationServer
                                     paginationTotalRows={cuentaTotal}

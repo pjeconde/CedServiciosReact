@@ -3,6 +3,7 @@ import { types } from "../types/types";
 const initialState = {
     cuits: [],
     cuitActivo: null,
+    unidadNegocioActivo: null,
     filtro: null
 }
 
@@ -43,6 +44,16 @@ export const cuitReducer = (state = initialState, action) => {
                     c => (c.cuit !== state.cuitActivo.cuit)
                 ),
                 cuitActivo: null
+            };
+        case types.cuitSetUnidadNegocioActivo:
+            return {
+                ...state,
+                unidadNegocioActivo: action.payload
+            };
+        case types.cuitRemoverUnidadNegocioActivo:
+            return {
+                ...state,
+                unidadNegocioActivo: null
             };
         default:
             return state;

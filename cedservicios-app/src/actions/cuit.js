@@ -12,7 +12,7 @@ export const iniciarObtenerCuits = () => {
             dispatch(startLoading());
             const { paginaActual: numeroPagina, registrosPorPagina } = getState().grilla;
 
-            const resp = await fetchConToken(`Cuit?${queryString.stringify({
+            const resp = await fetchConToken(`Cuit/ObtenerPorPermiso?${queryString.stringify({
                 numeroPagina,
                 registrosPorPagina
             })}`);
