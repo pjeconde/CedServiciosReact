@@ -1,5 +1,5 @@
 import React from 'react';
-import { Button } from 'react-bootstrap';
+import { Button, Table } from 'react-bootstrap';
 import DataTable from 'react-data-table-component';
 import { useDispatch } from 'react-redux';
 import { openModal } from '../../../actions/ui';
@@ -9,37 +9,37 @@ import { ButtonActualizar } from '../../ui/ButtonActualizar';
 import { ButtonEliminar } from '../../ui/ButtonEliminar';
 import { ModalUnidadNegocio } from './ModalUnidadNegocio';
 
-// const ExpandedUn = () => {
-//     return (
-//         <div className="w-auto">
-//             <Table hover size="sm">
-//                 <thead>
-//                     <tr>
-//                         <th colSpan="2" className="text-center" >Punto de ventas</th>
-//                     </tr>
-//                     <tr>
-//                         <th>Descripcion</th>
-//                         <th>Estado</th>
-//                     </tr>
-//                 </thead>
-//                 <tbody>
-//                     <tr>
-//                         <td>Punto de venta default</td>
-//                         <td>Vigente</td>
-//                     </tr>
-//                     {/* {
-//                     unidadesNegocio?.map((un) => (
-//                         <tr key={un.id}>
-//                             <td>{un.descripcion}</td>
-//                             <td>{un.estado.descripcion}</td>
-//                         </tr>
-//                     ))
-//                 } */}
-//                 </tbody>
-//             </Table>
-//         </div>
-//     )
-// }
+const ExpandedUn = () => {
+    return (
+        <div className="w-auto">
+            <Table hover size="sm">
+                <thead>
+                    <tr>
+                        <th colSpan="2" className="text-center" >Punto de ventas</th>
+                    </tr>
+                    <tr>
+                        <th>Descripcion</th>
+                        <th>Estado</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Punto de venta default</td>
+                        <td>Vigente</td>
+                    </tr>
+                    {/* {
+                    unidadesNegocio?.map((un) => (
+                        <tr key={un.id}>
+                            <td>{un.descripcion}</td>
+                            <td>{un.estado.descripcion}</td>
+                        </tr>
+                    ))
+                } */}
+                </tbody>
+            </Table>
+        </div>
+    )
+}
 
 const customStyles = {
     headCells: {
@@ -134,8 +134,8 @@ export const GrillaUnidadNegocio = ({ data: cuit }) => {
                             customStyles={customStyles}
                             columns={columnaUN}
                             data={unidadesNegocio}
-                            // expandableRows={true}
-                            // expandableRowsComponent={<ExpandedUn />}
+                            expandableRows={true}
+                            expandableRowsComponent={<ExpandedUn />}
                             noHeader
                             highlightOnHover
                             striped

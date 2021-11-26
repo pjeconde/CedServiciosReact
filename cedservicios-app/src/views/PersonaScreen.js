@@ -30,8 +30,6 @@ const customStyles = {
     },
 }
 
-
-
 export const PersonaScreen = () => {
 
     const dispatch = useDispatch();
