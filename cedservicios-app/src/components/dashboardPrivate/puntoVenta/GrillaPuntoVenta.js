@@ -1,15 +1,9 @@
 import React from 'react';
-import { Button } from 'react-bootstrap';
 import DataTable from 'react-data-table-component';
-import { useDispatch } from 'react-redux';
-import { openModal } from '../../../actions/ui';
-import { setUnidadNegocioActivo } from '../../../actions/unidadNegocio';
+import { Button } from 'react-bootstrap';
 import { BadgeStatus } from '../../ui/BadgeStatus';
 import { ButtonActualizar } from '../../ui/ButtonActualizar';
 import { ButtonEliminar } from '../../ui/ButtonEliminar';
-import { GrillaPuntoVenta } from '../puntoVenta/GrillaPuntoVenta';
-import { ModalUnidadNegocio } from './ModalUnidadNegocio';
-
 
 const customStyles = {
     headCells: {
@@ -20,14 +14,12 @@ const customStyles = {
         },
     },
 }
-const nameModal = 'modalUnidadNegocio';
 
-export const GrillaUnidadNegocio = ({ data: cuit }) => {
+export const GrillaPuntoVenta = ({ data: unidadNegocio }) => {
 
-    const { unidadesNegocio } = cuit;
-    const dispatch = useDispatch();
+    const { puntosVenta } = unidadNegocio || [];
 
-    const columnaUN = [
+    const columnaPuntoVenta = [
         {
             name: 'Descripcion',
             selector: 'descripcion',
@@ -60,29 +52,18 @@ export const GrillaUnidadNegocio = ({ data: cuit }) => {
         }
     ];
 
-    const handleOnClickActualizar = (unidadNegocio) => {
-        let typeModal = 'Actualizar';
-        dispatch(setUnidadNegocioActivo(unidadNegocio));
-        dispatch(openModal(nameModal, typeModal));
-    }
+    const handleOnClickActualizar = () => { }
 
-    const handleOnClickEliminar = (unidadNegocio) => {
-        let typeModal = 'Eliminar';
-        dispatch(setUnidadNegocioActivo(unidadNegocio));
-        dispatch(openModal(nameModal, typeModal));
-    }
+    const handleOnClickEliminar = () => { }
 
-    const handleOnClickAgregar = () => {
-        let typeModal = 'Agregar';
-        dispatch(openModal(nameModal, typeModal));
-    }
+    const handleOnClickAgregar = () => { }
 
     return (
-        <div className="mx-5 my-4 w-75">
+        <div className="mx-5 my-4 w-auto">
             <div className="container-fluid">
                 <div className="header__wrapper header__sub my-2">
                     <div className="header__title_sub">
-                        <h4>Unidades de Negocio</h4>
+                        <h4>Puntos de Venta</h4>
                     </div>
                     <div className="header__toolbar mx-1">
                         <Button
@@ -91,7 +72,7 @@ export const GrillaUnidadNegocio = ({ data: cuit }) => {
                             className="fas fa-plus"
                             onClick={handleOnClickAgregar} />
 
-                        <ModalUnidadNegocio key={cuit.id} cuit={cuit} />
+                        {/* <ModalUnidadNegocio key={cuit.id} cuit={cuit} /> */}
                     </div>
                 </div>
             </div>
@@ -101,21 +82,17 @@ export const GrillaUnidadNegocio = ({ data: cuit }) => {
                         <DataTable
                             key="datatable-un"
                             customStyles={customStyles}
-                            columns={columnaUN}
-                            data={unidadesNegocio}
-                            expandableRows={true}
-                            expandableRowsComponent={<GrillaPuntoVenta />}
+                            columns={columnaPuntoVenta}
+                            data={puntosVenta}
+                            // expandableRows={true}
+                            // expandableRowsComponent={<ExpandedUn />}
                             noHeader
                             highlightOnHover
                             striped
-                            responsive
-                        />
+                            responsive />
                     </div>
-
                 </div>
-
             </div>
-
         </div>
     )
 }
