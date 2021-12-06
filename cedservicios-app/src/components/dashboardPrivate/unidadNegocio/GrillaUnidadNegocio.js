@@ -1,9 +1,11 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Button } from 'react-bootstrap';
 import DataTable from 'react-data-table-component';
 import { useDispatch } from 'react-redux';
+import { iniciarSetCuitActivo, removerCuitActivo } from '../../../actions/cuit';
 import { openModal } from '../../../actions/ui';
-import { setUnidadNegocioActivo } from '../../../actions/unidadNegocio';
+import { removerUnidadNegocioActivo, setUnidadNegocioActivo } from '../../../actions/unidadNegocio';
+import { existePermisoDeAdmin } from '../../../helpers/tipoPermisos';
 import { BadgeStatus } from '../../ui/BadgeStatus';
 import { ButtonActualizar } from '../../ui/ButtonActualizar';
 import { ButtonEliminar } from '../../ui/ButtonEliminar';
@@ -24,7 +26,7 @@ const nameModal = 'modalUnidadNegocio';
 
 export const GrillaUnidadNegocio = ({ data: cuit }) => {
 
-    const { unidadesNegocio } = cuit;
+    const { unidadesNegocio, tipoPermisos } = cuit;
     const dispatch = useDispatch();
 
     const columnaUN = [
@@ -46,14 +48,14 @@ export const GrillaUnidadNegocio = ({ data: cuit }) => {
         },
         {
             name: 'Modificar',
-            cell: row => <ButtonActualizar row={row} handleOnClick={handleOnClickActualizar} />,
+            cell: row => <ButtonActualizar row={row} handleOnClick={handleOnClickActualizar} disabled={!existePermisoDeAdmin(row.tipoPermisos)} />,
             center: true,
             width: '15%',
             grow: .5
         },
         {
             name: 'Eliminar',
-            cell: row => <ButtonEliminar row={row} handleOnClick={handleOnClickEliminar} />,
+            cell: row => <ButtonEliminar row={row} handleOnClick={handleOnClickEliminar} disabled={!existePermisoDeAdmin(row.tipoPermisos)} />,
             center: true,
             width: '15%',
             grow: .5,
@@ -74,8 +76,21 @@ export const GrillaUnidadNegocio = ({ data: cuit }) => {
 
     const handleOnClickAgregar = () => {
         let typeModal = 'Agregar';
+        dispatch(removerUnidadNegocioActivo());
         dispatch(openModal(nameModal, typeModal));
     }
+
+    useEffect(() => {
+        if (cuit) {
+            dispatch(iniciarSetCuitActivo(cuit));
+        }
+    }, [cuit, dispatch])
+
+    useEffect(() => {
+        return () => {
+            dispatch(removerCuitActivo());
+        }
+    }, [dispatch])
 
     return (
         <div className="mx-5 my-4 w-75">
@@ -89,7 +104,8 @@ export const GrillaUnidadNegocio = ({ data: cuit }) => {
                             type="button"
                             variant="secondary"
                             className="fas fa-plus"
-                            onClick={handleOnClickAgregar} />
+                            onClick={handleOnClickAgregar}
+                            disabled={!existePermisoDeAdmin(tipoPermisos)} />
 
                         <ModalUnidadNegocio key={cuit.id} cuit={cuit} />
                     </div>

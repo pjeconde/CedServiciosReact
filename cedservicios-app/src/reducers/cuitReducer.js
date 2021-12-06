@@ -4,6 +4,7 @@ const initialState = {
     cuits: [],
     cuitActivo: null,
     unidadNegocioActivo: null,
+    puntoVentaActivo: null,
     filtro: null
 }
 
@@ -43,7 +44,9 @@ export const cuitReducer = (state = initialState, action) => {
                 cuits: state.cuits.filter(
                     c => (c.cuit !== state.cuitActivo.cuit)
                 ),
-                cuitActivo: null
+                cuitActivo: null,
+                unidadNegocioActivo: null,
+                puntoVentaActivo: null
             };
         case types.cuitSetUnidadNegocioActivo:
             return {
@@ -54,6 +57,16 @@ export const cuitReducer = (state = initialState, action) => {
             return {
                 ...state,
                 unidadNegocioActivo: null
+            };
+        case types.cuitSetPuntoVentaActivo:
+            return {
+                ...state,
+                puntoVentaActivo: action.payload
+            };
+        case types.cuitRemoverPuntoVentaActivo:
+            return {
+                ...state,
+                puntoVentaActivo: null
             };
         default:
             return state;

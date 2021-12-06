@@ -2,7 +2,7 @@ import React from 'react';
 import { Form } from 'react-bootstrap';
 import Select from 'react-select';
 
-import { condIngBrutos, condIva, provincias } from '../../../helpers/admin';
+import { condicionesIngresoBruto, condicionesIva, provincias } from '../../../helpers/admin';
 
 
 export const FormDatosGenericos = ({
@@ -168,7 +168,7 @@ export const FormDatosGenericos = ({
                 <Select
                     name="condIva"
                     placeholder=""
-                    options={condIva}
+                    options={condicionesIva}
                     onChange={handleDropdownChange}
                     classNamePrefix="react-select" />
             </div>
@@ -177,7 +177,7 @@ export const FormDatosGenericos = ({
                 <Select
                     name="condIngBruto"
                     placeholder=""
-                    options={condIngBrutos}
+                    options={condicionesIngresoBruto}
                     onChange={handleDropdownChange}
                     classNamePrefix="react-select" />
             </div>

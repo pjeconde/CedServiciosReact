@@ -26,7 +26,7 @@ export const provincias = [
     { value: 24, label: 'Tucumán' }
 ];
 
-export const condIva = [
+export const condicionesIva = [
     { value: 0, label: 'Ninguno' },
     { value: 1, label: 'IVA Responsable inscripto' },
     { value: 2, label: 'IVA Responsable no inscripto' },
@@ -41,7 +41,7 @@ export const condIva = [
     { value: 11, label: 'IVA R.I.-Agente Percepción' }
 ];
 
-export const condIngBrutos = [
+export const condicionesIngresoBruto = [
     { value: 0, label: 'Ninguno' },
     { value: 1, label: 'Contribuyente Local' },
     { value: 2, label: 'Contribuyente Multilateral' },
@@ -55,4 +55,48 @@ export const recomendaciones = [
     { value: 3, label: 'Mercado Libre' },
     { value: 4, label: 'Recomendado por Interfacturas' },
     { value: 5, label: 'Recomendado por un conocido' },
+];
+
+export const tiposPuntoVenta = [
+    { value: 1, label: 'BonoFiscal' },
+    { value: 2, label: 'Comun' },
+    { value: 3, label: 'Exportacion' },
+    { value: 4, label: 'RG2904' },
+    { value: 5, label: 'Turismo' },
+];
+
+export const Estados = [
+    { value: 1, label: 'Vigente' },
+    { value: 2, label: 'Inactivo' },
+    { value: 3, label: 'Pendiente' },
+];
+
+export const tipoDocumentos = [
+    { value: '93', label: 'Acta nacimiento' },
+    { value: '87', label: 'CDI' },
+    { value: '95', label: 'CI Bs. As. RNP' },
+    { value: '1', label: 'CI Buenos Aires' },
+    { value: '16', label: 'CI Chaco' },
+    { value: '17', label: 'CI Chubut' },
+    { value: '91', label: 'CI extranjera' },
+    { value: '18', label: 'CI Formosa' },
+    { value: '8', label: 'CI La Rioja' },
+    { value: '7', label: 'CI Mendoza' },
+    { value: '19', label: 'CI Misiones' },
+    { value: '20', label: 'CI Neuquén' },
+    { value: '0', label: 'CI Policía Federal' },
+    { value: '9', label: 'CI Salta' },
+    { value: '10', label: 'CI San Juan' },
+    { value: '12', label: 'CI San Luis' },
+    { value: '11', label: 'CI Santa Fe' },
+    { value: '13', label: 'CI Sgo.del Estero' },
+    { value: '14', label: 'CI Tucumán' },
+    { value: '86', label: 'CUIL' },
+    { value: '80', label: 'CUIT' },
+    { value: '70', label: 'CUIT País' },
+    { value: '96', label: 'DNI' },
+    { value: '92', label: 'En trámite' },
+    { value: '90', label: 'LC' },
+    { value: '89', label: 'LE' },
+    { value: '94', label: 'Pasaporte' }
 ];

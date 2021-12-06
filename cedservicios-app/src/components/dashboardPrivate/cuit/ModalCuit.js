@@ -6,7 +6,7 @@ import Select from 'react-select';
 import { Modal, Button, Form } from 'react-bootstrap';
 
 import { useForm } from '../../../hooks/useForm';
-import { provincias, condIva, condIngBrutos, recomendaciones } from '../../../helpers/admin';
+import { provincias, condicionesIva, condicionesIngresoBruto, recomendaciones } from '../../../helpers/datosComunes';
 import { getCamposHabilitados } from '../../../helpers/cuit/getCamposHabilitados';
 import { closeModal, removeError } from '../../../actions/ui';
 import { iniciarActualizarCuit, iniciarAgregarCuit, removerCuitActivo } from '../../../actions/cuit';
@@ -15,8 +15,8 @@ import { camelCase } from '../../../helpers/camelCase';
 const initCuit = {
     cuit: '',
     provincia: provincias[1],
-    condicionIva: condIva[0],
-    condicionIngresoBruto: condIngBrutos[0],
+    condicionIva: condicionesIva[0],
+    condicionIngresoBruto: condicionesIngresoBruto[0],
     medio: recomendaciones[0],
     calle: '',
     numero: '',
@@ -357,12 +357,12 @@ export const ModalCuit = () => {
                                 </Form.Group>
                             </div>
                             <div className="col-sm-12 col-md-6 col-lg-5">
-                                <Form.Label htmlFor="condIva">Cond. IVA</Form.Label>
+                                <Form.Label htmlFor="condicionIva">Cond. IVA</Form.Label>
                                 <Select
                                     name="condicionIva"
                                     isDisabled={!camposHabilitados["condicionIva"]}
                                     placeholder=""
-                                    options={condIva}
+                                    options={condicionesIva}
                                     value={condicionIva}
                                     onChange={handleDropdownChange}
                                     classNamePrefix="react-select" />
@@ -373,7 +373,7 @@ export const ModalCuit = () => {
                                     name="condicionIngresoBruto"
                                     isDisabled={!camposHabilitados["condicionIngresoBruto"]}
                                     placeholder=""
-                                    options={condIngBrutos}
+                                    options={condicionesIngresoBruto}
                                     value={condicionIngresoBruto}
                                     onChange={handleDropdownChange}
                                     classNamePrefix="react-select" />

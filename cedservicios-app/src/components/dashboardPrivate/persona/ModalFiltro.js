@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import Select from 'react-select';
 import { Button, Form, Modal } from 'react-bootstrap';
 import { useForm } from '../../../hooks/useForm';
-import { Estados } from '../../../helpers/estados';
+import { Estados } from '../../../helpers/datosComunes';
 import { closeModal, openModal } from '../../../actions/ui';
 import { agregarFiltro } from '../../../actions/persona';
 

@@ -12,9 +12,13 @@ import {
 
 import { closeModal, removeError } from '../../../actions/ui';
 import { removerPersonaActiva, iniciarAgregarPersona, iniciarActualizarPersona } from '../../../actions/persona';
-import { tipoDePersonas } from '../../../helpers/tipoPersona';
-import { tipoDocumentos } from '../../../helpers/tipoDocumento';
-import { condIngBrutos, condIva, provincias } from '../../../helpers/admin';
+import { tipoDePersonas } from '../../../helpers/persona/tipoPersona';
+import {
+    condicionesIngresoBruto,
+    condicionesIva,
+    provincias,
+    tipoDocumentos
+} from '../../../helpers/datosComunes';
 import { useForm } from '../../../hooks/useForm';
 import { getCamposHabilitados } from '../../../helpers/persona/getCamposHabilitados';
 import { camelCase } from '../../../helpers/camelCase';
@@ -27,8 +31,8 @@ const initPerson = {
     tipoPersona: tipoDePersonas[2],
     tipoDocumento: { value: 80, label: 'CUIT' },
     provincia: provincias[1],
-    condicionIva: condIva[0],
-    condicionIngresoBruto: condIngBrutos[0],
+    condicionIva: condicionesIva[0],
+    condicionIngresoBruto: condicionesIngresoBruto[0],
     calle: '',
     numero: '',
     piso: '',
@@ -452,12 +456,12 @@ export const ModalPersona = () => {
                                 </Form.Group>
                             </div>
                             <div className="col-sm-12 col-md-6 col-lg-5">
-                                <Form.Label htmlFor="condIva">Cond. IVA</Form.Label>
+                                <Form.Label htmlFor="condicionIva">Cond. IVA</Form.Label>
                                 <Select
                                     name="condicionIva"
                                     isDisabled={!camposHabilitados["condicionIva"]}
                                     placeholder=""
-                                    options={condIva}
+                                    options={condicionesIva}
                                     value={condicionIva}
                                     onChange={handleDropdownChange}
                                     classNamePrefix="react-select" />
@@ -468,7 +472,7 @@ export const ModalPersona = () => {
                                     name="condicionIngresoBruto"
                                     isDisabled={!camposHabilitados["condicionIngresoBruto"]}
                                     placeholder=""
-                                    options={condIngBrutos}
+                                    options={condicionesIngresoBruto}
                                     value={condicionIngresoBruto}
                                     onChange={handleDropdownChange}
                                     classNamePrefix="react-select" />

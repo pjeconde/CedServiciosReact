@@ -3,9 +3,13 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Modal, Form, Button } from 'react-bootstrap';
 
 import { closeModal, removeError } from '../../../actions/ui';
-// import { getCamposHabilitados } from '../../../helpers/cuit/getCamposHabilitados';
 import { useForm } from '../../../hooks/useForm';
-import { iniciarActualizarUnidadNegocio, iniciarAgregarUnidadNegocio, iniciarEliminarUnidadNegocio, removerUnidadNegocioActivo } from '../../../actions/unidadNegocio';
+import {
+    iniciarActualizarUnidadNegocio,
+    iniciarAgregarUnidadNegocio,
+    iniciarEliminarUnidadNegocio,
+    removerUnidadNegocioActivo
+} from '../../../actions/unidadNegocio';
 import { camelCase } from '../../../helpers/camelCase';
 
 
@@ -18,7 +22,6 @@ export const ModalUnidadNegocio = ({ cuit }) => {
     const { unidadNegocioActivo } = useSelector(state => state.cuit);
 
     const dispatch = useDispatch();
-    // const camposHabilitados = useMemo(() => getCamposHabilitados(typeModal), [typeModal]);
 
     const {
         values: formValues,

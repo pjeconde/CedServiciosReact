@@ -1,5 +1,5 @@
 import moment from "moment";
-import { tipoDePersonas } from "../tipoPersona";
+import { tipoDePersonas } from "./tipoPersona";
 
 // Transforma los combobox de persona en el objeto {value, label}
 const parsearComboboxPersona = (persona) => {

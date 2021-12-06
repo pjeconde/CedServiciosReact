@@ -67,6 +67,7 @@ export const iniciarAgregarCuit = (cuit) => {
         try {
             dispatch(startLoading());
             let cuitDto = parsearACuitDto(cuit);
+            
             const resp = await fetchConToken('Cuit', { ...cuitDto }, 'POST');
             const body = await resp.json();
 
@@ -102,14 +103,12 @@ export const iniciarActualizarCuit = (cuit) => {
 
             if (body.datos) {
                 let grillaCuitDto = parsearAGrillaCuitDto(cuit);
-                dispatch(finishLoading());
                 dispatch(actualizarCuit(grillaCuitDto));
                 dispatch(iniciarObtenerCuits());
                 Swal.fire('Success', 'Cuit actualizado con exito.', 'success');
             }
             else if (body.errors) {
                 dispatch(setError(body.errors));
-                dispatch(finishLoading());
             }
             else if (body.exception) {
                 Swal.fire({ icon: 'error', title: 'Oops...', text: body.exception[0].detail });

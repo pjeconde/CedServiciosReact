@@ -80,16 +80,13 @@ export const CuitScreen = () => {
         },
         {
             name: 'Modificar',
-            cell: row => <ButtonActualizar
-                row={row}
-                handleOnClick={handleOnClickActualizar}
-                disabled={!existePermisoDeAdmin(row.tipoPermisos)} />,
+            cell: row => <ButtonActualizar row={row} handleOnClick={handleOnClickActualizar} disabled={!existePermisoDeAdmin(row.tipoPermisos)} />,
             center: true,
             grow: .5
         },
         {
             name: 'Eliminar',
-            cell: row => <ButtonEliminar row={row} handleOnClick={handleOnClickEliminar} />,
+            cell: row => <ButtonEliminar row={row} handleOnClick={handleOnClickEliminar} disabled={!existePermisoDeAdmin(row.tipoPermisos)} />,
             center: true,
             grow: .5
         }

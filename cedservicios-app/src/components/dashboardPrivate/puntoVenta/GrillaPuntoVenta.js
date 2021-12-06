@@ -1,9 +1,17 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import DataTable from 'react-data-table-component';
 import { Button } from 'react-bootstrap';
+
 import { BadgeStatus } from '../../ui/BadgeStatus';
 import { ButtonActualizar } from '../../ui/ButtonActualizar';
 import { ButtonEliminar } from '../../ui/ButtonEliminar';
+import { ButtonDetalle } from '../../ui/ButtonDetalle';
+import { existePermisoDeAdmin } from '../../../helpers/tipoPermisos';
+import { useDispatch } from 'react-redux';
+import { openModal } from '../../../actions/ui';
+import { iniciarSetPuntoVentaActivo } from '../../../actions/puntoVenta';
+import { ModalPuntoVenta } from './ModalPuntoVenta';
+import { removerUnidadNegocioActivo, setUnidadNegocioActivo } from '../../../actions/unidadNegocio';
 
 const customStyles = {
     headCells: {
@@ -14,21 +22,28 @@ const customStyles = {
         },
     },
 }
+const nameModal = 'modalPuntoVenta';
 
 export const GrillaPuntoVenta = ({ data: unidadNegocio }) => {
 
-    const { puntosVenta } = unidadNegocio || [];
+    const { puntosVenta, tipoPermisos } = unidadNegocio || [];
+    const dispatch = useDispatch();
 
     const columnaPuntoVenta = [
         {
-            name: 'Descripcion',
-            selector: 'descripcion',
+            name: 'Nº Punto de Venta',
+            selector: 'numeroPuntoVenta',
             style: {
                 color: '#202124',
                 fontSize: '14px',
                 fontWeight: 700,
             },
-            width: '250px'
+            grow: .5
+        },
+        {
+            name: 'Tipo',
+            selector: 'tipoPuntoVenta.descripcion',
+            grow: .5
         },
         {
             name: 'Estado',
@@ -37,26 +52,59 @@ export const GrillaPuntoVenta = ({ data: unidadNegocio }) => {
             grow: .5
         },
         {
-            name: 'Modificar',
-            cell: row => <ButtonActualizar row={row} handleOnClick={handleOnClickActualizar} />,
+            name: 'Detalle',
+            cell: row => <ButtonDetalle row={row} handleOnClick={handleOnClickDetalle} />,
             center: true,
-            width: '15%',
-            grow: .5
+            width: '12%'
+        },
+        {
+            name: 'Modificar',
+            cell: row => <ButtonActualizar row={row} handleOnClick={handleOnClickActualizar} disabled={existePermisoDeAdmin(row.tipoPermisos)} />,
+            center: true,
+            width: '12%',
         },
         {
             name: 'Eliminar',
-            cell: row => <ButtonEliminar row={row} handleOnClick={handleOnClickEliminar} />,
+            cell: row => <ButtonEliminar row={row} handleOnClick={handleOnClickEliminar} disabled={!existePermisoDeAdmin(row.tipoPermisos)} />,
             center: true,
-            width: '15%',
-            grow: .5,
+            width: '12%',
         }
     ];
 
-    const handleOnClickActualizar = () => { }
+    const handleOnClickDetalle = (puntoVenta) => {
+        let typeModal = 'Detalle';
+        dispatch(iniciarSetPuntoVentaActivo(puntoVenta));
+        dispatch(openModal(nameModal, typeModal));
+    }
 
-    const handleOnClickEliminar = () => { }
+    const handleOnClickActualizar = (puntoVenta) => {
+        let typeModal = 'Actualizar';
+        dispatch(iniciarSetPuntoVentaActivo(puntoVenta));
+        dispatch(openModal(nameModal, typeModal));
+    }
 
-    const handleOnClickAgregar = () => { }
+    const handleOnClickEliminar = (puntoVenta) => {
+        let typeModal = 'Eliminar';
+        dispatch(iniciarSetPuntoVentaActivo(puntoVenta));
+        dispatch(openModal(nameModal, typeModal));
+    }
+
+    const handleOnClickAgregar = () => {
+        let typeModal = 'Agregar';
+        dispatch(openModal(nameModal, typeModal));
+    }
+
+    useEffect(() => {
+        if (unidadNegocio) {
+            dispatch(setUnidadNegocioActivo(unidadNegocio));
+        }
+    }, [unidadNegocio, dispatch])
+
+    useEffect(() => {
+        return () => {
+            dispatch(removerUnidadNegocioActivo());
+        }
+    }, [dispatch])
 
     return (
         <div className="mx-5 my-4 w-auto">
@@ -70,9 +118,11 @@ export const GrillaPuntoVenta = ({ data: unidadNegocio }) => {
                             type="button"
                             variant="secondary"
                             className="fas fa-plus"
-                            onClick={handleOnClickAgregar} />
+                            onClick={handleOnClickAgregar}
+                            disabled={!existePermisoDeAdmin(tipoPermisos)}
+                        />
 
-                        {/* <ModalUnidadNegocio key={cuit.id} cuit={cuit} /> */}
+                        <ModalPuntoVenta key={unidadNegocio.id} unidadNegocio={unidadNegocio} />
                     </div>
                 </div>
             </div>
@@ -84,8 +134,6 @@ export const GrillaPuntoVenta = ({ data: unidadNegocio }) => {
                             customStyles={customStyles}
                             columns={columnaPuntoVenta}
                             data={puntosVenta}
-                            // expandableRows={true}
-                            // expandableRowsComponent={<ExpandedUn />}
                             noHeader
                             highlightOnHover
                             striped
