@@ -84,3 +84,32 @@ export const iniciarActualizarPuntoVenta = (puntoVenta) => {
         }
     }
 }
+
+export const iniciarEliminarPuntoVenta = () => {
+    return async (dispatch, getState) => {
+        try {
+            dispatch(startLoading());
+
+            let { puntoVentaActivo } = getState().cuit;
+            let { id } = puntoVentaActivo;
+
+            const resp = await fetchConToken(`PuntoVenta/${id}`, null, 'DELETE');
+            const body = await resp.json();
+
+            if (body.datos) {
+                Swal.fire('Success', 'Punto de Venta eliminado con exito.', 'success');
+                dispatch(iniciarObtenerCuits());
+            }
+            else {
+                Swal.fire('Error', 'No se pudo eliminar el Punto de Venta.', 'error');
+            }
+
+            dispatch(finishLoading());
+
+        } catch (error) {
+            dispatch(finishLoading());
+            console.error(error);
+            Swal.fire({ icon: 'error', title: 'Oops...', text: 'Ocurrió un error inesperado.' });
+        }
+    }
+}

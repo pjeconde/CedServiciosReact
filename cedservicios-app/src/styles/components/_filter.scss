@@ -32,6 +32,11 @@ button:not(:disabled) {
     cursor: pointer;
 }
 
+[type=switch]:not(:disabled),
+input:not(:disabled) {
+    cursor: pointer;
+}
+
 .filter__badge--dismissible button {
     background: none;
     border: none;

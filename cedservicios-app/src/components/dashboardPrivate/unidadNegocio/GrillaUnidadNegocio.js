@@ -8,7 +8,7 @@ import { removerUnidadNegocioActivo, setUnidadNegocioActivo } from '../../../act
 import { existePermisoDeAdmin } from '../../../helpers/tipoPermisos';
 import { BadgeStatus } from '../../ui/BadgeStatus';
 import { ButtonActualizar } from '../../ui/ButtonActualizar';
-import { ButtonEliminar } from '../../ui/ButtonEliminar';
+import { CheckStatus } from '../../ui/CheckStatus';
 import { GrillaPuntoVenta } from '../puntoVenta/GrillaPuntoVenta';
 import { ModalUnidadNegocio } from './ModalUnidadNegocio';
 
@@ -54,8 +54,8 @@ export const GrillaUnidadNegocio = ({ data: cuit }) => {
             grow: .5
         },
         {
-            name: 'Eliminar',
-            cell: row => <ButtonEliminar row={row} handleOnClick={handleOnClickEliminar} disabled={!existePermisoDeAdmin(row.tipoPermisos)} />,
+            name: 'Alta/Baja',
+            cell: row => <CheckStatus row={row} handleOnClick={handleOnClickEliminar} disabled={!existePermisoDeAdmin(row.tipoPermisos)} />,
             center: true,
             width: '15%',
             grow: .5,

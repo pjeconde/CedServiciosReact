@@ -9,13 +9,14 @@ import { PaginationOptions } from '../components/ui/PaginationOptions';
 import { iniciarObtenerCuits, iniciarSetCuitActivo, removerCuitActivo } from '../actions/cuit';
 import { ButtonDetalle } from '../components/ui/ButtonDetalle';
 import { ButtonActualizar } from '../components/ui/ButtonActualizar';
-import { ButtonEliminar } from '../components/ui/ButtonEliminar';
+// import { ButtonEliminar } from '../components/ui/ButtonEliminar';
 import { ButtonAgregar } from '../components/ui/ButtonAgregar';
 import { openModal } from '../actions/ui';
 import { ModalCuit } from '../components/dashboardPrivate/cuit/ModalCuit';
 import { ModalEliminar } from '../components/dashboardPrivate/cuit/ModalEliminar';
 import { GrillaUnidadNegocio } from '../components/dashboardPrivate/unidadNegocio/GrillaUnidadNegocio';
 import { existePermisoDeAdmin } from '../helpers/tipoPermisos';
+import { CheckStatus } from '../components/ui/CheckStatus';
 
 
 const customStyles = {
@@ -85,8 +86,8 @@ export const CuitScreen = () => {
             grow: .5
         },
         {
-            name: 'Eliminar',
-            cell: row => <ButtonEliminar row={row} handleOnClick={handleOnClickEliminar} disabled={!existePermisoDeAdmin(row.tipoPermisos)} />,
+            name: 'Alta/Baja',
+            cell: row => <CheckStatus row={row} handleOnClick={handleOnClickEliminar} disabled={!existePermisoDeAdmin(row.tipoPermisos)} />,
             center: true,
             grow: .5
         }

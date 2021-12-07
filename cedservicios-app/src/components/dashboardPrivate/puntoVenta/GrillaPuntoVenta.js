@@ -4,7 +4,6 @@ import { Button } from 'react-bootstrap';
 
 import { BadgeStatus } from '../../ui/BadgeStatus';
 import { ButtonActualizar } from '../../ui/ButtonActualizar';
-import { ButtonEliminar } from '../../ui/ButtonEliminar';
 import { ButtonDetalle } from '../../ui/ButtonDetalle';
 import { existePermisoDeAdmin } from '../../../helpers/tipoPermisos';
 import { useDispatch } from 'react-redux';
@@ -12,6 +11,7 @@ import { openModal } from '../../../actions/ui';
 import { iniciarSetPuntoVentaActivo } from '../../../actions/puntoVenta';
 import { ModalPuntoVenta } from './ModalPuntoVenta';
 import { removerUnidadNegocioActivo, setUnidadNegocioActivo } from '../../../actions/unidadNegocio';
+import { CheckStatus } from '../../ui/CheckStatus';
 
 const customStyles = {
     headCells: {
@@ -59,13 +59,13 @@ export const GrillaPuntoVenta = ({ data: unidadNegocio }) => {
         },
         {
             name: 'Modificar',
-            cell: row => <ButtonActualizar row={row} handleOnClick={handleOnClickActualizar} disabled={existePermisoDeAdmin(row.tipoPermisos)} />,
+            cell: row => <ButtonActualizar row={row} handleOnClick={handleOnClickActualizar} disabled={!existePermisoDeAdmin(row.tipoPermisos)} />,
             center: true,
             width: '12%',
         },
         {
-            name: 'Eliminar',
-            cell: row => <ButtonEliminar row={row} handleOnClick={handleOnClickEliminar} disabled={!existePermisoDeAdmin(row.tipoPermisos)} />,
+            name: 'Alta/Baja',
+            cell: row => <CheckStatus row={row} handleOnClick={handleOnClickEliminar} disabled={existePermisoDeAdmin(row.tipoPermisos)} />,
             center: true,
             width: '12%',
         }

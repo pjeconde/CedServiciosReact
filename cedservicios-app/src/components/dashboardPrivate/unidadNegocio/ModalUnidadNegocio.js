@@ -99,7 +99,11 @@ export const ModalUnidadNegocio = ({ cuit }) => {
                                         ?
                                         'Modificación de Unidad de Negocio'
                                         :
-                                        'Baja Unidad de Negocio'
+                                        (unidadNegocioActivo?.estado?.id === 1)
+                                            ?
+                                            'Desactivar Unidad de Negocio'
+                                            :
+                                            'Activar Unidad de Negocio'
                             }
                         </h5>
                     </Modal.Title>
@@ -143,13 +147,17 @@ export const ModalUnidadNegocio = ({ cuit }) => {
                                 <Button
                                     type="button"
                                     disabled={loading}
-                                    variant="danger"
+                                    variant={unidadNegocioActivo?.estado.id === 1 ? 'danger' : 'success'}
                                     onClick={handleEliminarUnidadNegocio}>
-                                    Baja
+                                    {unidadNegocioActivo?.estado.id === 1 ? 'Desactivar' : 'Activar'}
                                 </Button>
                             ) :
                             (
-                                <Button type="submit" disabled={loading} variant="primary" onClick={handleSubmit} >
+                                <Button
+                                    type="submit"
+                                    disabled={loading}
+                                    variant="primary"
+                                    onClick={handleSubmit} >
                                     Aceptar
                                 </Button>
                             )

@@ -42,6 +42,11 @@ export const getCamposHabilitados = (tipoModal) => {
             return {
                 ...formCuit
             };
+        case 'Eliminar':
+            formCuit = getFieldsByStatus(false);
+            return {
+                ...formCuit
+            };
         default:
             return formCuit;
     }

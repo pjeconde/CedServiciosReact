@@ -45,7 +45,15 @@ export const ModalEliminar = () => {
             scrollable>
             <Modal.Header closeButton>
                 <Modal.Title>
-                    <h5>Baja de Cuit</h5>
+                    <h5>
+                        {
+                            (cuitActivo?.estado?.id === 1)
+                                ?
+                                'Desactivar Cuit'
+                                :
+                                'Activar Cuit'
+                        }
+                    </h5>
                 </Modal.Title>
             </Modal.Header>
             <Modal.Body>
@@ -89,12 +97,27 @@ export const ModalEliminar = () => {
                 </div>
             </Modal.Body>
             <Modal.Footer>
-                <Button
-                    className="w-25"
-                    variant="danger"
-                    disabled={loading}
-                    onClick={handleSubmit}
-                    type="button" >Baja</Button>
+                {
+                    (cuitActivo?.estado?.id === 1)
+                        ?
+                        (
+                            <Button
+                                className="w-25"
+                                variant="danger"
+                                disabled={loading}
+                                onClick={handleSubmit}
+                                type="button" >Desactivar</Button>
+                        )
+                        :
+                        (
+                            <Button
+                                className="w-25"
+                                variant="success"
+                                disabled={loading}
+                                onClick={handleSubmit}
+                                type="button" >Activar</Button>
+                        )
+                }
                 <Button
                     className="w-25"
                     variant="outline-secondary"

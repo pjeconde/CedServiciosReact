@@ -13,7 +13,7 @@ import {
 import { useForm } from '../../../hooks/useForm';
 import { closeModal, removeError } from '../../../actions/ui';
 import { camelCase } from '../../../helpers/camelCase';
-import { iniciarActualizarPuntoVenta, iniciarAgregarPuntoVenta, removerPuntoVentaActivo } from '../../../actions/puntoVenta';
+import { iniciarActualizarPuntoVenta, iniciarAgregarPuntoVenta, iniciarEliminarPuntoVenta, removerPuntoVentaActivo } from '../../../actions/puntoVenta';
 import { getCamposHabilitados } from '../../../helpers/puntoVenta/getCamposHabilitados';
 
 
@@ -108,6 +108,11 @@ export const ModalPuntoVenta = ({ unidadNegocio }) => {
         }
     }
 
+    const handleEliminarPuntoVenta = () => {
+        dispatch(iniciarEliminarPuntoVenta());
+        dispatch(closeModal());
+    }
+
     useEffect(() => {
         if (puntoVentaActivo) {
             reset(puntoVentaActivo);
@@ -153,7 +158,15 @@ export const ModalPuntoVenta = ({ unidadNegocio }) => {
                                         ?
                                         'Modificación del Punto de Venta'
                                         :
-                                        'Detalle del Punto de Venta'
+                                        (typeModal === 'Detalle')
+                                            ?
+                                            'Detalle del Punto de Venta'
+                                            :
+                                            (puntoVentaActivo?.estado?.id === 1)
+                                                ?
+                                                'Desactivar Punto de Venta'
+                                                :
+                                                'Activar Punto de Venta'
                             }
                         </h5>
                     </Modal.Title>
@@ -501,9 +514,25 @@ export const ModalPuntoVenta = ({ unidadNegocio }) => {
                         &&
                         (
                             <>
-                                <Button type="submit" disabled={loading} variant="primary" onClick={handleSubmit} >
-                                    Aceptar
-                                </Button>
+                                {
+                                    (typeModal === 'Eliminar')
+                                        ?
+                                        (
+                                            <Button
+                                                type="button"
+                                                disabled={loading}
+                                                variant={puntoVentaActivo?.estado?.id === 1 ? 'danger' : 'success'}
+                                                onClick={handleEliminarPuntoVenta}>
+                                                {puntoVentaActivo?.estado?.id === 1 ? 'Desactivar' : 'Activar'}
+                                            </Button>
+                                        )
+                                        :
+                                        (
+                                            <Button type="submit" disabled={loading} variant="primary" onClick={handleSubmit} >
+                                                Aceptar
+                                            </Button>
+                                        )
+                                }
                                 <Button type="button" variant="secondary" onClick={handleCloseModal}>
                                     Cancelar
                                 </Button>
