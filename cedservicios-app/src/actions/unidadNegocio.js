@@ -77,15 +77,19 @@ export const iniciarEliminarUnidadNegocio = () => {
             let { unidadNegocioActivo } = getState().cuit;
             let id = unidadNegocioActivo.id;
 
-            const resp = await fetchConToken(`UnidadNegocio/${id}`, null, 'DELETE');
+            const resp = await fetchConToken(`UnidadNegocio/${id}`, null, 'PUT');
             const body = await resp.json();
 
             if (body.datos) {
-                Swal.fire('Success', 'Cuit de baja con exito.', 'success');
+                Swal.fire(
+                    'Success',
+                    `Unidad de Negocio ${unidadNegocioActivo.idEstado === 1 ? 'desactivado' : 'activado'} con exito.`,
+                    'success'
+                );
                 dispatch(iniciarObtenerCuits());
             }
             else {
-                Swal.fire('Error', 'No se pudo eliminar el cuit.', 'error');
+                Swal.fire({ icon: 'error', title: 'Oops...', text: 'Ocurrió un error inesperado.' });
             }
 
             dispatch(finishLoading());

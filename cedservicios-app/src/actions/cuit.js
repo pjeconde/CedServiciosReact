@@ -67,7 +67,7 @@ export const iniciarAgregarCuit = (cuit) => {
         try {
             dispatch(startLoading());
             let cuitDto = parsearACuitDto(cuit);
-            
+
             const resp = await fetchConToken('Cuit', { ...cuitDto }, 'POST');
             const body = await resp.json();
 
@@ -135,17 +135,21 @@ export const iniciarEliminarCuit = () => {
             let { cuitActivo } = getState().cuit;
             let id = cuitActivo.id;
 
-            const resp = await fetchConToken(`Cuit/${id}`, null, 'DELETE');
+            const resp = await fetchConToken(`Cuit/${id}`, null, 'PUT');
             const body = await resp.json();
 
             if (body.datos) {
                 dispatch(finishLoading());
                 dispatch(eliminarCuit());
                 dispatch(iniciarObtenerCuits());
-                Swal.fire('Success', 'Cuit de baja con exito.', 'success');
+                Swal.fire(
+                    'Success',
+                    `Cuit ${cuitActivo.idEstado === 1 ? 'desactivado' : 'activado'} con exito.`,
+                    'success'
+                );
             }
             else {
-                Swal.fire('Error', 'No se pudo eliminar el cuit.', 'error');
+                Swal.fire({ icon: 'error', title: 'Oops...', text: 'Ocurrió un error inesperado.' });
             }
             dispatch(finishLoading());
 

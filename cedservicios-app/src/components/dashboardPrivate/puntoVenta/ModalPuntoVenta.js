@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import moment from 'moment';
 import Select from 'react-select';
@@ -42,6 +42,7 @@ const initPuntoVenta = {
 };
 
 const nameModal = 'modalPuntoVenta';
+const styleTipoPuntoVenta = { height: '250px' };
 
 export const ModalPuntoVenta = ({ unidadNegocio }) => {
 
@@ -49,6 +50,7 @@ export const ModalPuntoVenta = ({ unidadNegocio }) => {
     const { cuitActivo, unidadNegocioActivo, puntoVentaActivo } = useSelector(state => state.cuit);
     const dispatch = useDispatch();
     const camposHabilitados = useMemo(() => getCamposHabilitados(typeModal), [typeModal]);
+    const [customStyle, setCustomStyle] = useState('');
 
     const {
         values: formValues,
@@ -192,7 +194,7 @@ export const ModalPuntoVenta = ({ unidadNegocio }) => {
                                         name="numeroPuntoVenta"
                                         required
                                         isInvalid={!!errors?.numeroPuntoVenta}
-                                        disabled={!camposHabilitados["cuit"]}
+                                        disabled={!camposHabilitados["numeroPuntoVenta"]}
                                         minLength="11"
                                         maxLength="11"
                                         autoComplete="off"
@@ -204,17 +206,21 @@ export const ModalPuntoVenta = ({ unidadNegocio }) => {
                                     </Form.Control.Feedback>
                                 </Form.Group>
                             </div>
-                            <div className="col-sm-12 col-md-12 col-lg-4">
+                            <div className="col-sm-12 col-md-12 col-lg-4" style={{ ...customStyle }}>
                                 <Form.Label htmlFor="tipoPuntoVenta">Tipo Punto de Venta</Form.Label>
                                 <Select
                                     name="tipoPuntoVenta"
                                     isDisabled={!camposHabilitados["tipoPuntoVenta"]}
                                     placeholder=""
+                                    onMenuOpen={() => setCustomStyle(styleTipoPuntoVenta)}
+                                    onMenuClose={() => setCustomStyle('')}
                                     options={tiposPuntoVenta}
                                     value={tipoPuntoVenta}
                                     onChange={handleDropdownChange}
                                     classNamePrefix="react-select" />
                             </div>
+                        </div>
+                        <div className="row g-3 mt-3" hidden={typeModal === 'Detalle'}>
                             <div className="col-sm-12 col-md-12 col-lg-12">
                                 <FormCheck
                                     type="switch"
@@ -541,6 +547,6 @@ export const ModalPuntoVenta = ({ unidadNegocio }) => {
                     }
                 </Modal.Footer>
             </Modal>
-        </div>
+        </div >
     )
 }

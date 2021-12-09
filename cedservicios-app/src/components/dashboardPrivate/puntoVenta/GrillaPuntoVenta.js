@@ -59,13 +59,13 @@ export const GrillaPuntoVenta = ({ data: unidadNegocio }) => {
         },
         {
             name: 'Modificar',
-            cell: row => <ButtonActualizar row={row} handleOnClick={handleOnClickActualizar} disabled={!existePermisoDeAdmin(row.tipoPermisos)} />,
+            cell: row => <ButtonActualizar row={row} handleOnClick={handleOnClickActualizar} disabled={!existePermisoDeAdmin(tipoPermisos)} />,
             center: true,
             width: '12%',
         },
         {
             name: 'Alta/Baja',
-            cell: row => <CheckStatus row={row} handleOnClick={handleOnClickEliminar} disabled={existePermisoDeAdmin(row.tipoPermisos)} />,
+            cell: row => <CheckStatus row={row} handleOnClick={handleOnClickEliminar} disabled={!existePermisoDeAdmin(tipoPermisos)} />,
             center: true,
             width: '12%',
         }
