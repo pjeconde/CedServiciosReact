@@ -10,7 +10,7 @@ export const TipoPermisos = {
 export const existePermisoDeAdmin = (permisos = []) => {
     let permiso = false;
 
-    permisos.forEach(
+    permisos.length > 0 && permisos.forEach(
         p => {
             if (p.id === TipoPermisos.AdminSite ||
                 p.id === TipoPermisos.Owner ||
