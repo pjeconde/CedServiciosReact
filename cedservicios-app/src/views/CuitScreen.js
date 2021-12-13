@@ -17,6 +17,7 @@ import { ModalEliminar } from '../components/dashboardPrivate/cuit/ModalEliminar
 import { GrillaUnidadNegocio } from '../components/dashboardPrivate/unidadNegocio/GrillaUnidadNegocio';
 import { existePermisoDeAdmin } from '../helpers/tipoPermisos';
 import { CheckStatus } from '../components/ui/CheckStatus';
+import { DetallePermiso } from '../components/ui/DetallePermiso';
 
 
 const customStyles = {
@@ -61,9 +62,16 @@ export const CuitScreen = () => {
             grow: 1.5,
             sortable: true
         },
+        // {
+        //     name: 'Email',
+        //     selector: 'emailContacto',
+        //     grow: 2
+        // },
         {
-            name: 'Email',
-            selector: 'emailContacto',
+            name: 'Permisos',
+            selector: 'tipoPermisos',
+            cell: row => <DetallePermiso key={row.id} tipoPermisos={row.tipoPermisos} />,
+            sortable: true,
             grow: 2
         },
         {

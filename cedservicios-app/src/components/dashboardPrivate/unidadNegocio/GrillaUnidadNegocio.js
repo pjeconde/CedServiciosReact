@@ -9,6 +9,7 @@ import { existePermisoDeAdmin } from '../../../helpers/tipoPermisos';
 import { BadgeStatus } from '../../ui/BadgeStatus';
 import { ButtonActualizar } from '../../ui/ButtonActualizar';
 import { CheckStatus } from '../../ui/CheckStatus';
+import { DetallePermiso } from '../../ui/DetallePermiso';
 import { GrillaPuntoVenta } from '../puntoVenta/GrillaPuntoVenta';
 import { ModalUnidadNegocio } from './ModalUnidadNegocio';
 
@@ -39,6 +40,12 @@ export const GrillaUnidadNegocio = ({ data: cuit }) => {
                 fontWeight: 700,
             },
             width: '250px'
+        },
+        {
+            name: 'Permisos',
+            selector: 'tipoPermisos',
+            cell: row => <DetallePermiso key={row.id} tipoPermisos={row.tipoPermisos} />,
+            grow: 2
         },
         {
             name: 'Estado',
