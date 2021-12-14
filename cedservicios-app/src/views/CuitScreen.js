@@ -89,7 +89,10 @@ export const CuitScreen = () => {
         },
         {
             name: 'Modificar',
-            cell: row => <ButtonActualizar row={row} handleOnClick={handleOnClickActualizar} disabled={!existePermisoDeAdmin(row.tipoPermisos)} />,
+            cell: row => <ButtonActualizar
+                row={row}
+                handleOnClick={handleOnClickActualizar}
+                disabled={(!existePermisoDeAdmin(row.tipoPermisos) || row.estado.id !== 1)} />,
             center: true,
             grow: .5
         },
@@ -139,6 +142,10 @@ export const CuitScreen = () => {
         dispatch(openModal(nameModal, typeModal));
     }
 
+    const expandableRowDisabled = (row) => {
+        return (row.estado.id !== 1)
+    }
+
     useEffect(() => {
         dispatch(iniciarObtenerCuits());
     }, [dispatch])
@@ -180,6 +187,7 @@ export const CuitScreen = () => {
                                     onChangeRowsPerPage={handleFilasPorPagina}
                                     expandableRows={true}
                                     expandableRowsComponent={<GrillaUnidadNegocio />}
+                                    expandableRowDisabled={expandableRowDisabled}
                                     customStyles={customStyles}
                                     striped
                                     responsive

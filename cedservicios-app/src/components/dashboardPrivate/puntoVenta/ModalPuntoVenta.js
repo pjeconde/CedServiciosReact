@@ -229,6 +229,7 @@ export const ModalPuntoVenta = ({ unidadNegocio }) => {
                                         <FormCheck
                                             type="switch"
                                             name="usaSetPropioDeDatosCuit"
+                                            disabled={!camposHabilitados["usaSetPropioDeDatosCuit"]}
                                             label={
                                                 <label>
                                                     <strong> Usa datos Cuit </strong>

@@ -20,6 +20,7 @@ const getFieldsByStatus = (status) => ({
     provincia: status,
     condicionIva: status,
     condicionIngresoBruto: status,
+    usaSetPropioDeDatosCuit: status
 });
 
 export const getCamposHabilitados = (tipoModal) => {
@@ -40,12 +41,14 @@ export const getCamposHabilitados = (tipoModal) => {
         case 'Detalle':
             formCuit = getFieldsByStatus(false);
             return {
-                ...formCuit
+                ...formCuit,
+                usaSetPropioDeDatosCuit: false
             };
         case 'Eliminar':
             formCuit = getFieldsByStatus(false);
             return {
-                ...formCuit
+                ...formCuit,
+                usaSetPropioDeDatosCuit: false
             };
         default:
             return formCuit;

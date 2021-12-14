@@ -2,6 +2,8 @@ import { types } from "../types/types";
 
 const initialState = {
     cuits: [],
+    unidadesDeNegocio: [],
+    puntosDeVenta: [],
     cuitActivo: null,
     unidadNegocioActivo: null,
     puntoVentaActivo: null,
@@ -66,6 +68,27 @@ export const cuitReducer = (state = initialState, action) => {
         case types.cuitRemoverPuntoVentaActivo:
             return {
                 ...state,
+                puntoVentaActivo: null
+            };
+        case types.cuitCargarUnidadesDeNegocio:
+            return {
+                ...state,
+                unidadesDeNegocio: [...action.payload]
+            };
+        case types.cuitActualizarUnidadNegocio:
+            return {
+                ...state,
+                unidadesDeNegocio: state.unidadesDeNegocio.map(
+                    un => (un.id === action.payload.id) ? action.payload : un
+                )
+            };
+        case types.cuitEliminarUnidadNegocio:
+            return {
+                ...state,
+                unidadesDeNegocio: state.unidadesDeNegocio.filter(
+                    un => (un.id !== state.unidadNegocioActivo.id)
+                ),
+                unidadNegocioActivo: null,
                 puntoVentaActivo: null
             };
         default:

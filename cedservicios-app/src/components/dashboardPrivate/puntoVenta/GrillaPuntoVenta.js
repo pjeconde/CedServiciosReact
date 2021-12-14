@@ -113,7 +113,7 @@ export const GrillaPuntoVenta = ({ data: unidadNegocio }) => {
                     <div className="header__title_sub">
                         <h4>Puntos de Venta</h4>
                     </div>
-                    <div className="header__toolbar mx-1">
+                    <div className="header__toolbar ms-4 mb-3">
                         <Button
                             type="button"
                             variant="secondary"

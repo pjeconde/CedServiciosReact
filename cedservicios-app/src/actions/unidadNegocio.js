@@ -47,9 +47,9 @@ export const iniciarActualizarUnidadNegocio = (unidadNegocio) => {
 
             const resp = await fetchConToken('UnidadNegocio', unidadNegocio, 'PUT');
             const body = await resp.json();
-
             if (body.datos) {
                 Swal.fire('Success', 'Unidad de Negocio actualizado con exito.', 'success');
+                dispatch(actualizarUnidadNegocio(unidadNegocio));
                 dispatch(iniciarObtenerCuits());
                 dispatch(closeModal());
             }
@@ -70,6 +70,11 @@ export const iniciarActualizarUnidadNegocio = (unidadNegocio) => {
     }
 }
 
+const actualizarUnidadNegocio = (unidadNegocio) => ({
+    type: types.cuitActualizarUnidadNegocio,
+    payload: unidadNegocio
+});
+
 export const iniciarEliminarUnidadNegocio = () => {
     return async (dispatch, getState) => {
         try {
@@ -81,12 +86,13 @@ export const iniciarEliminarUnidadNegocio = () => {
             const body = await resp.json();
 
             if (body.datos) {
+                dispatch(eliminarUnidadNegocio());
+                dispatch(iniciarObtenerCuits());
                 Swal.fire(
                     'Success',
                     `Unidad de Negocio ${unidadNegocioActivo.idEstado === 1 ? 'desactivado' : 'activado'} con exito.`,
                     'success'
                 );
-                dispatch(iniciarObtenerCuits());
             }
             else {
                 Swal.fire({ icon: 'error', title: 'Oops...', text: 'Ocurrió un error inesperado.' });
@@ -101,5 +107,12 @@ export const iniciarEliminarUnidadNegocio = () => {
         }
     }
 }
+
+const eliminarUnidadNegocio = () => ({ type: types.cuitEliminarUnidadNegocio });
+
+export const iniciarCargarUnidadesDeNegocio = (unidadesNegocio) => ({
+    type: types.cuitCargarUnidadesDeNegocio,
+    payload: unidadesNegocio
+});
 
 // const eliminarUnidadNegocio = () => ({ type: types.cuitEliminarUnidadNegocio });
