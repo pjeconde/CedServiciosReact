@@ -1,4 +1,5 @@
 import React, { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import DataTable from 'react-data-table-component';
 import { Button } from 'react-bootstrap';
 
@@ -6,7 +7,6 @@ import { BadgeStatus } from '../../ui/BadgeStatus';
 import { ButtonActualizar } from '../../ui/ButtonActualizar';
 import { ButtonDetalle } from '../../ui/ButtonDetalle';
 import { existePermisoDeAdmin } from '../../../helpers/tipoPermisos';
-import { useDispatch } from 'react-redux';
 import { openModal } from '../../../actions/ui';
 import { iniciarSetPuntoVentaActivo } from '../../../actions/puntoVenta';
 import { ModalPuntoVenta } from './ModalPuntoVenta';
@@ -26,8 +26,9 @@ const nameModal = 'modalPuntoVenta';
 
 export const GrillaPuntoVenta = ({ data: unidadNegocio }) => {
 
-    const { puntosVenta, tipoPermisos } = unidadNegocio || [];
     const dispatch = useDispatch();
+    const { puntosVenta, tipoPermisos, estado: estadoUnidadNegocio } = unidadNegocio || [];
+    const { cuitActivo } = useSelector(state => state.cuit);
 
     const columnaPuntoVenta = [
         {
@@ -59,13 +60,28 @@ export const GrillaPuntoVenta = ({ data: unidadNegocio }) => {
         },
         {
             name: 'Modificar',
-            cell: row => <ButtonActualizar row={row} handleOnClick={handleOnClickActualizar} disabled={!existePermisoDeAdmin(tipoPermisos)} />,
+            cell: row => <ButtonActualizar
+                row={row}
+                handleOnClick={handleOnClickActualizar}
+                disabled={(
+                    !existePermisoDeAdmin(tipoPermisos) ||
+                    row.estado.id !== 1 ||
+                    cuitActivo.estado.id !== 1 ||
+                    estadoUnidadNegocio.id !== 1
+                )} />,
             center: true,
             width: '12%',
         },
         {
             name: 'Alta/Baja',
-            cell: row => <CheckStatus row={row} handleOnClick={handleOnClickEliminar} disabled={!existePermisoDeAdmin(tipoPermisos)} />,
+            cell: row => <CheckStatus
+                row={row}
+                handleOnClick={handleOnClickEliminar}
+                disabled={(
+                    !existePermisoDeAdmin(tipoPermisos) ||
+                    cuitActivo.estado.id !== 1 ||
+                    estadoUnidadNegocio.id !== 1
+                )} />,
             center: true,
             width: '12%',
         }
@@ -110,7 +126,7 @@ export const GrillaPuntoVenta = ({ data: unidadNegocio }) => {
         <div className="mx-5 my-4 w-auto">
             <div className="container-fluid">
                 <div className="header__wrapper header__sub my-2">
-                    <div className="header__title_sub">
+                    <div className="header__title_sub mb-auto">
                         <h4>Puntos de Venta</h4>
                     </div>
                     <div className="header__toolbar ms-4 mb-3">
@@ -119,8 +135,11 @@ export const GrillaPuntoVenta = ({ data: unidadNegocio }) => {
                             variant="secondary"
                             className="fas fa-plus"
                             onClick={handleOnClickAgregar}
-                            disabled={!existePermisoDeAdmin(tipoPermisos)}
-                        />
+                            disabled={(
+                                !existePermisoDeAdmin(tipoPermisos) ||
+                                cuitActivo.estado.id !== 1 ||
+                                estadoUnidadNegocio.id !== 1
+                            )} />
 
                         <ModalPuntoVenta key={unidadNegocio.id} unidadNegocio={unidadNegocio} />
                     </div>

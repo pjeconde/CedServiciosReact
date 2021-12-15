@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-
 import DataTable from 'react-data-table-component';
+
 import { BadgeStatus } from '../components/ui/BadgeStatus';
 import { setPaginaActual, setRegistrosPorPagina } from '../actions/grilla';
 import { SortIcon } from '../components/ui/SortIcon';
@@ -9,7 +9,6 @@ import { PaginationOptions } from '../components/ui/PaginationOptions';
 import { iniciarObtenerCuits, iniciarSetCuitActivo, removerCuitActivo } from '../actions/cuit';
 import { ButtonDetalle } from '../components/ui/ButtonDetalle';
 import { ButtonActualizar } from '../components/ui/ButtonActualizar';
-// import { ButtonEliminar } from '../components/ui/ButtonEliminar';
 import { ButtonAgregar } from '../components/ui/ButtonAgregar';
 import { openModal } from '../actions/ui';
 import { ModalCuit } from '../components/dashboardPrivate/cuit/ModalCuit';
@@ -62,11 +61,6 @@ export const CuitScreen = () => {
             grow: 1.5,
             sortable: true
         },
-        // {
-        //     name: 'Email',
-        //     selector: 'emailContacto',
-        //     grow: 2
-        // },
         {
             name: 'Permisos',
             selector: 'tipoPermisos',
@@ -142,10 +136,6 @@ export const CuitScreen = () => {
         dispatch(openModal(nameModal, typeModal));
     }
 
-    const expandableRowDisabled = (row) => {
-        return (row.estado.id !== 1)
-    }
-
     useEffect(() => {
         dispatch(iniciarObtenerCuits());
     }, [dispatch])
@@ -187,7 +177,6 @@ export const CuitScreen = () => {
                                     onChangeRowsPerPage={handleFilasPorPagina}
                                     expandableRows={true}
                                     expandableRowsComponent={<GrillaUnidadNegocio />}
-                                    expandableRowDisabled={expandableRowDisabled}
                                     customStyles={customStyles}
                                     striped
                                     responsive
@@ -198,7 +187,6 @@ export const CuitScreen = () => {
                         </div>
                     </div>
                 </div>
-
             </section>
         </div>
     )

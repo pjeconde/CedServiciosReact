@@ -1,10 +1,10 @@
 import React, { useEffect } from 'react';
-import { Button } from 'react-bootstrap';
+import { useDispatch } from 'react-redux';
 import DataTable from 'react-data-table-component';
-import { useDispatch, useSelector } from 'react-redux';
+import { Button } from 'react-bootstrap';
 import { iniciarSetCuitActivo, removerCuitActivo } from '../../../actions/cuit';
 import { openModal } from '../../../actions/ui';
-import { iniciarCargarUnidadesDeNegocio, removerUnidadNegocioActivo, setUnidadNegocioActivo } from '../../../actions/unidadNegocio';
+import { removerUnidadNegocioActivo, setUnidadNegocioActivo } from '../../../actions/unidadNegocio';
 import { existePermisoDeAdmin } from '../../../helpers/tipoPermisos';
 import { BadgeStatus } from '../../ui/BadgeStatus';
 import { ButtonActualizar } from '../../ui/ButtonActualizar';
@@ -27,9 +27,7 @@ const nameModal = 'modalUnidadNegocio';
 
 export const GrillaUnidadNegocio = ({ data: cuit }) => {
 
-    //unidadesNegocio = cuit.unidadesNegocio,,
-    const { tipoPermisos } = cuit;
-    const { unidadesDeNegocio } = useSelector(state => state.cuit);
+    const { tipoPermisos, estado: estadoCuit, unidadesNegocio } = cuit;
     const dispatch = useDispatch();
 
     const columnaUN = [
@@ -60,14 +58,24 @@ export const GrillaUnidadNegocio = ({ data: cuit }) => {
             cell: row => <ButtonActualizar
                 row={row}
                 handleOnClick={handleOnClickActualizar}
-                disabled={(!existePermisoDeAdmin(row.tipoPermisos) || row.estado.id !== 1)} />,
+                disabled={(
+                    !existePermisoDeAdmin(row.tipoPermisos) ||
+                    row.estado.id !== 1 ||
+                    estadoCuit.id !== 1
+                )} />,
             center: true,
             width: '15%',
             grow: .5
         },
         {
             name: 'Alta/Baja',
-            cell: row => <CheckStatus row={row} handleOnClick={handleOnClickEliminar} disabled={!existePermisoDeAdmin(row.tipoPermisos)} />,
+            cell: row => <CheckStatus
+                row={row}
+                handleOnClick={handleOnClickEliminar}
+                disabled={(
+                    !existePermisoDeAdmin(row.tipoPermisos) ||
+                    estadoCuit.id !== 1
+                )} />,
             center: true,
             width: '15%',
             grow: .5,
@@ -92,14 +100,9 @@ export const GrillaUnidadNegocio = ({ data: cuit }) => {
         dispatch(openModal(nameModal, typeModal));
     }
 
-    const handleExpandableRowDisabled = (row) => {
-        return (row.estado.id !== 1)
-    }
-
     useEffect(() => {
         if (cuit) {
             dispatch(iniciarSetCuitActivo(cuit));
-            dispatch(iniciarCargarUnidadesDeNegocio(cuit.unidadesNegocio));
         }
     }, [cuit, dispatch])
 
@@ -113,7 +116,7 @@ export const GrillaUnidadNegocio = ({ data: cuit }) => {
         <div className="mx-5 my-4 w-75">
             <div className="container-fluid">
                 <div className="header__wrapper header__sub my-2">
-                    <div className="header__title_sub">
+                    <div className="header__title_sub mb-auto">
                         <h4>Unidades de Negocio</h4>
                     </div>
                     <div className="header__toolbar ms-4 mb-3">
@@ -122,7 +125,7 @@ export const GrillaUnidadNegocio = ({ data: cuit }) => {
                             variant="secondary"
                             className="fas fa-plus"
                             onClick={handleOnClickAgregar}
-                            disabled={!existePermisoDeAdmin(tipoPermisos)} />
+                            disabled={(!existePermisoDeAdmin(tipoPermisos) || estadoCuit.id !== 1)} />
 
                         <ModalUnidadNegocio key={cuit.id} cuit={cuit} />
                     </div>
@@ -135,21 +138,17 @@ export const GrillaUnidadNegocio = ({ data: cuit }) => {
                             key="datatable-un"
                             customStyles={customStyles}
                             columns={columnaUN}
-                            data={unidadesDeNegocio}
+                            data={unidadesNegocio}
                             expandableRows={true}
                             expandableRowsComponent={<GrillaPuntoVenta />}
-                            expandableRowDisabled={handleExpandableRowDisabled}
                             noHeader
                             highlightOnHover
                             striped
                             responsive
                         />
                     </div>
-
                 </div>
-
             </div>
-
         </div>
     )
 }

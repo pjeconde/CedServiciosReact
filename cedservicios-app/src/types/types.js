@@ -41,8 +41,5 @@ export const types = {
     cuitEliminarUnidadNegocio: '[cuit] Unidad de negocio eliminado',
     cuitSetPuntoVentaActivo: '[cuit] Set punto de venta activo',
     cuitRemoverPuntoVentaActivo: '[cuit] Punto de venta activo removido',
-    cuitCargarUnidadesDeNegocio: '[cuit] Unidades de Negocio cargados',
-    cuitActualizarUnidadNegocio: '[cuit] Unidad de negocio actualizado',
-    cuitCargarPuntosDeVenta: '[cuit] Puntos de Ventas cargados',
     cuitCierreDeSesion: '[cuit] Cierre de sesion de Cuit',
 };
