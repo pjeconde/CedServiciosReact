@@ -15,7 +15,7 @@ export const iniciarAgregarPuntoVenta = (puntoVenta) => {
             const body = await resp.json();
 
             if (resp.status === 200) {
-                Swal.fire('Success', 'Punto de Venta agregado con exito.', 'success');
+                Swal.fire({ title: 'Realizado.', text: 'Punto de Venta agregado con exito.', icon: 'success' });
                 dispatch(iniciarObtenerCuits());
                 dispatch(closeModal());
             }
@@ -65,7 +65,7 @@ export const iniciarActualizarPuntoVenta = (puntoVenta) => {
             const body = await resp.json();
 
             if (body.datos) {
-                Swal.fire('Success', 'Punto de Venta actualizado con exito.', 'success');
+                Swal.fire({ title: 'Realizado.', text: 'Punto de Venta actualizado con exito.', icon: 'success' });
                 dispatch(iniciarObtenerCuits());
                 dispatch(closeModal());
             }
@@ -97,11 +97,7 @@ export const iniciarEliminarPuntoVenta = () => {
             const body = await resp.json();
 
             if (body.datos) {
-                Swal.fire(
-                    'Success',
-                    `Punto de Venta ${puntoVentaActivo.idEstado === 1 ? 'desactivado' : 'activado'} con exito.`,
-                    'success'
-                );
+                Swal.fire({ title: 'Realizado.', text: `Punto de Venta ${puntoVentaActivo.idEstado === 1 ? 'desactivado' : 'activado'} con exito.`, icon: 'success' });
                 dispatch(iniciarObtenerCuits());
             }
             else {

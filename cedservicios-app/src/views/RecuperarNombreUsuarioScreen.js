@@ -4,7 +4,7 @@ import { useHistory } from 'react-router-dom';
 import { Form, Button } from 'react-bootstrap';
 import Swal from 'sweetalert2';
 import validator from 'validator';
-import { iniciarValidarIdUsuarioPorEmail } from '../actions/auth';
+import { iniciarRecuperarUsuarioPorEmail } from '../actions/auth';
 import { useForm } from '../hooks/useForm';
 
 
@@ -24,7 +24,7 @@ export const RecuperarNombreUsuarioScreen = () => {
             Swal.fire('Error', 'El campo email no debe estar vacío.', 'error');
             return false;
         }
-        dispatch(iniciarValidarIdUsuarioPorEmail(email));
+        dispatch(iniciarRecuperarUsuarioPorEmail(email));
     }
 
     return (

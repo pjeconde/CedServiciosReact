@@ -55,7 +55,7 @@ export const iniciarRegistroUsuario = (usuario) => {
             const body = await resp.json();
 
             if (resp.status === 200) {
-                Swal.fire({ icon: 'success', title: 'Usuario', text: 'Usuario creado exitosamente.' });
+                Swal.fire({ icon: 'success', title: 'Realizado.', text: 'Usuario creado exitosamente.' });
                 dispatch(setRedirect('/auth/ingresar'));
             }
             else if (body.errors) {
@@ -99,14 +99,10 @@ export const iniciarValidarNombreUsuario = (nombreUsuario) => {
 
             if (resp.status === 200) {
                 if (body.datos) {
-                    Swal.fire('Nombre Usuario', 'Nombre de usuario disponible.', 'success');
+                    Swal.fire({ icon: 'success', title: 'Usuario', text: 'Nombre de usuario disponible.' });
                     dispatch(removeError());
                 } else {
-                    Swal.fire({
-                        icon: 'error',
-                        title: 'Oops...',
-                        text: 'El Nombre de usuario no está disponible.'
-                    });
+                    Swal.fire({ icon: 'error', title: 'Oops...', text: 'El Nombre de usuario no está disponible.' });
                     dispatch(setError({ nombreUsuario: 'El Nombre de usuario no está disponible.' }));
                 }
                 dispatch(finishLoading());
@@ -126,38 +122,30 @@ export const iniciarValidarNombreUsuario = (nombreUsuario) => {
     }
 }
 
-export const iniciarValidarIdUsuarioPorEmail = (email) => {
+export const iniciarRecuperarUsuarioPorEmail = (email) => {
     return async (dispatch) => {
         try {
             dispatch(startLoading());
 
-            // const resp = await axios.get('Usuario/ConsultarIdUsuarioPorEmail', {
-            //     params: {
-            //         email
-            //     }
-            // });
-            // const { respuesta } = resp.data[0];
+            const resp = await fetchSinToken(`Usuario/RecuperarNombreUsuario?${queryString.stringify({ email })}`);
+            const body = await resp.json();
 
-            // if (resp.status === 200 && respuesta.resultado.severidad === 0) {
-            //     Swal.fire('Id Usuario', 'Id usuario recuperado exitosamente.', 'success');
-            // } else {
-            //     Swal.fire({
-            //         icon: 'error',
-            //         title: 'Oops...',
-            //         text: respuesta.resultado.descripcion
-            //     });
-            //     dispatch(setError(respuesta.resultado.descripcion));
-            // }
+            if (resp.status === 200) {
+                Swal.fire({ icon: 'success', title: 'Realizado.', text: 'Email enviado correctamente.' });
+            }
+            else if (body.errors) {
+                dispatch(setError(body.errors));
+            }
+            else if (body.exception) {
+                Swal.fire({ icon: 'error', title: 'Oops...', text: body.exception[0].detail });
+            }
+
             dispatch(finishLoading());
-
-        } catch (error) {
+        }
+        catch (error) {
             console.log(error);
             dispatch(finishLoading());
-            Swal.fire({
-                icon: 'error',
-                title: 'Oops...',
-                text: 'Ocurrió un error inesperado.'
-            });
+            Swal.fire({ icon: 'error', title: 'Oops...', text: 'Ocurrió un error inesperado.' });
         }
     }
 }
@@ -180,11 +168,7 @@ export const iniciarObtenerPreguntaSeguridad = (nombreUsuario, email) => {
                 }))
             }
             else {
-                Swal.fire({
-                    icon: 'error',
-                    title: 'Oops...',
-                    text: body.errors[0].detail
-                });
+                Swal.fire({ icon: 'error', title: 'Oops...', text: body.errors[0].detail });
                 dispatch(setError(body.errors[0].detail));
             }
 
@@ -262,17 +246,14 @@ export const iniciarCambiarContraseña = (password) => {
             const body = await resp.json();
 
             if (resp.status === 200) {
-                Swal.fire('Success', 'Cambio de contraseña exitoso.', 'success');
+                Swal.fire({ title: 'Realizado.', text: 'Cambio de contraseña exitoso.', icon: 'success' });
                 dispatch(removerFormSeguridad());
             }
             else {
-                Swal.fire({
-                    icon: 'error',
-                    title: 'Oops...',
-                    text: body.errors[0].detail
-                });
+                Swal.fire({ icon: 'error', title: 'Oops...', text: body.errors[0].detail });
                 dispatch(setError(body.errors[0].detail));
             }
+
             dispatch(finishLoading());
 
         } catch (error) {
@@ -280,7 +261,6 @@ export const iniciarCambiarContraseña = (password) => {
             dispatch(finishLoading());
             Swal.fire({ icon: 'error', title: 'Oops...', text: 'Ocurrió un error inesperado.' });
         }
-
     }
 }
 
@@ -299,8 +279,10 @@ export const iniciarComprobacion = () => {
                     email,
                     token,
                     fechaExpiracion } = body.datos;
+
                 localStorage.setItem('token', token);
                 localStorage.setItem('token-exp', fechaExpiracion);
+
                 dispatch(ingresarUsuario({
                     nombreUsuario,
                     nombreCompleto,
@@ -315,9 +297,6 @@ export const iniciarComprobacion = () => {
             dispatch(finishLoading());
             dispatch(finalizarComprobacion());
             localStorage.removeItem('token');
-            // localStorage.removeItem('token-init-date');
-            // Swal.fire({ icon: 'error', title: 'Oops...', text: 'Ocurrió un error inesperado.' });
-            // dispatch(setError('Ocurrio un error inesperado.'));
         }
     }
 }
@@ -329,11 +308,11 @@ export const iniciarVerificacionEmail = (encriptacion) => {
         try {
             dispatch(startLoading());
 
-            const resp = await fetchSinToken(`Usuario/ValidarVerificacionMailUsuario?${queryString.stringify({ encriptacion })}`);
+            const resp = await fetchSinToken(`Usuario/ActualizarVerificacionMail?${queryString.stringify({ encriptacion })}`);
             const body = await resp.json();
 
             if (resp.status === 200) {
-                Swal.fire({ icon: 'success', title: 'Verificacion de email', text: 'Verificacion de email exitosa.' });
+                Swal.fire({ icon: 'success', title: 'Realizado.', text: 'Verificacion de email exitosa.' });
                 dispatch(setRedirect('/auth/ingresar'));
             }
             else if (body.errors) {
@@ -362,7 +341,7 @@ export const iniciarReenviarEmail = (nombreUsuario) => {
             const body = await resp.json();
 
             if (resp.status === 200) {
-                Swal.fire({ icon: 'success', title: 'Reenviar email', text: 'Email enviado correctamente.' });
+                Swal.fire({ icon: 'success', title: 'Realizado.', text: 'Email enviado correctamente.' });
             }
             else if (body.errors) {
                 dispatch(setError(body.errors));

@@ -13,7 +13,7 @@ export const iniciarAgregarUnidadNegocio = (unidadNegocio) => {
             const body = await resp.json();
 
             if (resp.status === 200) {
-                Swal.fire('Success', 'Unidad de Negocio agregado con exito.', 'success');
+                Swal.fire({ title: 'Realizado.', text: 'Unidad de Negocio agregado con exito.', icon: 'success' });
                 dispatch(iniciarObtenerCuits());
                 dispatch(closeModal());
             }
@@ -48,7 +48,7 @@ export const iniciarActualizarUnidadNegocio = (unidadNegocio) => {
             const resp = await fetchConToken('UnidadNegocio', unidadNegocio, 'PUT');
             const body = await resp.json();
             if (body.datos) {
-                Swal.fire('Success', 'Unidad de Negocio actualizado con exito.', 'success');
+                Swal.fire({ title: 'Success', text: 'Unidad de Negocio actualizado con exito.', icon: 'success' });
                 dispatch(iniciarObtenerCuits());
                 dispatch(closeModal());
             }
@@ -81,11 +81,7 @@ export const iniciarEliminarUnidadNegocio = () => {
 
             if (body.datos) {
                 dispatch(iniciarObtenerCuits());
-                Swal.fire(
-                    'Success',
-                    `Unidad de Negocio ${unidadNegocioActivo.idEstado === 1 ? 'desactivado' : 'activado'} con exito.`,
-                    'success'
-                );
+                Swal.fire({ title: 'Realizado.', text: `Unidad de Negocio ${unidadNegocioActivo.idEstado === 1 ? 'desactivado' : 'activado'} con exito.`, icon: 'success' });
             }
             else {
                 Swal.fire({ icon: 'error', title: 'Oops...', text: 'Ocurrió un error inesperado.' });

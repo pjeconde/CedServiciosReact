@@ -21,7 +21,7 @@ export const iniciarAgregarPersona = (persona) => {
             if (resp.status === 200) {
                 dispatch(finishLoading());
                 dispatch(iniciarObtenerPersonas());
-                Swal.fire('Success', 'Persona agregada con exito.', 'success');
+                Swal.fire({ title: 'Realizado.', text: 'Persona agregada con exito.', icon: 'success' });
             }
             else if (body.errors) {
                 dispatch(setError(body.errors));
@@ -38,11 +38,6 @@ export const iniciarAgregarPersona = (persona) => {
         }
     }
 }
-
-// const agregarPersona = (persona) => ({
-//     type: types.personaAgregarPersona,
-//     payload: persona
-// });
 
 export const iniciarSetPersonaActiva = (persona) => {
     return (dispatch) => {
@@ -78,7 +73,7 @@ export const iniciarActualizarPersona = (persona) => {
                 dispatch(finishLoading());
                 dispatch(actualizarPersona(grillaPersonaDto));
                 dispatch(iniciarObtenerPersonas());
-                Swal.fire('Success', 'Persona actualizada con exito.', 'success');
+                Swal.fire({ title: 'Realizado.', text: 'Persona actualizada con exito.', icon: 'success' });
             }
             else if (body.errors) {
                 dispatch(setError(body.errors));
@@ -111,10 +106,9 @@ export const iniciarEliminarPersona = () => {
             const body = await resp.json();
 
             if (body.datos) {
-                dispatch(finishLoading());
                 dispatch(eliminarPersona());
                 dispatch(iniciarObtenerPersonas());
-                Swal.fire('Success', 'Persona de baja con exito.', 'success');
+                Swal.fire({ title: 'Realizado.', text: 'Persona de baja con exito.', icon: 'success' });
             }
             else {
                 Swal.fire('Error', 'No se pudo eliminar la persona.', 'error');

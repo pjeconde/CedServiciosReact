@@ -74,7 +74,7 @@ export const iniciarAgregarCuit = (cuit) => {
             if (resp.status === 200) {
                 dispatch(finishLoading());
                 dispatch(iniciarObtenerCuits());
-                Swal.fire('Success', 'Cuit agregado con exito.', 'success');
+                Swal.fire({ title: 'Realizado.', text: 'Cuit agregado con exito.', icon: 'success' });
                 dispatch(closeModal());
             }
             else if (body.errors) {
@@ -105,7 +105,7 @@ export const iniciarActualizarCuit = (cuit) => {
                 let grillaCuitDto = parsearAGrillaCuitDto(cuit);
                 dispatch(actualizarCuit(grillaCuitDto));
                 dispatch(iniciarObtenerCuits());
-                Swal.fire('Success', 'Cuit actualizado con exito.', 'success');
+                Swal.fire({ title: 'Realizado.', text: 'Cuit actualizado con exito.', icon: 'success' });
             }
             else if (body.errors) {
                 dispatch(setError(body.errors));
@@ -142,11 +142,7 @@ export const iniciarEliminarCuit = () => {
                 dispatch(finishLoading());
                 dispatch(eliminarCuit());
                 dispatch(iniciarObtenerCuits());
-                Swal.fire(
-                    'Success',
-                    `Cuit ${cuitActivo.idEstado === 1 ? 'desactivado' : 'activado'} con exito.`,
-                    'success'
-                );
+                Swal.fire({ title: 'Realizado.', text: `Cuit ${cuitActivo.idEstado === 1 ? 'desactivado' : 'activado'} con exito.`, icon: 'success' });
             }
             else {
                 Swal.fire({ icon: 'error', title: 'Oops...', text: 'Ocurrió un error inesperado.' });
