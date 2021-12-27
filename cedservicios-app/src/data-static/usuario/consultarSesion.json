@@ -704,21 +704,9 @@
                     "url": "/Admin",
                     "menu": [
                         {
-                            "nombre": "CUIT",
+                            "nombre": "Cuit",
                             "habilitada": true,
                             "url": "/admin/cuit",
-                            "menu": []
-                        },
-                        {
-                            "nombre": "UNs",
-                            "habilitada": true,
-                            "url": "/Admin/UNs",
-                            "menu": []
-                        },
-                        {
-                            "nombre": "Puntos de Venta",
-                            "habilitada": true,
-                            "url": "/Admin/PuntosVenta",
                             "menu": []
                         },
                         {

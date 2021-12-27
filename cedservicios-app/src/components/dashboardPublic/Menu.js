@@ -1,5 +1,5 @@
 import React from 'react';
-import { Link, NavLink } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
 export const Menu = () => {
     return (
@@ -10,7 +10,7 @@ export const Menu = () => {
                         <img src={`${process.env.PUBLIC_URL}/assets/logo.png`} alt="Cedeira Software Factory" />
                     </Link>
                 </div>
-                <ul className="nav">
+                {/* <ul className="nav">
                     <NavLink
                         to="./"
                         className="nav-item nav-link link-secondary t-up"
@@ -53,7 +53,7 @@ export const Menu = () => {
                         activeClassName="active">
                         ingresar
                     </NavLink>
-                </ul>
+                </ul> */}
             </nav>
         </header>
     )

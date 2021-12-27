@@ -18,10 +18,8 @@ export const IngresarScreen = () => {
     values: formValues,
     handleInputChange,
     errors: formErrors,
-    setErrors } = useForm({
-      nombreUsuario: 'gmontiel',
-      clave: 'asdasd'
-    });
+    setErrors } = useForm({ nombreUsuario: '', clave: '' });
+
   const { nombreUsuario, clave } = formValues;
 
   const handleLogin = (e) => {
@@ -77,8 +75,7 @@ export const IngresarScreen = () => {
                     name="clave"
                     isInvalid={!!formErrors.clave}
                     value={clave}
-                    onChange={handleInputChange}
-                    placeholder="Clave" />
+                    onChange={handleInputChange} />
                   <label htmlFor="clave">Clave</label>
                   <Form.Control.Feedback type="invalid">
                     {formErrors.clave}
