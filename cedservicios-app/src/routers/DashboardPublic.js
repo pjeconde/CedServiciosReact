@@ -5,7 +5,6 @@ import { RecuperarNombreUsuarioScreen } from '../views/RecuperarNombreUsuarioScr
 import { IngresarScreen } from '../views/IngresarScreen';
 import { RegistrarScreen } from '../views/RegistrarScreen';
 import { CambiarPasswordScreen } from '../views/CambiarPasswordScreen';
-// import { HomeScreen } from '../views/HomeScreen';
 import { VerificacionEmailScreen } from '../views/VerificacionEmailScreen';
 
 
@@ -17,7 +16,6 @@ export const DashboardPublic = () => {
             <main>
 
                 <Switch>
-                    {/* <Route exact path="/auth" component={HomeScreen} /> */}
                     <Route exact path="/auth/ingresar" component={IngresarScreen} />
                     <Route exact path="/auth/registrar" component={RegistrarScreen} />
                     <Route exact path="/auth/recuperar/nombreUsuario" component={RecuperarNombreUsuarioScreen} />

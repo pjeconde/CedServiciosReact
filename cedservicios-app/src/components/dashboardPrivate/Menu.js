@@ -14,7 +14,6 @@ const menu = consultaSesionJSON[0].sesion.menu;
 
 export const Menu = () => {
 
-
     return (
         <header className="bg-dark container-fluid header__menu" >
             <div className="container-fluid">

@@ -62,7 +62,8 @@ export const IngresarScreen = () => {
                     name="nombreUsuario"
                     isInvalid={!!formErrors.nombreUsuario}
                     value={nombreUsuario}
-                    onChange={handleInputChange} />
+                    onChange={handleInputChange}
+                    placeholder="Nombre de usuario" />
                   <label htmlFor="nombreUsuario">Nombre de usuario</label>
                   <Form.Control.Feedback type="invalid">
                     {formErrors.nombreUsuario}
@@ -75,7 +76,8 @@ export const IngresarScreen = () => {
                     name="clave"
                     isInvalid={!!formErrors.clave}
                     value={clave}
-                    onChange={handleInputChange} />
+                    onChange={handleInputChange}
+                    placeholder="Clave" />
                   <label htmlFor="clave">Clave</label>
                   <Form.Control.Feedback type="invalid">
                     {formErrors.clave}

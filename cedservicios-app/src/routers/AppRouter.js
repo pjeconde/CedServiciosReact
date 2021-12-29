@@ -4,8 +4,7 @@ import {
     Switch,
     Redirect
 } from 'react-router-dom';
-import { useSelector } from 'react-redux';
-import { useDispatch } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import { DashboardPublic } from './DashboardPublic';
 import { DashboardPrivate } from './DashboardPrivate';
 import { PrivateRoute } from './PrivateRoute';
@@ -39,7 +38,7 @@ export const AppRouter = () => {
                     isAuthenticated={!!nombreUsuario}
                     component={DashboardPrivate} />
 
-                <Redirect to="/auth/login" />
+                <Redirect to="/" />
             </Switch>
         </Router>
     )
