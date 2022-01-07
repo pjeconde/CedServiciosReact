@@ -1,14 +1,5 @@
 import { types } from "../types/types";
 
-/*
-const initialState = {
-    checking: true,
-    uid: null,
-    username: null,
-    cuit: null
-}
-*/
-
 const initialState = {
     comprobacion: true,
     nombreCompleto: null,

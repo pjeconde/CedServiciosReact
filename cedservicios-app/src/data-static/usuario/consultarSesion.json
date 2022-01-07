@@ -710,15 +710,21 @@
                             "menu": []
                         },
                         {
+                            "nombre": "Solicitudes",
+                            "habilitada": true,
+                            "url": "/admin/solicitudes",
+                            "menu": []
+                        },
+                        {
                             "nombre": "Autorizaciones",
                             "habilitada": true,
-                            "url": "/Admin/Autorizaciones",
+                            "url": "/admin/autorizaciones",
                             "menu": []
                         },
                         {
                             "nombre": "Usuarios",
                             "habilitada": true,
-                            "url": "/Admin/Usuarios",
+                            "url": "/admin/usuarios",
                             "menu": []
                         }
                     ]
