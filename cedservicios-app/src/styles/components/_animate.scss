@@ -1,0 +1,11 @@
+.animate-spinner {
+    // animation-name: spinner;
+    // animation-duration: .75s;
+    // animation-iteration-count: infinite;
+    animation: .75s linear infinite spinner;
+}
+
+
+@keyframes spinner {
+    to { transform: rotate(360deg) #{"/* rtl:ignore */"}; }
+}

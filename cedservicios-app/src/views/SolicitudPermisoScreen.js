@@ -1,6 +1,7 @@
 import React from 'react';
 import { GrillaSolicitarPermiso } from '../components/dashboardPrivate/solicitudPermiso/GrillaSolicitarPermiso';
 import { GrillaSolicitudesCuit } from '../components/dashboardPrivate/solicitudPermiso/GrillaSolicitudesCuit';
+import { GrillaSolicitudesUnidadNegocio } from '../components/dashboardPrivate/solicitudPermiso/GrillaSolicitudesUnidadNegocio';
 
 
 export const SolicitudPermisoScreen = () => {
@@ -15,6 +16,10 @@ export const SolicitudPermisoScreen = () => {
                 <div className='col-sm-12 cold-md-12 col-lg-6 mt-5'>
                     <GrillaSolicitudesCuit key='grillaSolicitudesCuit' />
                 </div>
+                <div className='col-sm-12 cold-md-12 col-lg-6 mt-5'>
+                    <GrillaSolicitudesUnidadNegocio key='grillaSolicitudesUnidadNegocio' />
+                </div>
+
             </div>
 
         </div>
