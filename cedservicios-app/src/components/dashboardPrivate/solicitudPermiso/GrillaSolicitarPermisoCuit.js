@@ -30,7 +30,7 @@ const cuit = [
     }
 ];
 
-export const GrillaSolicitarPermiso = () => {
+export const GrillaSolicitarPermisoCuit = () => {
 
     const [filterText, setFilterText] = useState('');
 
@@ -85,11 +85,12 @@ export const GrillaSolicitarPermiso = () => {
                     <div className="card-body">
                         <div className="datatable">
                             <DataTable
-                                key="datatable-cuits"
+                                key="datatable-solicitar-cuit"
                                 keyField="id"
                                 data={cuit}
                                 columns={columnaCuits}
                                 expandableRows={true}
+                                // expandableRowsComponent={}
                                 customStyles={customStyles}
                                 striped
                                 responsive

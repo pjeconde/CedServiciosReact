@@ -1,11 +1,10 @@
 import React from 'react';
-import { ReactComponent as LoaderCircleSvg } from '../../styles/icons/loader-circle.svg';
+import { ReactComponent as UserClockSvg } from '../../styles/icons/user-clock-solid.svg';
 
 export const PendingIcon = () => {
     return (
         <>
-            <LoaderCircleSvg className='animate-spinner' />
+            <UserClockSvg title='Pendiente..' />
         </>
-
     )
 }
