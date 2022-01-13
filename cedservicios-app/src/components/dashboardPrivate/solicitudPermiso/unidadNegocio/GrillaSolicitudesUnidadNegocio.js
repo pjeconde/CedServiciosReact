@@ -1,11 +1,10 @@
 import React from 'react';
 import moment from 'moment';
 import DataTable from 'react-data-table-component';
-import 'moment/locale/es';
-import { CheckIcon } from '../../ui/CheckIcon';
-import { PendingIcon } from '../../ui/PendingIcon';
-import { RejectedIcon } from '../../ui/RejectedIcon';
 
+import { CheckIcon } from '../../../ui/CheckIcon';
+import { RejectedIcon } from '../../../ui/RejectedIcon';
+import { PendingIcon } from '../../../ui/PendingIcon';
 
 const customStyles = {
     headCells: {
@@ -17,38 +16,42 @@ const customStyles = {
     },
 }
 
-moment.locale('es');
-
-const solicitudesCuit = [
+const solicitudesUnidadNegocio = [
     {
-        cuit: '65655665445',
-        fechaCreacion: moment().format("YYYY-MM-DD"),
+        id: 2,
+        descripcion: 'Carrefour Don Torcuato',
+        cuit: '55646646445',
+        fechaCreacion: moment().add(5, 'M').format("YYYY-MM-DD"),
         estado: {
-            id: 3,
-            descripcion: 'Pendiente'
+            id: 2,
+            descripcion: 'Inactivo'
         }
     },
     {
-        cuit: '20398724357',
-        fechaCreacion: moment().add(1, 'M').format("YYYY-MM-DD"),
+        id: 3,
+        descripcion: 'Carrefour Pacheco',
+        cuit: '55646646445',
+        fechaCreacion: moment().add(2, 'M').format("YYYY-MM-DD"),
         estado: {
             id: 1,
             descripcion: 'Vigente'
         }
     },
     {
+        id: 10,
+        descripcion: 'Predefinida',
         cuit: '65655665445',
-        fechaCreacion: moment().add(2, 'M').format("YYYY-MM-DD"),
+        fechaCreacion: moment().format("YYYY-MM-DD"),
         estado: {
-            id: 2,
-            descripcion: 'Inactivo'
+            id: 3,
+            descripcion: 'Pendiente'
         }
     }
 ];
 
-export const GrillaSolicitudesCuit = () => {
+export const GrillaSolicitudesUnidadNegocio = () => {
 
-    const columnaSolicitudesCuit = [
+    const columnaSolicitudesUnidadNegocio = [
         {
             name: 'Cuit',
             selector: 'cuit',
@@ -57,6 +60,10 @@ export const GrillaSolicitudesCuit = () => {
                 fontSize: '14px',
                 fontWeight: 700,
             }
+        },
+        {
+            name: 'Descripcion',
+            selector: 'descripcion'
         },
         {
             name: 'Fecha solicitado',
@@ -83,7 +90,7 @@ export const GrillaSolicitudesCuit = () => {
                 <div className="container-fluid">
                     <div className="header__wrapper">
                         <div className="header__title">
-                            <h4>Solicitudes de Permisos Cuits</h4>
+                            <h4>Solicitudes de Permisos de Unidades de Negocio</h4>
                         </div>
 
                     </div>
@@ -94,10 +101,9 @@ export const GrillaSolicitudesCuit = () => {
                     <div className="card-body">
                         <div className="datatable">
                             <DataTable
-                                key="datatable-solicitudes-cuit"
-                                keyField="id"
-                                data={solicitudesCuit}
-                                columns={columnaSolicitudesCuit}
+                                key="datatable-solicitudes-unidadNegocio"
+                                data={solicitudesUnidadNegocio}
+                                columns={columnaSolicitudesUnidadNegocio}
                                 customStyles={customStyles}
                                 striped
                                 responsive

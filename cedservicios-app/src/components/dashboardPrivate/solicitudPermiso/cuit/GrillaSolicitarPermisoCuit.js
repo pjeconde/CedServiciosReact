@@ -1,8 +1,13 @@
 import React, { useState } from 'react';
+import { useDispatch } from 'react-redux';
 import DataTable from 'react-data-table-component';
 
-import { ButtonSolicitar } from '../../ui/ButtonSolicitar';
-import { InputFilter } from '../../ui/InputFilter';
+import { ButtonSolicitar } from '../../../ui/ButtonSolicitar';
+import { InputFilter } from '../../../ui/InputFilter';
+import { iniciarSetCuitActivo } from '../../../../actions/solicitudPermiso';
+import { ModalSolicitarPermisoCuit, nameModal } from './ModalSolicitarPermisoCuit';
+import { openModal } from '../../../../actions/ui';
+import { GrillaSolicitarPermisoUnidadNegocio } from '../unidadNegocio/GrillaSolicitarPermisoUnidadNegocio';
 
 
 const customStyles = {
@@ -32,6 +37,7 @@ const cuit = [
 
 export const GrillaSolicitarPermisoCuit = () => {
 
+    const dispatch = useDispatch();
     const [filterText, setFilterText] = useState('');
 
     const columnaCuits = [
@@ -64,7 +70,12 @@ export const GrillaSolicitarPermisoCuit = () => {
 
     const handleOnChangeFilterText = (value) => setFilterText(value);
 
-    const handleOnClickSolicitar = (cuit) => console.log(cuit);
+    const handleOnClickSolicitar = (value) => {
+        let { id, cuit } = value;
+        let typeModal = 'Solicitar';
+        dispatch(iniciarSetCuitActivo({ id, cuit }));
+        dispatch(openModal(nameModal, typeModal));
+    }
 
     return (
         <div >
@@ -75,7 +86,7 @@ export const GrillaSolicitarPermisoCuit = () => {
                             <h2>Solicitar permiso para un Cuit o Unidad de Negocio</h2>
                         </div>
                         <div className="header__toolbar">
-
+                            <ModalSolicitarPermisoCuit key="modal-solicitar-permiso-cuit" />
                         </div>
                     </div>
                 </div>
@@ -90,7 +101,7 @@ export const GrillaSolicitarPermisoCuit = () => {
                                 data={cuit}
                                 columns={columnaCuits}
                                 expandableRows={true}
-                                // expandableRowsComponent={}
+                                expandableRowsComponent={<GrillaSolicitarPermisoUnidadNegocio />}
                                 customStyles={customStyles}
                                 striped
                                 responsive

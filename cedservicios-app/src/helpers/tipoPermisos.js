@@ -21,3 +21,8 @@ export const existePermisoDeAdmin = (permisos = []) => {
 
     return permiso;
 }
+
+export const TipoPermisosUnidadNegocio = [
+    { label: 'Admin', value: 2 },
+    { label: 'FacturaElectronica', value: 3 }
+];

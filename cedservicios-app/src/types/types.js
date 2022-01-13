@@ -42,4 +42,9 @@ export const types = {
     cuitSetPuntoVentaActivo: '[cuit] Set punto de venta activo',
     cuitRemoverPuntoVentaActivo: '[cuit] Punto de venta activo removido',
     cuitCierreDeSesion: '[cuit] Cierre de sesion de Cuit',
+
+    solicitudPermisoSetCuitActivo: '[solicitud permiso] Set cuit activo',
+    solicitudPermisoRemoverCuitActivo: '[solicitud permiso] Cuit activo removido',
+    solicitudPermisoSetUnidadNegocioActivo: '[solicitud permiso] Set unidad negocio activo ',
+    solicitudPermisoRemoverUnidadNegocioActivo: '[solicitud permiso] Unidad de negocio activo removido',
 };

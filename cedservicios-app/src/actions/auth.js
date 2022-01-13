@@ -289,9 +289,9 @@ export const iniciarComprobacion = () => {
                     email
                 }));
             }
-            else {
-                dispatch(finalizarComprobacion());
-            }
+
+            dispatch(finalizarComprobacion());
+            dispatch(finishLoading());
 
         } catch (error) {
             dispatch(finishLoading());
