@@ -158,3 +158,32 @@ export const iniciarEliminarCuit = () => {
 }
 
 const eliminarCuit = () => ({ type: types.cuitEliminarCuit });
+
+export const removerTodoCuit = () => ({ type: types.cuitRemoverTodo });
+
+export const iniciarObtenerCuitPorNumeroCuit = (numeroCuit) => {
+    return async (dispatch) => {
+        try {
+            dispatch(startLoading());
+
+            const resp = await fetchConToken(`Cuit/ObtenerPorNumeroCuit?${queryString.stringify({ numeroCuit })}`);
+            const body = await resp.json();
+
+            if (body.datos) {
+                let cuits = [body.datos];
+                dispatch(cargarCuits(cuits))
+                dispatch(setCuitActivo(body.datos));
+            }
+            else if (body.exception) {
+                Swal.fire({ icon: 'error', title: 'Oops...', text: body.exception[0].detail });
+            }
+
+            dispatch(finishLoading());
+
+        } catch (error) {
+            console.error(error);
+            dispatch(finishLoading());
+            Swal.fire({ icon: 'error', title: 'Oops...', text: 'Ocurrió un error inesperado.' });
+        }
+    }
+}

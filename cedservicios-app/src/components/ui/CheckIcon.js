@@ -1,5 +1,5 @@
 import React from 'react';
-import { ReactComponent as CheckSvg } from '../../styles/icons/check.svg';
+import { ReactComponent as CheckSvg } from '../../images/check.svg';
 
 export const CheckIcon = () => {
     return (

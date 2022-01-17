@@ -5,7 +5,9 @@ import Select from 'react-select';
 
 import { closeModal } from '../../../../actions/ui';
 import { TipoPermisosUnidadNegocio } from '../../../../helpers/tipoPermisos';
-import { iniciarRemoverUnidadNegocioActivo } from '../../../../actions/solicitudPermiso';
+import { removerUnidadNegocioActivo } from '../../../../actions/unidadNegocio';
+import { iniciarSolicitarPermisoUnidadNegocio } from '../../../../actions/solicitudPermiso';
+
 
 
 export const nameModal = 'SolicitarPermisoUnidadNegocio';
@@ -15,17 +17,17 @@ export const ModalSolicitarPermisoUnidadNegocio = () => {
 
     const dispatch = useDispatch();
     const { showModal, loading } = useSelector(state => state.ui);
-    const { unidadNegocioActivo } = useSelector(state => state.solicitudPermiso);
+    const { unidadNegocioActivo } = useSelector(state => state.cuit);
     const [permisoSeleccionado, setPermisoSeleccionado] = useState(TipoPermisosUnidadNegocio[0]);
     const [customStyle, setCustomStyle] = useState('');
 
     const handleCloseModal = () => {
         dispatch(closeModal());
-        dispatch(iniciarRemoverUnidadNegocioActivo());
+        dispatch(removerUnidadNegocioActivo());
     }
 
     const handleOnClickSolicitarPermisoUnidadNegocio = () => {
-        console.log('dispatch(iniciarSolicitarPermisoUnidadNegocio)');
+        dispatch(iniciarSolicitarPermisoUnidadNegocio(permisoSeleccionado.value));
     }
 
     const handleDropdownChange = (selectedOption) => {

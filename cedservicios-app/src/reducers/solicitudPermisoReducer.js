@@ -1,8 +1,8 @@
 import { types } from "../types/types";
 
 const initialState = {
-    cuitActivo: null,
-    unidadNegocioActivo: null
+    solicitudesCuitGeneradas: [],
+    solicitudesUnidadNegocioGeneradas: []
 };
 
 export const solicitudPermisoReducer = (state = initialState, action) => {

@@ -2,7 +2,7 @@ import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Modal, Button } from 'react-bootstrap';
 import { closeModal } from '../../../../actions/ui';
-import { iniciarRemoverCuitActivo } from '../../../../actions/solicitudPermiso';
+import { iniciarSolicitarPermisoCuit } from '../../../../actions/solicitudPermiso';
 
 export const nameModal = 'SolicitarPermisoCuit';
 
@@ -10,15 +10,14 @@ export const ModalSolicitarPermisoCuit = () => {
 
     const dispatch = useDispatch();
     const { showModal, loading } = useSelector(state => state.ui);
-    const { cuitActivo } = useSelector(state => state.solicitudPermiso);
+    const { cuitActivo } = useSelector(state => state.cuit);
 
     const handleCloseModal = () => {
         dispatch(closeModal());
-        dispatch(iniciarRemoverCuitActivo());
     }
 
     const handleOnClickSolicitarPermisoCuit = () => {
-        console.log('dispatch(iniciarSolicitarPermisoCuit)');
+        dispatch(iniciarSolicitarPermisoCuit());
     }
 
     return (
@@ -35,7 +34,7 @@ export const ModalSolicitarPermisoCuit = () => {
                 </Modal.Title>
             </Modal.Header>
             <Modal.Body>
-                <p>Solicitar Permiso de <b>Administrador</b> para el Cuit: <b>{cuitActivo?.cuit || ''}</b></p>
+                <p className='text-center'>Solicitar Permiso de <b>Administrador</b> para el Cuit: <b>{cuitActivo?.cuit || ''}</b></p>
             </Modal.Body>
             <Modal.Footer>
                 <Button

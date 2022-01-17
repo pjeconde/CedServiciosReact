@@ -1,13 +1,16 @@
-import React, { useState } from 'react';
-import { useDispatch } from 'react-redux';
+import React, { useCallback, useMemo, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import DataTable from 'react-data-table-component';
+import { Button } from 'react-bootstrap';
+import Swal from 'sweetalert2';
 
 import { ButtonSolicitar } from '../../../ui/ButtonSolicitar';
 import { InputFilter } from '../../../ui/InputFilter';
-import { iniciarSetCuitActivo } from '../../../../actions/solicitudPermiso';
 import { ModalSolicitarPermisoCuit, nameModal } from './ModalSolicitarPermisoCuit';
 import { openModal } from '../../../../actions/ui';
 import { GrillaSolicitarPermisoUnidadNegocio } from '../unidadNegocio/GrillaSolicitarPermisoUnidadNegocio';
+import { EmptyState } from '../../../ui/EmptyState';
+import { iniciarObtenerCuitPorNumeroCuit, removerTodoCuit } from '../../../../actions/cuit';
 
 
 const customStyles = {
@@ -20,24 +23,10 @@ const customStyles = {
     },
 }
 
-const cuit = [
-    {
-        id: 10,
-        cuit: '20398724357',
-        razonSocial: 'German Company',
-        nombreContacto: 'German Montiel',
-        unidadesNegocio: [
-            {
-                id: 3,
-                descripcion: 'Predefinida'
-            }
-        ]
-    }
-];
-
 export const GrillaSolicitarPermisoCuit = () => {
 
     const dispatch = useDispatch();
+    const { cuits } = useSelector(state => state.cuit);
     const [filterText, setFilterText] = useState('');
 
     const columnaCuits = [
@@ -68,14 +57,46 @@ export const GrillaSolicitarPermisoCuit = () => {
         },
     ];
 
-    const handleOnChangeFilterText = (value) => setFilterText(value);
+    const handleOnChangeFilterText = (e) => {
+        const re = /^[0-9\b]+$/;
+        (e.target.value === '' || (re.test(e.target.value))) && setFilterText(e.target.value)
+    };
 
-    const handleOnClickSolicitar = (value) => {
-        let { id, cuit } = value;
+    const handleOnClickSolicitar = () => {
         let typeModal = 'Solicitar';
-        dispatch(iniciarSetCuitActivo({ id, cuit }));
         dispatch(openModal(nameModal, typeModal));
     }
+
+    const handleOnClickBuscarCuit = useCallback(() => {
+        if (filterText === '' || filterText.length < 11)
+            Swal.fire({ title: 'Cuit', text: 'Por favor ingrese un Cuit.', icon: 'warning' });
+        else {
+            dispatch(removerTodoCuit());
+            dispatch(iniciarObtenerCuitPorNumeroCuit(filterText));
+        }
+    }, [dispatch, filterText])
+
+    const subHeaderComponent = useMemo(() => {
+        return (
+            <>
+                <InputFilter
+                    key='busqueda-solicitud-cuit'
+                    id='buscar-solicitud-cuit'
+                    className='buttons__border-radius-right'
+                    maxLength="11"
+                    onFilter={handleOnChangeFilterText}
+                    filterText={filterText}
+                    placeholder='Cuit...'
+                />
+                <Button
+                    className='buttons__border-radius-left'
+                    variant='secondary'
+                    onClick={handleOnClickBuscarCuit}>
+                    Buscar
+                </Button>
+            </>
+        );
+    }, [filterText, handleOnClickBuscarCuit]);
 
     return (
         <div >
@@ -98,25 +119,18 @@ export const GrillaSolicitarPermisoCuit = () => {
                             <DataTable
                                 key="datatable-solicitar-cuit"
                                 keyField="id"
-                                data={cuit}
+                                data={cuits}
                                 columns={columnaCuits}
                                 expandableRows={true}
                                 expandableRowsComponent={<GrillaSolicitarPermisoUnidadNegocio />}
+                                noDataComponent={<EmptyState />}
                                 customStyles={customStyles}
                                 striped
                                 responsive
                                 noHeader
                                 subHeader
                                 subHeaderAlign="left"
-                                subHeaderComponent={
-                                    <InputFilter
-                                        key={'busqueda-solicitud-cuit'}
-                                        id={'buscar-solicitud-cuit'}
-                                        onFilter={handleOnChangeFilterText}
-                                        filterText={filterText}
-                                        placeholder='Cuit...'
-                                    />
-                                }
+                                subHeaderComponent={subHeaderComponent}
                             />
                         </div>
                     </div>

@@ -1,5 +1,5 @@
 import React from 'react';
-import { ReactComponent as RejectedSvg } from '../../styles/icons/times-circle-regular.svg';
+import { ReactComponent as RejectedSvg } from '../../images/times-circle-regular.svg';
 
 export const RejectedIcon = () => {
     return (

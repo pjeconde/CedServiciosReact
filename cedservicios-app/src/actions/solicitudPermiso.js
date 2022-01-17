@@ -1,70 +1,65 @@
 import Swal from "sweetalert2";
-import { types } from "../types/types";
+import { fetchConToken } from "../config/fetch";
+import { closeModal, finishLoading, startLoading } from "./ui";
 
 
-export const iniciarSetCuitActivo = (cuit) => {
-    return (dispatch) => {
+export const iniciarSolicitarPermisoCuit = () => {
+    return async (dispatch, getState) => {
         try {
-            dispatch(setCuitActivo(cuit));
+            dispatch(startLoading());
+            const { cuitActivo } = getState().cuit;
+
+            const resp = await fetchConToken('SolicitudPermiso/Cuit', { idCuit: cuitActivo.id }, 'POST');
+            const body = await resp.json();
+
+            if (body.datos) {
+                Swal.fire({ title: 'Realizado.', text: `Solicitud de permiso para el Cuit ${cuitActivo.cuit} enviada.`, icon: 'success' });
+            }
+            else if (body.exception) {
+                Swal.fire({ icon: 'error', title: 'Oops...', text: body.exception[0].detail });
+            }
+
+            dispatch(finishLoading());
+            dispatch(closeModal());
 
         } catch (error) {
             console.error(error);
             Swal.fire({ icon: 'error', title: 'Oops...', text: 'Ocurrió un error inesperado.' });
+            dispatch(finishLoading());
         }
     }
 }
 
-const setCuitActivo = (cuit) => ({
-    type: types.solicitudPermisoSetCuitActivo,
-    payload: cuit
-});
-
-export const iniciarRemoverCuitActivo = () => ({ type: types.solicitudPermisoRemoverCuitActivo });
-
-export const iniciarSetUnidadNegocioActivo = (unidadNegocio) => {
-    return (dispatch) => {
+export const iniciarSolicitarPermisoUnidadNegocio = (idTipoPermiso) => {
+    return async (dispatch, getState) => {
         try {
-            dispatch(setUnidadNegocioActivo(unidadNegocio));
+            dispatch(startLoading());
+            const { unidadNegocioActivo } = getState().cuit;
+            const { id, idCuit, descripcion } = unidadNegocioActivo;
+
+            const resp = await fetchConToken('SolicitudPermiso/UnidadNegocio',
+                {
+                    idCuit,
+                    idUnidadNegocio: id,
+                    idTipoPermiso
+                },
+                'POST');
+            const body = await resp.json();
+
+            if (body.datos) {
+                Swal.fire({ title: 'Realizado.', text: `Solicitud de permiso para la Unidad de Negocio ${descripcion} enviada.`, icon: 'success' });
+            }
+            else if (body.exception) {
+                Swal.fire({ icon: 'error', title: 'Oops...', text: body.exception[0].detail });
+            }
+
+            dispatch(finishLoading());
+            dispatch(closeModal());
 
         } catch (error) {
             console.error(error);
             Swal.fire({ icon: 'error', title: 'Oops...', text: 'Ocurrió un error inesperado.' });
+            dispatch(finishLoading());
         }
     }
 }
-
-const setUnidadNegocioActivo = (unidadNegocio) => ({
-    type: types.solicitudPermisoSetUnidadNegocioActivo,
-    payload: unidadNegocio
-});
-
-export const iniciarRemoverUnidadNegocioActivo = () => ({ type: types.solicitudPermisoRemoverUnidadNegocioActivo });
-
-// export const iniciarSolicitarPermisoCuit = () => {
-//     return async (dispatch) => {
-//         try {
-//             dispatch(startLoading());
-
-//             const resp = await fetchConToken('PuntoVenta', puntoVentaDto, 'POST');
-//             const body = await resp.json();
-
-//             if (resp.status === 200) {
-//                 Swal.fire({ title: 'Realizado.', text: 'Punto de Venta agregado con exito.', icon: 'success' });
-//                 dispatch(iniciarObtenerCuits());
-//                 dispatch(closeModal());
-//             }
-//             else if (body.errors) {
-//                 dispatch(setError(body.errors));
-//             }
-//             else if (body.exception) {
-//                 Swal.fire({ icon: 'error', title: 'Oops...', text: body.exception[0].detail });
-//             }
-
-//             dispatch(finishLoading());
-//         } catch (error) {
-//             console.error(error);
-//             Swal.fire({ icon: 'error', title: 'Oops...', text: 'Ocurrió un error inesperado.' });
-//             dispatch(finishLoading());
-//         }
-//     }
-// }

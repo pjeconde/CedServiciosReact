@@ -5,6 +5,7 @@ import 'moment/locale/es';
 import { CheckIcon } from '../../../ui/CheckIcon';
 import { PendingIcon } from '../../../ui/PendingIcon';
 import { RejectedIcon } from '../../../ui/RejectedIcon';
+import { EmptyState } from '../../../ui/EmptyState';
 
 
 const customStyles = {
@@ -99,6 +100,7 @@ export const GrillaSolicitudesCuit = () => {
                                 data={solicitudesCuit}
                                 columns={columnaSolicitudesCuit}
                                 customStyles={customStyles}
+                                noDataComponent={<EmptyState />}
                                 striped
                                 responsive
                                 noHeader

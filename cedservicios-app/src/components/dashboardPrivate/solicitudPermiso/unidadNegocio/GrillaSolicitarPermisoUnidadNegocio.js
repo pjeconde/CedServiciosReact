@@ -2,10 +2,10 @@ import React from 'react';
 import { useDispatch } from 'react-redux';
 import DataTable from 'react-data-table-component';
 
-import { iniciarSetUnidadNegocioActivo } from '../../../../actions/solicitudPermiso';
 import { ButtonSolicitar } from '../../../ui/ButtonSolicitar';
 import { openModal } from '../../../../actions/ui';
 import { ModalSolicitarPermisoUnidadNegocio, nameModal } from './ModalSolicitarPermisoUnidadNegocio';
+import { setUnidadNegocioActivo } from '../../../../actions/unidadNegocio';
 
 
 const customStyles = {
@@ -39,7 +39,7 @@ export const GrillaSolicitarPermisoUnidadNegocio = ({ data: cuit }) => {
 
     const handleOnClickSolicitar = (value) => {
         let typeModal = 'Solicitar';
-        dispatch(iniciarSetUnidadNegocioActivo({...value, idCuit: cuit.id}));
+        dispatch(setUnidadNegocioActivo({...value, idCuit: cuit.id}));
         dispatch(openModal(nameModal, typeModal));
     }
 

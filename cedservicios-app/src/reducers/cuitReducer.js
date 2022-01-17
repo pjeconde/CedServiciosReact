@@ -68,6 +68,10 @@ export const cuitReducer = (state = initialState, action) => {
                 ...state,
                 puntoVentaActivo: null
             };
+        case types.cuitRemoverTodo:
+            return {
+                ...initialState
+            }
         default:
             return state;
     }

@@ -17,6 +17,7 @@ import { GrillaUnidadNegocio } from '../components/dashboardPrivate/unidadNegoci
 import { existePermisoDeAdmin } from '../helpers/tipoPermisos';
 import { CheckStatus } from '../components/ui/CheckStatus';
 import { DetallePermiso } from '../components/ui/DetallePermiso';
+import { EmptyState } from '../components/ui/EmptyState';
 
 
 const customStyles = {
@@ -175,6 +176,7 @@ export const CuitScreen = () => {
                                     paginationComponentOptions={PaginationOptions}
                                     onChangePage={handleCambiarPagina}
                                     onChangeRowsPerPage={handleFilasPorPagina}
+                                    noDataComponent={<EmptyState />}
                                     expandableRows={true}
                                     expandableRowsComponent={<GrillaUnidadNegocio />}
                                     customStyles={customStyles}

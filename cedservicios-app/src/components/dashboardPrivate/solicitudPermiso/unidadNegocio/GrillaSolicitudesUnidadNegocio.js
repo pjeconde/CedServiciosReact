@@ -5,6 +5,7 @@ import DataTable from 'react-data-table-component';
 import { CheckIcon } from '../../../ui/CheckIcon';
 import { RejectedIcon } from '../../../ui/RejectedIcon';
 import { PendingIcon } from '../../../ui/PendingIcon';
+import { EmptyState } from '../../../ui/EmptyState';
 
 const customStyles = {
     headCells: {
@@ -105,6 +106,7 @@ export const GrillaSolicitudesUnidadNegocio = () => {
                                 data={solicitudesUnidadNegocio}
                                 columns={columnaSolicitudesUnidadNegocio}
                                 customStyles={customStyles}
+                                noDataComponent={<EmptyState />}
                                 striped
                                 responsive
                                 noHeader
