@@ -43,9 +43,7 @@ export const types = {
     cuitRemoverPuntoVentaActivo: '[cuit] Punto de venta activo removido',
     cuitRemoverTodo: '[cuit] Remover todo',
 
-    solicitudPermisoSetCuitActivo: '[solicitud permiso] Set cuit activo',
-    solicitudPermisoRemoverCuitActivo: '[solicitud permiso] Cuit activo removido',
-    solicitudPermisoSetUnidadNegocioActivo: '[solicitud permiso] Set unidad negocio activo ',
-    solicitudPermisoRemoverUnidadNegocioActivo: '[solicitud permiso] Unidad de negocio activo removido',
-    // solicitudPermisoSetCuitBuscado: '[solicitud permiso] Set cuit buscado',
+    solicitudPermisoCargarSolicitudesCuitGeneradas: '[solicitud Permiso] Solicitudes de permiso cuit generado cargados.',
+    solicitudPermisoCargarSolicitudesUnidadNegocioGeneradas: '[solicitud Permiso] Solicitudes de permiso unidad de negocio generado cargados.',
+    solicitudPermisoRemoverTodo: '[solicitud Permiso] Remover todo',
 };

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import moment from 'moment';
 import DataTable from 'react-data-table-component';
 
@@ -6,6 +6,8 @@ import { CheckIcon } from '../../../ui/CheckIcon';
 import { RejectedIcon } from '../../../ui/RejectedIcon';
 import { PendingIcon } from '../../../ui/PendingIcon';
 import { EmptyState } from '../../../ui/EmptyState';
+import { useDispatch, useSelector } from 'react-redux';
+import { obtenerSolicitudesPermisosUnidadNegocioGeneradas } from '../../../../actions/solicitudPermiso';
 
 const customStyles = {
     headCells: {
@@ -17,40 +19,10 @@ const customStyles = {
     },
 }
 
-const solicitudesUnidadNegocio = [
-    {
-        id: 2,
-        descripcion: 'Carrefour Don Torcuato',
-        cuit: '55646646445',
-        fechaCreacion: moment().add(5, 'M').format("YYYY-MM-DD"),
-        estado: {
-            id: 2,
-            descripcion: 'Inactivo'
-        }
-    },
-    {
-        id: 3,
-        descripcion: 'Carrefour Pacheco',
-        cuit: '55646646445',
-        fechaCreacion: moment().add(2, 'M').format("YYYY-MM-DD"),
-        estado: {
-            id: 1,
-            descripcion: 'Vigente'
-        }
-    },
-    {
-        id: 10,
-        descripcion: 'Predefinida',
-        cuit: '65655665445',
-        fechaCreacion: moment().format("YYYY-MM-DD"),
-        estado: {
-            id: 3,
-            descripcion: 'Pendiente'
-        }
-    }
-];
-
 export const GrillaSolicitudesUnidadNegocio = () => {
+
+    const dispatch = useDispatch();
+    const { solicitudesUnidadNegocioGeneradas } = useSelector(state => state.solicitudPermiso);
 
     const columnaSolicitudesUnidadNegocio = [
         {
@@ -63,13 +35,18 @@ export const GrillaSolicitudesUnidadNegocio = () => {
             }
         },
         {
-            name: 'Descripcion',
-            selector: 'descripcion'
+            name: 'Unidad Negocio',
+            selector: 'unidadNegocio'
+        },
+        {
+            name: 'Permiso',
+            selector: 'tipoPermiso.descripcion'
         },
         {
             name: 'Fecha solicitado',
             selector: 'fechaCreacion',
-            center: true
+            center: true,
+            cell: row => moment(row.fechaCreacion).format("DD/MM/YYYY")
         },
         {
             name: 'Estado',
@@ -84,6 +61,10 @@ export const GrillaSolicitudesUnidadNegocio = () => {
                     <PendingIcon />
         },
     ];
+
+    useEffect(() => {
+        dispatch(obtenerSolicitudesPermisosUnidadNegocioGeneradas());
+    }, [dispatch])
 
     return (
         <div >
@@ -103,24 +84,13 @@ export const GrillaSolicitudesUnidadNegocio = () => {
                         <div className="datatable">
                             <DataTable
                                 key="datatable-solicitudes-unidadNegocio"
-                                data={solicitudesUnidadNegocio}
+                                data={solicitudesUnidadNegocioGeneradas}
                                 columns={columnaSolicitudesUnidadNegocio}
                                 customStyles={customStyles}
                                 noDataComponent={<EmptyState />}
                                 striped
                                 responsive
                                 noHeader
-                            // subHeader
-                            // subHeaderAlign="left"
-                            // subHeaderComponent={
-                            //     <InputFilter
-                            //         key={'busqueda-solicitud-cuit'}
-                            //         id={'buscar-solicitud-cuit'}
-                            //         onFilter={handleOnChangeFilterText}
-                            //         filterText={filterText}
-                            //         placeholder='Cuit...'
-                            //     />
-                            // }
                             />
                         </div>
                     </div>

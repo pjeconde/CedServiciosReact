@@ -8,27 +8,20 @@ const initialState = {
 export const solicitudPermisoReducer = (state = initialState, action) => {
 
     switch (action.type) {
-        case types.solicitudPermisoSetCuitActivo:
+        case types.solicitudPermisoCargarSolicitudesCuitGeneradas:
             return {
                 ...state,
-                cuitActivo: action.payload
+                solicitudesCuitGeneradas: action.payload
             };
-        case types.solicitudPermisoRemoverCuitActivo:
+        case types.solicitudPermisoCargarSolicitudesUnidadNegocioGeneradas:
             return {
                 ...state,
-                cuitActivo: null
+                solicitudesUnidadNegocioGeneradas: action.payload
             };
-        case types.solicitudPermisoSetUnidadNegocioActivo:
+        case types.solicitudPermisoRemoverTodo:
             return {
-                ...state,
-                unidadNegocioActivo: action.payload
+                ...initialState
             };
-        case types.solicitudPermisoRemoverUnidadNegocioActivo:
-            return {
-                ...state,
-                unidadNegocioActivo: null
-            };
-
         default:
             return state;
     }

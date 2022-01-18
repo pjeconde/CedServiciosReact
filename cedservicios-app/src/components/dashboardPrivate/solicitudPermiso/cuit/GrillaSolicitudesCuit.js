@@ -1,13 +1,17 @@
-import React from 'react';
-import moment from 'moment';
+import React, { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import DataTable from 'react-data-table-component';
+import moment from 'moment';
 import 'moment/locale/es';
+
 import { CheckIcon } from '../../../ui/CheckIcon';
 import { PendingIcon } from '../../../ui/PendingIcon';
 import { RejectedIcon } from '../../../ui/RejectedIcon';
 import { EmptyState } from '../../../ui/EmptyState';
+import { obtenerSolicitudesPermisosCuitGeneradas } from '../../../../actions/solicitudPermiso';
 
 
+moment.locale('es');
 const customStyles = {
     headCells: {
         style: {
@@ -18,36 +22,10 @@ const customStyles = {
     },
 }
 
-moment.locale('es');
-
-const solicitudesCuit = [
-    {
-        cuit: '65655665445',
-        fechaCreacion: moment().format("YYYY-MM-DD"),
-        estado: {
-            id: 3,
-            descripcion: 'Pendiente'
-        }
-    },
-    {
-        cuit: '20398724357',
-        fechaCreacion: moment().add(1, 'M').format("YYYY-MM-DD"),
-        estado: {
-            id: 1,
-            descripcion: 'Vigente'
-        }
-    },
-    {
-        cuit: '65655665445',
-        fechaCreacion: moment().add(2, 'M').format("YYYY-MM-DD"),
-        estado: {
-            id: 2,
-            descripcion: 'Inactivo'
-        }
-    }
-];
-
 export const GrillaSolicitudesCuit = () => {
+
+    const dispatch = useDispatch();
+    const { solicitudesCuitGeneradas } = useSelector(state => state.solicitudPermiso);
 
     const columnaSolicitudesCuit = [
         {
@@ -62,7 +40,8 @@ export const GrillaSolicitudesCuit = () => {
         {
             name: 'Fecha solicitado',
             selector: 'fechaCreacion',
-            center: true
+            center: true,
+            cell: row => moment(row.fechaCreacion).format("DD/MM/YYYY")
         },
         {
             name: 'Estado',
@@ -77,6 +56,10 @@ export const GrillaSolicitudesCuit = () => {
                     <PendingIcon />
         },
     ];
+
+    useEffect(() => {
+        dispatch(obtenerSolicitudesPermisosCuitGeneradas());
+    }, [dispatch])
 
     return (
         <div >
@@ -97,24 +80,13 @@ export const GrillaSolicitudesCuit = () => {
                             <DataTable
                                 key="datatable-solicitudes-cuit"
                                 keyField="id"
-                                data={solicitudesCuit}
+                                data={solicitudesCuitGeneradas}
                                 columns={columnaSolicitudesCuit}
                                 customStyles={customStyles}
                                 noDataComponent={<EmptyState />}
                                 striped
                                 responsive
                                 noHeader
-                            // subHeader
-                            // subHeaderAlign="left"
-                            // subHeaderComponent={
-                            //     <InputFilter
-                            //         key={'busqueda-solicitud-cuit'}
-                            //         id={'buscar-solicitud-cuit'}
-                            //         onFilter={handleOnChangeFilterText}
-                            //         filterText={filterText}
-                            //         placeholder='Cuit...'
-                            //     />
-                            // }
                             />
                         </div>
                     </div>

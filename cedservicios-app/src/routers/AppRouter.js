@@ -38,7 +38,7 @@ export const AppRouter = () => {
                     isAuthenticated={!!nombreUsuario}
                     component={DashboardPrivate} />
 
-                <Redirect to="/" />
+                <Redirect to="/auth/ingresar" />
             </Switch>
         </Router>
     )

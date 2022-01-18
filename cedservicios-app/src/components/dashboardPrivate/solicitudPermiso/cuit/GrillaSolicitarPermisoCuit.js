@@ -121,7 +121,8 @@ export const GrillaSolicitarPermisoCuit = () => {
                                 keyField="id"
                                 data={cuits}
                                 columns={columnaCuits}
-                                expandableRows={true}
+                                expandableRows
+                                expandableRowExpanded={row => row.unidadesNegocio.length >= 0}
                                 expandableRowsComponent={<GrillaSolicitarPermisoUnidadNegocio />}
                                 noDataComponent={<EmptyState />}
                                 customStyles={customStyles}

@@ -5,7 +5,7 @@ import { GrillaSolicitudesUnidadNegocio } from '../components/dashboardPrivate/s
 
 
 export const SolicitudPermisoScreen = () => {
-
+    
     return (
         <div className='container-xxl'>
             <div className='row pb-5'>
@@ -14,11 +14,11 @@ export const SolicitudPermisoScreen = () => {
                     <GrillaSolicitarPermisoCuit key='grillaSolicitarPermisoCuit' />
                 </div>
 
-                <div className='col-sm-12 cold-md-12 col-lg-6 mt-5'>
+                <div className='col-sm-12 cold-md-12 col-lg-5 mt-5'>
                     <GrillaSolicitudesCuit key='grillaSolicitudesCuit' />
                 </div>
 
-                <div className='col-sm-12 cold-md-12 col-lg-6 mt-5'>
+                <div className='col-sm-12 cold-md-12 col-lg-7 mt-5'>
                     <GrillaSolicitudesUnidadNegocio key='grillaSolicitudesUnidadNegocio' />
                 </div>
 
