@@ -4,7 +4,7 @@ import { fetchConToken } from "../config/fetch";
 import { parsearAGrillaPersonaDto, parsearAPersonaDto, parsearComboboxPersona } from '../helpers/persona/getPersona';
 import { types } from "../types/types";
 import { setDatosGrilla } from './grilla';
-import { finishLoading, setError, startLoading } from "./ui";
+import { finishLoading, setError, startLoading, closeModal } from "./ui";
 
 
 export const iniciarAgregarPersona = (persona) => {
@@ -70,18 +70,20 @@ export const iniciarActualizarPersona = (persona) => {
 
             if (body.datos) {
                 let grillaPersonaDto = parsearAGrillaPersonaDto(persona);
-                dispatch(finishLoading());
                 dispatch(actualizarPersona(grillaPersonaDto));
                 dispatch(iniciarObtenerPersonas());
                 Swal.fire({ title: 'Realizado.', text: 'Persona actualizada con exito.', icon: 'success' });
             }
             else if (body.errors) {
                 dispatch(setError(body.errors));
-                dispatch(finishLoading());
             }
             else if (body.exception) {
                 Swal.fire({ icon: 'error', title: 'Oops...', text: body.exception[0].detail });
             }
+
+            dispatch(finishLoading());
+            dispatch(closeModal());
+
         } catch (error) {
             dispatch(finishLoading());
             console.error(error);
@@ -102,7 +104,7 @@ export const iniciarEliminarPersona = () => {
             let { personaActiva } = getState().persona;
             let id = personaActiva.id;
 
-            const resp = await fetchConToken(`Persona/${id}`, null, 'DELETE');
+            const resp = await fetchConToken(`Persona/${id}`, null, 'PUT');
             const body = await resp.json();
 
             if (body.datos) {

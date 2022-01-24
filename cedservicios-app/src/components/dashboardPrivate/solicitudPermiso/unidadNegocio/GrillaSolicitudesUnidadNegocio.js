@@ -72,7 +72,7 @@ export const GrillaSolicitudesUnidadNegocio = () => {
                 <div className="container-fluid">
                     <div className="header__wrapper">
                         <div className="header__title">
-                            <h4>Solicitudes de Permisos de Unidades de Negocio</h4>
+                            <h4>Solicitudes de Permisos sobre Unidades de Negocio</h4>
                         </div>
 
                     </div>

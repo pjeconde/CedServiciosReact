@@ -1,15 +1,14 @@
 import React, { useCallback, useMemo, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import DataTable from 'react-data-table-component';
-import { Button } from 'react-bootstrap';
 import Swal from 'sweetalert2';
+import { Button } from 'react-bootstrap';
 
 import { ButtonSolicitar } from '../../../ui/ButtonSolicitar';
 import { InputFilter } from '../../../ui/InputFilter';
 import { ModalSolicitarPermisoCuit, nameModal } from './ModalSolicitarPermisoCuit';
 import { openModal } from '../../../../actions/ui';
 import { GrillaSolicitarPermisoUnidadNegocio } from '../unidadNegocio/GrillaSolicitarPermisoUnidadNegocio';
-import { EmptyState } from '../../../ui/EmptyState';
 import { iniciarObtenerCuitPorNumeroCuit, removerTodoCuit } from '../../../../actions/cuit';
 
 
@@ -124,7 +123,7 @@ export const GrillaSolicitarPermisoCuit = () => {
                                 expandableRows
                                 expandableRowExpanded={row => row.unidadesNegocio.length >= 0}
                                 expandableRowsComponent={<GrillaSolicitarPermisoUnidadNegocio />}
-                                noDataComponent={<EmptyState />}
+                                noDataComponent={<> </>}
                                 customStyles={customStyles}
                                 striped
                                 responsive

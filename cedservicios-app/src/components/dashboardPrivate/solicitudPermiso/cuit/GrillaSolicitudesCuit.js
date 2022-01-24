@@ -67,7 +67,7 @@ export const GrillaSolicitudesCuit = () => {
                 <div className="container-fluid">
                     <div className="header__wrapper">
                         <div className="header__title">
-                            <h4>Solicitudes de Permisos Cuits</h4>
+                            <h4>Solicitudes de Permisos sobre Cuits</h4>
                         </div>
 
                     </div>
